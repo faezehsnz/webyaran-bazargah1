@@ -1,0 +1,17 @@
+
+@font-face {
+  font-family: IRANSansWeb;
+  src: url(./assets/font/Iranian\ Sans.ttf);
+}
+.MuiStepLabel-label {
+  font-family: 'IRANSansWeb' !important;
+}
+.MuiTypography-root {
+  font-family: 'IRANSansWeb' !important;
+}
+.MuiFormLabel-root{
+  font-family: 'IRANSansWeb' !important;
+}
+.MuiButtonBase-root{
+  font-family: 'IRANSansWeb' !important;
+}
