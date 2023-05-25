@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // react-router-dom components
@@ -21,31 +6,73 @@ import { Link } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // Material Dashboard 2 React components
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  Input,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Stack,
+  Typography,
+} from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { TextField } from "@mui/material";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const login = async (e) => {
+    var bodyFormData = new FormData();
+    if (username != null) {
+      bodyFormData.append("username", username);
+    }
+    if (password != null) {
+      bodyFormData.append("password", password);
+    }
 
+    try {
+      setLoading(true);
+      const response = await fetch(
+        "https://www.vira-rte.com/api/barnameh/getBarnamehs",
+        { mode: "cors", method: "POST", body: bodyFormData }
+      );
+      const data = await response.json();
+      localStorage.setItem("token", data.access_token);
+      setTimeout(function () {
+        window.open(`/dashboard`, "_self");
+      }, 1000);
+      setLoading(false);
+    } catch (e) {
+      setError(e.message);
+    }
+  };
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -60,56 +87,88 @@ function Basic() {
           mb={1}
           textAlign="center"
         >
-          <Typography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
-          </Typography >
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2}>
-              <Typography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
-              </Typography >
-            </Grid>
-            <Grid item xs={2}>
-              <Typography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
-              </Typography >
-            </Grid>
-            <Grid item xs={2}>
-              <Typography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
-              </Typography >
-            </Grid>
-          </Grid>
+          <Typography variant="h4" fontWeight="medium" color="white" mt={3}>
+            به بازارگاه خوش آمدید!
+          </Typography>
         </Box>
         <Box pt={4} pb={3} px={3}>
           <Box component="form" role="form">
             <Box mb={2}>
-              <Input type="email" label="Email" fullWidth />
+              <TextField
+                value={username}
+                name="username"
+                onChange={(e) => setUsername(e.target.value)}
+                variant="standard"
+                label="نام کاربری"
+                fullWidth
+              />
             </Box>
             <Box mb={2}>
-              <Input type="password" label="Password" fullWidth />
+              <FormControl fullWidth variant="standard">
+                <InputLabel htmlFor="standard-adornment-password">
+                  رمز عبور
+                </InputLabel>
+                <Input
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  name="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
             </Box>
             <Box display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <Typography 
+              <Typography
                 variant="button"
                 fontWeight="regular"
                 color="text"
                 onClick={handleSetRememberMe}
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
-                &nbsp;&nbsp;Remember me
-              </Typography >
+                یادآوری ورود
+              </Typography>
             </Box>
             <Box mt={4} mb={1}>
-              <Button variant="gradient" color="info" fullWidth>
-                sign in
-              </Button>
+              {loading == true ? (
+                <LoadingButton
+                  fullWidth
+                  // onClick={handleClick}
+                  loading={loading}
+                  variant="outlined"
+                  loadingIndicator="درحال ورود..."
+                  sx={{ backgroundColor: "rgb(64, 81, 59 ,.5)", px: 1 }}
+                  disabled
+                >
+                  <span>disabled</span>
+                </LoadingButton>
+              ) : (
+                <Button
+                  loa
+                  variant="contained"
+                  sx={{ color: "#FFF" }}
+                  onClick={login}
+                  fullWidth
+                >
+                  ورود
+                </Button>
+              )}
             </Box>
             <Box mt={3} mb={1} textAlign="center">
               <Typography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <Typography 
+                {/* Don&apos;t have an account?{" "} */}
+                <Typography
                   component={Link}
                   to="/authentication/sign-up"
                   variant="button"
@@ -117,9 +176,9 @@ function Basic() {
                   fontWeight="medium"
                   textGradient
                 >
-                  Sign up
-                </Typography >
-              </Typography >
+                  ثبت نام
+                </Typography>
+              </Typography>
             </Box>
           </Box>
         </Box>

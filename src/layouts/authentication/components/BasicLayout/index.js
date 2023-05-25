@@ -32,14 +32,14 @@ import Footer from "layouts/authentication/components/Footer";
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
+      {/* <DefaultNavbar
         action={{
           type: "external",
           route: "https://creative-tim.com/product/material-dashboard-react",
           label: "free download",
           color: "dark",
         }}
-      />
+      /> */}
       <Box
         position="absolute"
         width="100%"
@@ -63,7 +63,7 @@ function BasicLayout({ image, children }) {
           </Grid>
         </Grid>
       </Box>
-      <Footer light />
+      {/* <Footer light /> */}
     </PageLayout>
   );
 }

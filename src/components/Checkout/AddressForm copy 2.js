@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { FormHelperText } from '@mui/material';
+import { FormHelperText ,InputAdornment ,FormControl , InputLabel, Select, MenuItem} from '@mui/material';
 
 export default function FinancialInfoForm() {
   return (
@@ -15,23 +15,36 @@ export default function FinancialInfoForm() {
       <p>پر کردن فیلد های ستاره دار (*) اجباری است.</p>
       <Grid container spacing={3} mt={5}>
         <Grid item xs={12} sm={2}>
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="نوع پرداخت کرایه"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-          />
+        <FormControl variant="standard" fullWidth>
+            <InputLabel id="demo-simple-select-standard-label">
+              نوع پرداخت کرایه
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              // value={age}
+              // onChange={handleChange}
+              defaultValue={10}
+              label="پوشش ماشین"
+            >
+              <MenuItem value="44"></MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={2}>
-          <TextField
-            id="lastName"
-            name="lastName"
-            label="ارزش کالا(ریال)"
-            fullWidth
-            autoComplete="family-name"
+        <TextField
+            id="standard-start-adornment"
             variant="standard"
+            label="ارزش کالا"
+            dir="ltr"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="end">ریال</InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={2}>
@@ -45,27 +58,38 @@ export default function FinancialInfoForm() {
           <FormHelperText>این فیلد از سازمان گرفته میشود</FormHelperText>
         </Grid>
         <Grid item xs={12} sm={2}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="نوع کرایه پیشنهادی"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
+        <FormControl variant="standard" fullWidth>
+            <InputLabel id="demo-simple-select-standard-label">
+              نوع کرایه پیشنهادی
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              // value={age}
+              // onChange={handleChange}
+              defaultValue={10}
+              label="پوشش ماشین"
+            >
+              <MenuItem value="44"></MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={2}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="کرایه پیشنهادی مشتری(ریال)"
-            fullWidth
-            autoComplete="shipping address-level2"
+        <TextField
+            id="standard-start-adornment"
             variant="standard"
+            label="کرایه پیشنهادی مشتری"
+            dir="ltr"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="end">ریال</InputAdornment>
+              ),
+            }}
           />
         </Grid>
-        
       </Grid>
     </React.Fragment>
   );
