@@ -8,6 +8,7 @@ import { DataGrid, faIR, GridToolbar } from "@mui/x-data-grid";
 // import { setData ,setReport } from '../../store/actions'
 import styled from "@emotion/styled";
 import { useDemoData } from "@mui/x-data-grid-generator";
+import { Button } from "@mui/material";
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .super-app-theme--2": {
     backgroundColor: "rgb(192, 216, 193)",
@@ -103,7 +104,7 @@ function BillingInformation(props) {
       // },
     },
     {
-      field: "paymentDate",
+      field: "asssss",
       headerName: "عملیات",
       headerAlign: "center",
       width: 110,
@@ -118,10 +119,11 @@ function BillingInformation(props) {
   // var rowID = props.report.map((row) => row.paymentStatus)
   return (
     <Card id="delete-account">
-      <Box pt={3} px={2}>
+      <Box pt={3} px={2} flexDirection='row' display='flex' justifyContent='space-between'>
         <Typography variant="h6" fontWeight="medium">
-          بارهای در صف پذیرش
+           {props.title}
         </Typography>
+        {props.title == 'بارهای حواله شده در بازارگاه' ? <Button variant="contained" sx={{color:'#FFF'}}>حواله کردن</Button>:null}
       </Box>
       <Box pt={1} pb={2} px={2}>
         <Box component="ul" display="flex" flexDirection="column" p={0} m={0}>
@@ -156,6 +158,7 @@ function BillingInformation(props) {
             }}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
+            checkboxSelection
             showCellVerticalBorder
           />
         </Box>

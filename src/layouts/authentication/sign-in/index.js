@@ -60,7 +60,7 @@ function Basic() {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://www.vira-rte.com/api/barnameh/getBarnamehs",
+        // "https://www.vira-rte.com/api/barnameh/getBarnamehs",
         { mode: "cors", method: "POST", body: bodyFormData }
       );
       const data = await response.json();
@@ -148,7 +148,7 @@ function Basic() {
                   loading={loading}
                   variant="outlined"
                   loadingIndicator="درحال ورود..."
-                  sx={{ backgroundColor: "rgb(64, 81, 59 ,.5)", px: 1 }}
+                  sx={{ backgroundColor: "rgb(0, 0, 0 ,.5)", px: 1 }}
                   disabled
                 >
                   <span>disabled</span>

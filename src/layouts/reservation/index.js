@@ -18,7 +18,7 @@ import Projects from "layouts/rtl/components/Projects";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setDirection } from "context";
 
-function RTL() {
+function Reservation() {
   const [, dispatch] = useMaterialUIController();
 
   // Changing the direction to rtl
@@ -35,7 +35,7 @@ function RTL() {
         <Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={12}>
-              <BillingInformation title='بارهای حواله شده در بازارگاه'/>
+              <BillingInformation title='بارهای رزرو شده'/>
             </Grid>
           </Grid>
         </Box>
@@ -45,4 +45,4 @@ function RTL() {
   );
 }
 
-export default RTL;
+export default Reservation;

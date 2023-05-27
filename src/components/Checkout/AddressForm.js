@@ -2,12 +2,8 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormHelperText from "@mui/material/FormHelperText";
-import Input from "@mui/material/Input";
 import { InputLabel, Select, MenuItem } from "@mui/material";
 export default function AddressForm() {
   return (
@@ -15,12 +11,12 @@ export default function AddressForm() {
       <Typography variant="h6" gutterBottom>
         اطلاعات بار
       </Typography>
-      <p>پر کردن فیلد های ستاره دار (*) اجباری است.</p>
+      <Typography>پر کردن فیلد های ستاره دار (*) اجباری است.</Typography>
       <Grid container spacing={3} mt={5}>
         <Grid item xs={12} sm={3}>
           <FormControl variant="standard" fullWidth>
             <InputLabel id="demo-simple-select-standard-label">
-              نوع بار
+            *نوع بار
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
@@ -28,7 +24,8 @@ export default function AddressForm() {
               // value={age}
               // onChange={handleChange}
               defaultValue={10}
-              label="نوع بار"
+              label="*نوع بار"
+              required
             >
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
@@ -49,7 +46,7 @@ export default function AddressForm() {
         <Grid item xs={12} sm={3}>
           <FormControl variant="standard" fullWidth>
             <InputLabel id="demo-simple-select-standard-label">
-              نوع بسته بندی
+            *نوع بسته بندی
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
@@ -80,7 +77,7 @@ export default function AddressForm() {
           <TextField
             id="standard-start-adornment"
             variant="standard"
-            label="وزن"
+            label="وزن*"
             dir="ltr"
             InputProps={{
               startAdornment: (
@@ -93,7 +90,7 @@ export default function AddressForm() {
           <TextField
             id="standard-start-adornment"
             variant="standard"
-            label="عرض بار"
+            label="عرض بار*"
             dir="ltr"
             InputProps={{
               startAdornment: (
@@ -106,7 +103,7 @@ export default function AddressForm() {
           <TextField
             id="standard-start-adornment"
             variant="standard"
-            label="طول بار"
+            label="طول بار*"
             dir="ltr"
             InputProps={{
               startAdornment: (

@@ -141,9 +141,9 @@ export default function Checkout() {
           <Typography component="h1" variant="h3" align="center" mb={5}>
             افزودن بار
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 ,flexWrap:'wrap'}}>
             {steps.map((label) => (
-              <Step key={label}>
+              <Step key={label} sx={{my:3}}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}

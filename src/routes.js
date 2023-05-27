@@ -5,7 +5,6 @@ import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
@@ -13,12 +12,13 @@ import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
 import Ticket from "layouts/profile";
 import Canceled from "layouts/canceled";
+import Reservation from "layouts/reservation";
 
 const routes = [
   {
     type: "collapse",
     name: "داشبورد",
-    key: "dashboard",
+    key: "داشبورد",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
@@ -26,8 +26,16 @@ const routes = [
   {
     type: "collapse",
     name: "افزودن بار",
+    key: "add-bar",
+    icon: <Icon fontSize="small">add_box</Icon>,
+    route: "/addbar",
+    component: <Tables />,
+  },
+  {
+    type: "collapse",
+    name: "افزودن بارنامه",
     key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
+    icon: <Icon fontSize="small">add_box</Icon>,
     route: "/tables",
     component: <Tables />,
   },
@@ -35,7 +43,7 @@ const routes = [
     type: "collapse",
     name: "بارهای در صف پذیرش",
     key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
+    icon: <Icon fontSize="small">list_alt</Icon>,
     route: "/billing",
     component: <Billing />,
   },
@@ -43,15 +51,23 @@ const routes = [
     type: "collapse",
     name: "بارهای حواله شده در بازارگاه",
     key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+    icon: <Icon fontSize="small">drafts</Icon>,
     route: "/rtl",
     component: <RTL />,
   },
   {
     type: "collapse",
+    name: "بارهای رزرو شده",
+    key: "reservation",
+    icon: <Icon fontSize="small">drafts</Icon>,
+    route: "/reservation",
+    component: <Reservation />,
+  },
+  {
+    type: "collapse",
     name: "بارهای درحال حمل",
     key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
+    icon: <Icon fontSize="small">local_shipping</Icon>,
     route: "/notifications",
     component: <Notifications />,
   },
@@ -59,23 +75,15 @@ const routes = [
     type: "collapse",
     name: "بارهای کنسلی",
     key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
+    icon: <Icon fontSize="small">cancel</Icon>,
     route: "/canceled",
-    component: <Canceled />,
-  },
-  {
-    type: "collapse",
-    name: "ثبت فرم خسارت",
-    key: "profile2",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/form",
     component: <Canceled />,
   },
   {
     type: "collapse",
     name: "تیکت",
     key: "profile3",
-    icon: <Icon fontSize="small">person</Icon>,
+    icon: <Icon fontSize="small">confirmation_number</Icon>,
     route: "/ticket",
     component: <Ticket />,
   },

@@ -25,7 +25,7 @@ export default function FinancialInfoForm() {
               // value={age}
               // onChange={handleChange}
               defaultValue={10}
-              label="پوشش ماشین"
+              label="پوشش ماشین*"
             >
               <MenuItem value="44"></MenuItem>
               <MenuItem value={10}>Ten</MenuItem>

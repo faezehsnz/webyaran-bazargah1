@@ -25,7 +25,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
-
+import { InputLabel } from "@mui/material";
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
@@ -47,35 +47,83 @@ function Cover() {
           mb={1}
           textAlign="center"
         >
-          <Typography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Join us today
-          </Typography >
+          <Typography variant="h4" fontWeight="medium" color="white" mt={3}>
+            ثبت نام
+          </Typography>
           <Typography display="block" variant="button" color="white" my={1}>
-            Enter your email and password to register
-          </Typography >
+            لطفا اطلاعات خودتان را به درستی وارد کنید
+          </Typography>
         </Box>
         <Box pt={4} pb={3} px={3}>
           <Box component="form" role="form">
             <Box mb={2}>
-              <Input type="text" label="Name" variant="standard" fullWidth />
+              <Input
+                required
+                type="نام و نام خانوادگی"
+                label="Name"
+                variant="standard"
+                fullWidth
+              />
             </Box>
             <Box mb={2}>
-              <Input type="email" label="Email" variant="standard" fullWidth />
+              <Input
+                required
+                type="number"
+                label="تلفن همراه"
+                variant="standard"
+                fullWidth
+              />
             </Box>
             <Box mb={2}>
-              <Input type="password" label="Password" variant="standard" fullWidth />
+              <Input
+                required
+                type="number"
+                label="نام کاربری"
+                variant="standard"
+                fullWidth
+              />
+            </Box>
+            <Box mb={2}>
+              <Input
+                required
+                type="email"
+                label="کدملی"
+                variant="standard"
+                fullWidth
+              />
+            </Box>
+            <Box mb={2}>
+              <InputLabel htmlFor="standard-adornment-password">
+                رمز عبور
+              </InputLabel>
+              <Input
+                required
+                type="password"
+                label="رمز عبور"
+                variant="standard"
+                fullWidth
+              />
+            </Box>
+            <Box mb={2}>
+              <Input
+                required
+                type="password"
+                label="تکرار رمز عبور"
+                variant="standard"
+                fullWidth
+              />
             </Box>
             <Box display="flex" alignItems="center" ml={-1}>
               <Checkbox />
-              <Typography 
+              <Typography
                 variant="button"
                 fontWeight="regular"
                 color="text"
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
                 &nbsp;&nbsp;I agree the&nbsp;
-              </Typography >
-              <Typography 
+              </Typography>
+              <Typography
                 component="a"
                 href="#"
                 variant="button"
@@ -84,7 +132,7 @@ function Cover() {
                 textGradient
               >
                 Terms and Conditions
-              </Typography >
+              </Typography>
             </Box>
             <Box mt={4} mb={1}>
               <Button variant="gradient" color="info" fullWidth>
@@ -94,7 +142,7 @@ function Cover() {
             <Box mt={3} mb={1} textAlign="center">
               <Typography variant="button" color="text">
                 Already have an account?{" "}
-                <Typography 
+                <Typography
                   component={Link}
                   to="/authentication/sign-in"
                   variant="button"
@@ -103,8 +151,8 @@ function Cover() {
                   textGradient
                 >
                   Sign In
-                </Typography >
-              </Typography >
+                </Typography>
+              </Typography>
             </Box>
           </Box>
         </Box>

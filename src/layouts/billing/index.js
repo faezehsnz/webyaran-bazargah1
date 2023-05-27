@@ -37,7 +37,7 @@ function Billing() {
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <BillingInformation />
+              <BillingInformation title='بارهای در صف پذیرش'/>
             </Grid>
           </Grid>
         </Box>

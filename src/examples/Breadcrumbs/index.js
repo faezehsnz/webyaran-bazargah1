@@ -29,13 +29,43 @@ import MDTypography from "components/MDTypography";
 
 function Breadcrumbs({ icon, title, route, light }) {
   const routes = route.slice(0, -1);
-
+  var title1 = changeName(title);
+  function changeName(e) {
+    if(e === 'dashboard'){
+      return 'داشبورد'
+    }
+    if(e === 'tables'){
+      return 'افزودن بار'
+    }
+    if(e === 'billing'){
+      return 'بارهای درصف پذیرش'
+    }
+    if(e === 'rtl'){
+      return 'بارهای حواله شده'
+    }
+    if(e === 'notifications'){
+      return 'بارهای درحال حمل'
+    }
+    if(e === 'canceled'){
+      return 'بارهای کنسلی'
+    }
+    if(e === 'form'){
+      return 'افزودن بار'
+    }
+    if(e === 'ticket'){
+      return 'تیکت'
+    }
+    if(e === 'reservation'){
+      return 'بارهای رزرو شده'
+    }
+  }
   return (
     <MDBox mr={{ xs: 0, xl: 8 }}>
       <MuiBreadcrumbs
         sx={{
           "& .MuiBreadcrumbs-separator": {
-            color: ({ palette: { white, grey } }) => (light ? white.main : grey[600]),
+            color: ({ palette: { white, grey } }) =>
+              light ? white.main : grey[600],
           },
         }}
       >
@@ -61,7 +91,7 @@ function Breadcrumbs({ icon, title, route, light }) {
               opacity={light ? 0.8 : 0.5}
               sx={{ lineHeight: 0 }}
             >
-              {el}
+              {routes}
             </MDTypography>
           </Link>
         ))}
@@ -72,7 +102,7 @@ function Breadcrumbs({ icon, title, route, light }) {
           color={light ? "white" : "dark"}
           sx={{ lineHeight: 0 }}
         >
-          {title.replace("-", " ")}
+          {title1}
         </MDTypography>
       </MuiBreadcrumbs>
       <MDTypography
@@ -82,7 +112,7 @@ function Breadcrumbs({ icon, title, route, light }) {
         color={light ? "white" : "dark"}
         noWrap
       >
-        {title.replace("-", " ")}
+        {title1}
       </MDTypography>
     </MDBox>
   );

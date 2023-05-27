@@ -38,14 +38,19 @@ function Tables() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
-      <Box pt={6} pb={3}>
-        <Grid container spacing={6}>
+    <DashboardNavbar />
+    <Box py={3}>
+      <Box>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6} lg={12}>
           <Checkout />
+          </Grid>
         </Grid>
       </Box>
-      {/* <Footer /> */}
-    </DashboardLayout>
+    </Box>
+    {/* <Footer /> */}
+  </DashboardLayout>
+  
   );
 }
 

@@ -8,7 +8,7 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 
 export default function MoreInfoForm() {
   return (
@@ -20,19 +20,18 @@ export default function MoreInfoForm() {
       <Grid container spacing={3} mt={5}>
         <Grid item xs={12} sm={2}>
           <TextField
-            required
+            
             id="firstName"
             name="firstName"
-            label="فرستنده"
+            label="فرستنده*"
             fullWidth
-            autoComplete="given-name"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={2}>
           <FormControl variant="standard" fullWidth>
             <InputLabel id="demo-simple-select-standard-label">
-              شهر مبدا
+              شهر مبدا*
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
@@ -56,7 +55,6 @@ export default function MoreInfoForm() {
             name="address1"
             label="محل بارگیری"
             fullWidth
-            autoComplete="shipping address-line1"
             variant="standard"
           />
         </Grid>
@@ -74,19 +72,18 @@ export default function MoreInfoForm() {
       <Grid container spacing={3} mt={5}>
         <Grid item xs={12} sm={2}>
           <TextField
-            required
+            
             id="firstName"
             name="firstName"
-            label="گیرنده"
+            label="گیرنده*"
             fullWidth
-            autoComplete="given-name"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={2}>
           <FormControl variant="standard" fullWidth>
             <InputLabel id="demo-simple-select-standard-label">
-              شهر مقصد
+              شهر مقصد*
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
@@ -110,7 +107,6 @@ export default function MoreInfoForm() {
             name="address1"
             label="محل تخلیه"
             fullWidth
-            autoComplete="shipping address-line1"
             variant="standard"
           />
         </Grid>

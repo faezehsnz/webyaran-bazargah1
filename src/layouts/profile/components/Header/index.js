@@ -25,18 +25,16 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 // Material Dashboard 2 React components
-import {Box} from "@mui/material";
-import {Typography} from "@mui/material";
-import {Avatar} from "@mui/material";
+import { Box } from "@mui/material";
+
 
 // Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 import { Button } from "@mui/material";
 
@@ -75,7 +73,10 @@ function Header({ children }) {
         minHeight="18.75rem"
         borderRadius="xl"
         sx={{
-          backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
+          backgroundImage: ({
+            functions: { rgba, linearGradient },
+            palette: { gradients },
+          }) =>
             `${linearGradient(
               rgba(gradients.info.main, 0.6),
               rgba(gradients.info.state, 0.6)
@@ -95,22 +96,29 @@ function Header({ children }) {
         }}
       >
         <Grid container spacing={3} alignItems="center">
-
           <Grid item>
             <Box height="100%" mt={0.5} lineHeight={1}>
-              <Button variant="contained" sx={{color:'#FFF' ,backgroundColor:'#1A73E8' ,fontSize: 15}}>
-              <AddOutlinedIcon />
-                تیکت جدید</Button>
+              <Button
+                variant="contained"
+                sx={{ color: "#FFF", backgroundColor: "#1A73E8", fontSize: 15 }}
+              >
+                <AddOutlinedIcon />
+                تیکت جدید
+              </Button>
             </Box>
           </Grid>
-          <Grid item xs={12} md={8} lg={6} sx={{ ml: "auto"}}>
+          <Grid item xs={12} md={8} lg={6} sx={{ ml: "auto" }}>
             <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-              <Tab
+              <Tabs
+                orientation={tabsOrientation}
+                value={tabValue}
+                onChange={handleSetTabValue}
+              >
+                <Tab
                   label="همه"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      home
+                      reorder
                     </Icon>
                   }
                 />
@@ -118,7 +126,7 @@ function Header({ children }) {
                   label="انجام نشده"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      home
+                      radio_button_unchecked
                     </Icon>
                   }
                 />
@@ -126,7 +134,7 @@ function Header({ children }) {
                   label="انجام شده"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      email
+                      done
                     </Icon>
                   }
                 />
@@ -134,7 +142,7 @@ function Header({ children }) {
                   label="بسته شده"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      settings
+                      done_all
                     </Icon>
                   }
                 />
