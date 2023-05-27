@@ -29,7 +29,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/Connected-truck-telematics.jpg";
 import { TextField } from "@mui/material";
 
 function Basic() {

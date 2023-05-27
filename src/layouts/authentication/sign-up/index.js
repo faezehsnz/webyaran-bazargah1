@@ -30,19 +30,18 @@ import { InputLabel } from "@mui/material";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import bgImage from "assets/images/shutterstock_723474445.jpg";
 
 function Cover() {
   return (
-    <CoverLayout image={bgImage}>
-      <Card>
+    <CoverLayout image={bgImage} >
+      <Card sx={{mt:-13}}>
         <Box
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
-          mt={-3}
           p={3}
           mb={1}
           textAlign="center"
@@ -57,6 +56,9 @@ function Cover() {
         <Box pt={4} pb={3} px={3}>
           <Box component="form" role="form">
             <Box mb={2}>
+            <InputLabel htmlFor="standard-adornment-password">
+                نام و نام خانوادگی
+              </InputLabel>
               <Input
                 required
                 type="نام و نام خانوادگی"
@@ -66,6 +68,9 @@ function Cover() {
               />
             </Box>
             <Box mb={2}>
+            <InputLabel htmlFor="standard-adornment-password">
+                تلفن همراه
+              </InputLabel>
               <Input
                 required
                 type="number"
@@ -75,6 +80,9 @@ function Cover() {
               />
             </Box>
             <Box mb={2}>
+            <InputLabel htmlFor="standard-adornment-password">
+                نام کاربری
+              </InputLabel>
               <Input
                 required
                 type="number"
@@ -84,6 +92,9 @@ function Cover() {
               />
             </Box>
             <Box mb={2}>
+            <InputLabel htmlFor="standard-adornment-password">
+                کدملی
+              </InputLabel>
               <Input
                 required
                 type="email"
@@ -105,6 +116,9 @@ function Cover() {
               />
             </Box>
             <Box mb={2}>
+            <InputLabel htmlFor="standard-adornment-password">
+                تکرار رمز عبور
+              </InputLabel>
               <Input
                 required
                 type="password"
@@ -113,44 +127,25 @@ function Cover() {
                 fullWidth
               />
             </Box>
-            <Box display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <Typography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </Typography>
-              <Typography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Terms and Conditions
-              </Typography>
-            </Box>
+           
             <Box mt={4} mb={1}>
               <Button variant="gradient" color="info" fullWidth>
-                sign in
+                
+                ثبت نام
               </Button>
             </Box>
             <Box mt={3} mb={1} textAlign="center">
               <Typography variant="button" color="text">
-                Already have an account?{" "}
+                قبلا ثبت نام کرده اید؟
                 <Typography
                   component={Link}
-                  to="/authentication/sign-in"
+                  to="/"
                   variant="button"
                   color="info"
                   fontWeight="medium"
                   textGradient
                 >
-                  Sign In
+                  ورود
                 </Typography>
               </Typography>
             </Box>
