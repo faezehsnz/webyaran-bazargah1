@@ -78,9 +78,9 @@ function Basic() {
       <Card>
         <Box
           variant="gradient"
-          bgColor="info"
+          bgcolor="info"
           borderRadius="lg"
-          coloredShadow="info"
+          coloredshadow="info"
           mx={2}
           mt={-3}
           p={2}
@@ -174,7 +174,6 @@ function Basic() {
                   variant="button"
                   color="info"
                   fontWeight="medium"
-                  textGradient
                 >
                   ثبت نام
                 </Typography>

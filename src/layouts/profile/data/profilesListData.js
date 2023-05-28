@@ -19,12 +19,15 @@ import marie from "assets/images/marie.jpg";
 import ivana from "assets/images/ivana-square.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
+import { Person2Rounded } from "@mui/icons-material";
+import Icon from "@mui/material/Icon";
 
 export default [
   {
-    image: kal,
-    name: "Sophie B.",
-    description: "Hi! I need more information..",
+    image: Person2Rounded,
+    icon: <Icon>person</Icon>,
+    name: "احمدی",
+    description: "سلام!",
     action: {
       type: "internal",
       route: "/pages/profile/profile-overview",
@@ -33,9 +36,10 @@ export default [
     },
   },
   {
-    image: marie,
-    name: "Anne Marie",
-    description: "Awesome work, can you..",
+    image: Person2Rounded,
+    name: "محمدی",
+    icon: <Icon>person</Icon>,
+    description: "سلام!",
     action: {
       type: "internal",
       route: "/pages/profile/profile-overview",
@@ -45,8 +49,9 @@ export default [
   },
   {
     image: ivana,
-    name: "Ivanna",
-    description: "About files I can..",
+    icon: <Icon>person</Icon>,
+    name: "احمدی",
+    description: "سلام!",
     action: {
       type: "internal",
       route: "/pages/profile/profile-overview",
@@ -56,8 +61,9 @@ export default [
   },
   {
     image: team4,
-    name: "Peterson",
-    description: "Have a great afternoon..",
+    icon: <Icon>person</Icon>,
+    name: "احمدی",
+    description: "سلام!",
     action: {
       type: "internal",
       route: "/pages/profile/profile-overview",
@@ -67,8 +73,9 @@ export default [
   },
   {
     image: team3,
-    name: "Nick Daniel",
-    description: "Hi! I need more information..",
+    icon: <Icon>person</Icon>,
+    name: "احمدی",
+    description: "سلام!",
     action: {
       type: "internal",
       route: "/pages/profile/profile-overview",

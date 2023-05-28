@@ -70,7 +70,7 @@ function ProgressLineChart({ color, icon, title, count, progress, height, chart 
           borderRadius="md"
           shadow="md"
           color="white"
-          bgColor={color}
+          bgcolor={color}
           variant="gradient"
         >
           <Icon fontSize="default">{icon}</Icon>

@@ -32,37 +32,33 @@ function Footer({ light }) {
   const { size } = typography;
 
   return (
-    <Box position="absolute" width="100%" bottom={0} py={4}>
-      <Container>
+    <Box position="absolute" width="100%" bottom={0} py={4} >
         <Box
           width="100%"
           display="flex"
           flexDirection={{ xs: "column", lg: "row" }}
           justifyContent="space-between"
           alignItems="center"
-          px={1.5}
+          px={4}
         >
           <Box
-            display="flex"
+            display={{ xs: "none", lg: "flex" }}
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"
             color={light ? "white" : "text"}
             fontSize={size.sm}
+            
           >
-            &copy; {new Date().getFullYear()}, made with
-            <Box fontSize={size.md} color={light ? "white" : "dark"} mb={-0.5} mx={0.25}>
-              <Icon color="inherit" fontSize="inherit">
-                favorite
-              </Icon>
-            </Box>
-            by
-            <Link href="https://www.creative-tim.com/" target="_blank">
-              <Typography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
-                &nbsp;Creative Tim&nbsp;
-              </Typography >
-            </Link>
-            for a better web.
+            <span className="float-md-left d-block d-md-inline-block mt-25">
+              © 2021 کلیه حقوق این وب سایت متعلق به
+              <a className="ml-25" href="#" target="_blank">
+                {" "}
+                ....
+                {/* شرکت کالابران انتخاب{" "} */}
+              </a>
+              <span className="d-none d-sm-inline-block">می باشد.</span>
+            </span>
           </Box>
           <Box
             component="ul"
@@ -82,52 +78,34 @@ function Footer({ light }) {
             })}
           >
             <Box component="li" pr={2} lineHeight={1}>
-              <Link href="https://www.creative-tim.com/" target="_blank">
-                <Typography 
+              <Link href="#" target="_blank">
+                <Typography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  Creative Tim
-                </Typography >
-              </Link>
-            </Box>
-            <Box component="li" px={2} lineHeight={1}>
-              <Link href="https://www.creative-tim.com/presentation" target="_blank">
-                <Typography 
-                  variant="button"
-                  fontWeight="regular"
-                  color={light ? "white" : "dark"}
-                >
-                  About Us
-                </Typography >
-              </Link>
-            </Box>
-            <Box component="li" px={2} lineHeight={1}>
-              <Link href="https://www.creative-tim.com/blog" target="_blank">
-                <Typography 
-                  variant="button"
-                  fontWeight="regular"
-                  color={light ? "white" : "dark"}
-                >
-                  Blog
-                </Typography >
-              </Link>
-            </Box>
-            <Box component="li" pl={2} lineHeight={1}>
-              <Link href="https://www.creative-tim.com/license" target="_blank">
-                <Typography 
-                  variant="button"
-                  fontWeight="regular"
-                  color={light ? "white" : "dark"}
-                >
-                  License
-                </Typography >
+                  <span className="float-md-right d-none d-md-block">
+                    طراحی شده توسط تیم 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="feather feather-heart"
+                    >
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                  </span>
+                </Typography>
               </Link>
             </Box>
           </Box>
         </Box>
-      </Container>
     </Box>
   );
 }

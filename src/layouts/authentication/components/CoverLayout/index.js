@@ -62,14 +62,14 @@ function CoverLayout({ coverHeight, image, children }) {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <Box mt={{ xs: -20, lg: -18 }} px={1} width="calc(100% - 2rem)" mx="auto">
+      <Box mt={{ xs: -20, lg: -18 }} px={1} width="calc(100% - 2rem)" mx="auto" bgcolor='#f0f2f5'>
         <Grid container spacing={1} justifyContent="center">
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             {children}
           </Grid>
         </Grid>
       </Box>
-      {/* <Footer /> */}
+      <Footer />
     </PageLayout>
   );
 }

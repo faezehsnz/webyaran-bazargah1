@@ -18,7 +18,7 @@ const routes = [
   {
     type: "collapse",
     name: "داشبورد",
-    key: "داشبورد",
+    key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
@@ -26,7 +26,7 @@ const routes = [
   {
     type: "collapse",
     name: "افزودن بار",
-    key: "add-bar",
+    key: "addbar",
     icon: <Icon fontSize="small">add_box</Icon>,
     route: "/addbar",
     component: <Tables />,
@@ -74,7 +74,7 @@ const routes = [
   {
     type: "collapse",
     name: "بارهای کنسلی",
-    key: "profile",
+    key: "canceled",
     icon: <Icon fontSize="small">cancel</Icon>,
     route: "/canceled",
     component: <Canceled />,
@@ -82,7 +82,7 @@ const routes = [
   {
     type: "collapse",
     name: "تیکت",
-    key: "profile3",
+    key: "ticket",
     icon: <Icon fontSize="small">confirmation_number</Icon>,
     route: "/ticket",
     component: <Ticket />,

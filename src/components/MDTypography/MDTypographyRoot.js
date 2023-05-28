@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 
 export default styled(Typography)(({ theme, ownerState }) => {
   const { palette, typography, functions } = theme;
-  const { color, textTransform, verticalAlign, fontWeight, opacity, textGradient, darkMode } =
+  const { color, textTransform, verticalAlign, fontWeight, opacity, textgradient, darkMode } =
     ownerState;
 
   const { gradients, transparent, white } = palette;
@@ -34,7 +34,7 @@ export default styled(Typography)(({ theme, ownerState }) => {
     bold: fontWeightBold,
   };
 
-  // styles for the typography with textGradient={true}
+  // styles for the typography with textgradient={true}
   const gradientStyles = () => ({
     backgroundImage:
       color !== "inherit" && color !== "text" && color !== "white" && gradients[color]
@@ -61,6 +61,6 @@ export default styled(Typography)(({ theme, ownerState }) => {
     textDecoration: "none",
     color: colorValue,
     fontWeight: fontWeights[fontWeight] && fontWeights[fontWeight],
-    ...(textGradient && gradientStyles()),
+    ...(textgradient && gradientStyles()),
   };
 });

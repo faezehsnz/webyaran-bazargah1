@@ -48,6 +48,8 @@ import routes from "routes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+import { Provider } from 'react-redux'
+import { store } from 'components/store';
 
 // Images
 import brandWhite from "assets/images/logo-ct.png";
@@ -122,33 +124,10 @@ export default function App() {
       return null;
     });
 
-  const configsButton = (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="50%"
-      position="fixed"
-      right="2rem"
-      bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpen}
-    >
-      {/* <Icon fontSize="small" color="inherit">
-        settings
-      </Icon> */}
-    </Box>
-  );
-
   return (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
+      <Provider store={store}>
         <CssBaseline />
         {layout === "dashboard" && (
           <>
@@ -166,6 +145,7 @@ export default function App() {
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+        </Provider>
       </ThemeProvider>
     </CacheProvider>
   );

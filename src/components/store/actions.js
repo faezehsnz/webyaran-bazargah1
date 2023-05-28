@@ -10,4 +10,10 @@ export const setReport = (value) => {
       value
    }
 };
+export const setType = (value) => {
+   return {
+      type:'SET_TYPE',
+      value
+   }
+};
 

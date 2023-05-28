@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 
 export default styled(Box)(({ theme, ownerState }) => {
   const { palette, functions, borders, boxShadows } = theme;
-  const { variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow } = ownerState;
+  const { variant, bgcolor, color, opacity, borderRadius, shadow, coloredshadow } = ownerState;
 
   const { gradients, grey, white } = palette;
   const { linearGradient } = functions;
@@ -77,16 +77,16 @@ export default styled(Box)(({ theme, ownerState }) => {
   const validBoxShadows = ["xs", "sm", "md", "lg", "xl", "xxl", "inset"];
 
   // background value
-  let backgroundValue = bgColor;
+  let backgroundValue = bgcolor;
 
   if (variant === "gradient") {
-    backgroundValue = validGradients.find((el) => el === bgColor)
-      ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
+    backgroundValue = validGradients.find((el) => el === bgcolor)
+      ? linearGradient(gradients[bgcolor].main, gradients[bgcolor].state)
       : white.main;
-  } else if (validColors.find((el) => el === bgColor)) {
-    backgroundValue = palette[bgColor] ? palette[bgColor].main : greyColors[bgColor];
+  } else if (validColors.find((el) => el === bgcolor)) {
+    backgroundValue = palette[bgcolor] ? palette[bgcolor].main : greyColors[bgcolor];
   } else {
-    backgroundValue = bgColor;
+    backgroundValue = bgcolor;
   }
 
   // color value
@@ -108,8 +108,8 @@ export default styled(Box)(({ theme, ownerState }) => {
 
   if (validBoxShadows.find((el) => el === shadow)) {
     boxShadowValue = boxShadows[shadow];
-  } else if (coloredShadow) {
-    boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : "none";
+  } else if (coloredshadow) {
+    boxShadowValue = colored[coloredshadow] ? colored[coloredshadow] : "none";
   }
 
   return {

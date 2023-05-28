@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 
 export default styled(Avatar)(({ theme, ownerState }) => {
   const { palette, functions, typography, boxShadows } = theme;
-  const { shadow, bgColor, size } = ownerState;
+  const { shadow, bgcolor, size } = ownerState;
 
   const { gradients, transparent, white } = palette;
   const { pxToRem, linearGradient } = functions;
@@ -27,9 +27,9 @@ export default styled(Avatar)(({ theme, ownerState }) => {
 
   // backgroundImage value
   const backgroundValue =
-    bgColor === "transparent"
+    bgcolor === "transparent"
       ? transparent.main
-      : linearGradient(gradients[bgColor].main, gradients[bgColor].state);
+      : linearGradient(gradients[bgcolor].main, gradients[bgcolor].state);
 
   // size value
   let sizeValue;

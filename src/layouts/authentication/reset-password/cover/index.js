@@ -34,9 +34,9 @@ function Cover() {
       <Card>
         <Box
           variant="gradient"
-          bgColor="info"
+          bgcolor="info"
           borderRadius="lg"
-          coloredShadow="success"
+          coloredshadow="success"
           mx={2}
           mt={-3}
           py={2}

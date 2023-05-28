@@ -34,8 +34,11 @@ function Breadcrumbs({ icon, title, route, light }) {
     if(e === 'dashboard'){
       return 'داشبورد'
     }
-    if(e === 'tables'){
+    if(e === 'addbar'){
       return 'افزودن بار'
+    }
+    if(e === 'tables'){
+      return 'افزودن بارنامه'
     }
     if(e === 'billing'){
       return 'بارهای درصف پذیرش'

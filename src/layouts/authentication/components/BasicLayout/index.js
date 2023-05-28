@@ -63,7 +63,7 @@ function BasicLayout({ image, children }) {
           </Grid>
         </Grid>
       </Box>
-      {/* <Footer light /> */}
+      <Footer />
     </PageLayout>
   );
 }

@@ -71,9 +71,9 @@ function VerticalBarChart({ icon, title, description, height, chart }) {
             <MDBox
               width="4rem"
               height="4rem"
-              bgColor={icon.color || "dark"}
+              bgcolor={icon.color || "dark"}
               variant="gradient"
-              coloredShadow={icon.color || "dark"}
+              coloredshadow={icon.color || "dark"}
               borderRadius="xl"
               display="flex"
               justifyContent="center"

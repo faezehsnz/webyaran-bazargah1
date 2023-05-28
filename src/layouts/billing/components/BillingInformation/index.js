@@ -39,13 +39,13 @@ function BillingInformation(props) {
       field: "loading_time",
       headerName: "زمان بارگیری",
       headerAlign: "center",
-      width:130
+      width: 130,
     },
     {
       field: "destinationWeight",
       headerName: "نوع پرداخت کرایه",
       headerAlign: "center",
-      width:150
+      width: 150,
     },
     {
       field: "origin",
@@ -66,7 +66,7 @@ function BillingInformation(props) {
       field: "receiverCityName",
       headerName: "نوع کرایه پیشنهادی",
       headerAlign: "center",
-      width:160
+      width: 160,
     },
     {
       field: "fullName",
@@ -119,11 +119,21 @@ function BillingInformation(props) {
   // var rowID = props.report.map((row) => row.paymentStatus)
   return (
     <Card id="delete-account">
-      <Box pt={3} px={2} flexDirection='row' display='flex' justifyContent='space-between'>
+      <Box
+        pt={3}
+        px={2}
+        flexDirection="row"
+        display="flex"
+        justifyContent="space-between"
+      >
         <Typography variant="h6" fontWeight="medium">
-           {props.title}
+          {props.title}
         </Typography>
-        {props.title == 'بارهای حواله شده در بازارگاه' ? <Button variant="contained" sx={{color:'#FFF'}}>حواله کردن</Button>:null}
+        {props.title == "بارهای حواله شده در بازارگاه" ? (
+          <Button variant="contained" sx={{ color: "#FFF" }}>
+            حواله کردن ({0}) بارنامه  
+          </Button>
+        ) : null}
       </Box>
       <Box pt={1} pb={2} px={2}>
         <Box component="ul" display="flex" flexDirection="column" p={0} m={0}>

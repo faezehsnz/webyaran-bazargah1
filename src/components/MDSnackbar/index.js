@@ -72,7 +72,7 @@ function MDSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ...
     >
       <MDBox
         variant={bgWhite ? "contained" : "gradient"}
-        bgColor={bgWhite ? "white" : color}
+        bgcolor={bgWhite ? "white" : color}
         minWidth="21.875rem"
         maxWidth="100%"
         shadow="md"
@@ -98,7 +98,7 @@ function MDSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ...
               variant="button"
               fontWeight="medium"
               color={titleColor}
-              textGradient={bgWhite}
+              textgradient={bgWhite}
             >
               {title}
             </MDTypography>

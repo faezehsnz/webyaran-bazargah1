@@ -2,6 +2,7 @@
 export const initialState = {
     data: [],
     report:null,
+    type:0
 };
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -17,6 +18,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 report: action.value
+            };
+            case 'SET_TYPE':
+            return {
+                ...state,
+                type: action.value
             };
         default:
             return state;

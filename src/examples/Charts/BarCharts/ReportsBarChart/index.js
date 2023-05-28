@@ -54,9 +54,9 @@ function ReportsBarChart({ color, title, description, date, chart }) {
           () => (
             <MDBox
               variant="gradient"
-              bgColor={color}
+              bgcolor={color}
               borderRadius="lg"
-              coloredShadow={color}
+              coloredshadow={color}
               py={2}
               pr={0.5}
               mt={-5}

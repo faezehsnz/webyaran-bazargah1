@@ -39,7 +39,7 @@ function Ticket() {
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Grid item xs={12} xl={12}>
-              <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
+              <ProfilesList title="تیکت ها" profiles={profilesListData} shadow={false} />
             </Grid>
           </Grid>
         </Box>

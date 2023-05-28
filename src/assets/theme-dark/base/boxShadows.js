@@ -25,7 +25,7 @@ import colors from "assets/theme-dark/base/colors";
 // Material Dashboard 2 React Helper Functions
 import boxShadow from "assets/theme-dark/functions/boxShadow";
 
-const { black, dark, tabs, coloredShadows } = colors;
+const { black, dark, tabs, coloredshadows } = colors;
 
 const boxShadows = {
   xs: boxShadow([0, 2], [9, -5], black.main, 0.15),
@@ -54,49 +54,49 @@ const boxShadows = {
     primary: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.primary,
+      coloredshadows.primary,
       0.4
     )}`,
     secondary: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.secondary,
+      coloredshadows.secondary,
       0.4
     )}`,
     info: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.info,
+      coloredshadows.info,
       0.4
     )}`,
     success: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.success,
+      coloredshadows.success,
       0.4
     )}`,
     warning: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.warning,
+      coloredshadows.warning,
       0.4
     )}`,
     error: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.error,
+      coloredshadows.error,
       0.4
     )}`,
     light: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.light,
+      coloredshadows.light,
       0.4
     )}`,
     dark: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow(
       [0, 7],
       [10, -5],
-      coloredShadows.dark,
+      coloredshadows.dark,
       0.4
     )}`,
   },
