@@ -1,3 +1,4 @@
+import React from "react";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
@@ -8,7 +9,15 @@ import { DataGrid, faIR, GridToolbar } from "@mui/x-data-grid";
 // import { setData ,setReport } from '../../store/actions'
 import styled from "@emotion/styled";
 import { useDemoData } from "@mui/x-data-grid-generator";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import NotificationItem from "examples/Items/NotificationItem";
+import Menu from "@mui/material/Menu";
+import Icon from "@mui/material/Icon";
+import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .super-app-theme--2": {
     backgroundColor: "rgb(192, 216, 193)",
@@ -24,6 +33,27 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 // import Bill from "layouts/billing/components/Bill";
 
 function BillingInformation(props) {
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
+  const handleCloseMenu = () => setOpenMenu(false);
+  const renderMenu = () => (
+    <Menu
+      anchorEl={openMenu}
+      anchorReference={null}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "left",
+      }}
+      open={Boolean(openMenu)}
+      onClose={handleCloseMenu}
+      sx={{ mt: 2 }}
+    >
+      <NotificationItem onClick={() => window.open('/bar/show' ,'_self')} icon={<VisibilityOutlinedIcon/>} title="نمایش" />
+      <NotificationItem icon={<ModeEditOutlineOutlinedIcon/>} title="ویرایش" />
+      <NotificationItem icon={<DeleteOutlineOutlinedIcon/>} title="حذف" />
+      <NotificationItem icon={<MenuOutlinedIcon/>} title="حواله کردن" />
+    </Menu>
+  );
   const { data } = useDemoData({
     dataSet: "Commodity",
     rowLength: 5,
@@ -107,16 +137,31 @@ function BillingInformation(props) {
       field: "asssss",
       headerName: "عملیات",
       headerAlign: "center",
+      align: 'center',
       width: 110,
-      // renderCell: (params) => {
-      //   var date = params.value;
-      //   var validDate = new Date(date * 1000).toLocaleDateString("fa-IR");
-      //   return <p>{params.value != null ? validDate : " "}</p>;
-      // },
+      renderCell: (params) => (
+        <>
+          <MoreHorizOutlinedIcon onClick={handleOpenMenu} >
+            move_vert
+          </MoreHorizOutlinedIcon>
+          {renderMenu()}
+        </>
+      ),
     },
   ];
   // var date = new Date(props.report.issueDate * 1000);
   // var rowID = props.report.map((row) => row.paymentStatus)
+  const rows = [
+    { id: 1, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 2, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 3, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 4, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 5, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 6, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 7, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 8, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 9, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+  ];
   return (
     <Card id="delete-account">
       <Box
@@ -131,7 +176,7 @@ function BillingInformation(props) {
         </Typography>
         {props.title == "بارهای حواله شده در بازارگاه" ? (
           <Button variant="contained" sx={{ color: "#FFF" }}>
-            حواله کردن ({0}) بارنامه  
+            حواله کردن ({0}) بارنامه
           </Button>
         ) : null}
       </Box>
@@ -140,24 +185,8 @@ function BillingInformation(props) {
           <StyledDataGrid
             slots={{ toolbar: GridToolbar }}
             localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
-            //  sx={{
-            //   '& .MuiDataGrid-row': {
-            //     ...((params) => params.row.paymentStatus == 0 &&  {
-            //       backgroundColor:"rgb(249, 210, 179)"
-            //     }
-            //     ),
-            //     ...((params) => params.row.paymentStatus == 1 &&  {
-            //       backgroundColor:"rgb(192, 216, 193)"
-            //     }
-            //     )
-            //   }
-            // }}
-            // getRowClassName={(params) => `super-app-theme--${params.row.paymentStatus}`}
-            // key={props.report.ID}
-            // {...props.report}
-            // getRowId={(row) => row.ID}
             columns={columns}
-            rows={data}
+            rows={rows}
             // {...data}
             initialState={{
               pagination: {

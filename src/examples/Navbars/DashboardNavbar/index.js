@@ -143,18 +143,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 account_circle
                 </Icon>
               </IconButton>
-              {/* <IconButton
-                size="large"
-                disableRipple
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon fontSize="large" sx={iconsStyle}>account_circle</Icon>
-              </IconButton> */}
               {renderMenu()}
             </MDBox>
           </MDBox>

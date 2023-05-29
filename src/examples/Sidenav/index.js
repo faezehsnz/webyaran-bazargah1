@@ -31,7 +31,7 @@ import {
 } from "context";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
-  var e = routes.filter(e => e.key !== 'sign-up' && e.key !== 'sign-in')
+  var e = routes.filter(e => e.key !== 'sign-up' && e.key !== 'sign-in' && e.key !== 'show')
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();

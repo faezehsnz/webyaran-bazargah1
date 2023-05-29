@@ -23,7 +23,7 @@ const steps = [
   "اطلاعات مکانیزم حمل",
   "سایر توضیحات",
   "اطلاعات مالی",
-  "بازبینی",
+  // "بازبینی",
 ];
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -124,12 +124,67 @@ export default function Checkout() {
             setCustomerOfferFare={setCustomerOfferFare}
           />
         );
-      case 4:
-        return <Review />;
+      // case 4:
+      //   return <Review />;
       default:
         throw new Error("Unknown step");
     }
   }
+  const getData = async (e) => {
+
+    try {
+      const response = await fetch(
+        "https://vira-etg.ir/api/Generals/getPaking",
+      );
+      const data = await response.json();
+      console.log(data)
+    } catch (e) {
+      // setError(e.message);
+    }
+  };
+  const getData2 = async (e) => {
+
+    try {
+      const response = await fetch(
+        "https://vira-etg.ir/api/Generals/getCities",
+      );
+      const data = await response.json();
+      console.log(data)
+    } catch (e) {
+      // setError(e.message);
+    }
+  };
+  const getData3 = async (e) => {
+
+    try {
+      const response = await fetch(
+        "https://vira-etg.ir/api/Generals/getMecanismType",
+      );
+      const data = await response.json();
+      console.log(data)
+    } catch (e) {
+      // setError(e.message);
+    }
+  };
+  const getData4 = async (e) => {
+
+    try {
+      const response = await fetch(
+        "https://vira-etg.ir/api/Generals/getGoodType",
+        { mode: "cors" , 'Access-Control-Allow-Origin' : '*'}
+      );
+      const data = await response.json();
+      console.log(data)
+    } catch (e) {
+      // setError(e.message);
+    }
+  };
+  React.useEffect(() => {
+    getData()
+    getData2()
+    getData3()
+    getData4()
+  }, []);
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />

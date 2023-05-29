@@ -42,9 +42,9 @@ export default function MoreInfoForm() {
               label="نوع ماشین"
             >
               <MenuItem value="44"></MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>بندر ماهشهر</MenuItem>
+              {/* <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
         </Grid>
@@ -94,9 +94,9 @@ export default function MoreInfoForm() {
               label="نوع ماشین"
             >
               <MenuItem value="44"></MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>اصفهان</MenuItem>
+              {/* <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
         </Grid>
