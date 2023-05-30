@@ -35,6 +35,7 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
       width={width}
       py={1.5}
       px={3}
+     
       sx={({ palette: { light }, borders: { borderWidth } }) => ({
         borderBottom: `${borderWidth[1]} solid ${light.main}`,
       })}

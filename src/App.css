@@ -3,6 +3,10 @@
   font-family: IRANSansWeb;
   src: url(./assets/font/Iranian\ Sans.ttf);
 }
+body {
+  margin: 0;
+  font-family: 'IRANSansWeb' !important;
+}
 .MuiStepLabel-label {
   font-family: 'IRANSansWeb' !important;
 }

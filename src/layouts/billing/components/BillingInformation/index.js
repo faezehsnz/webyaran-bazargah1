@@ -36,6 +36,7 @@ function BillingInformation(props) {
   const [openMenu, setOpenMenu] = React.useState(false);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+  
   const renderMenu = () => (
     <Menu
       anchorEl={openMenu}

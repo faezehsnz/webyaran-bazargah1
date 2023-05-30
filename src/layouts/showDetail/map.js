@@ -5,11 +5,11 @@ import 'leaflet/dist/leaflet.css';
 // import "./styles.scss";
 
 export default function Map() {
-    const position = [51.505, -0.09]
+    const position = [32.6539, 51.6660]
   return (
     <div > 
     <MapContainer
-    style={{width:'40vw' ,height:'30vh'}}
+    style={{width:'35vw' ,height:'50vh'}}
     center={position} zoom={13} scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -17,7 +17,7 @@ export default function Map() {
       />
       <Marker position={position}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          hey
         </Popup>
       </Marker>
     </MapContainer>

@@ -12,11 +12,12 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AddressForm from "./AddressForm";
+import AddressForm from "./BsrDetail";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-import MoreInfoForm from "./AddressForm copy";
-import FinancialInfoForm from "./AddressForm copy 2";
+import MoreInfoForm from "./MoreInfo";
+import FinancialInfoForm from "./Financial";
+import { set } from "date-fns-jalali";
 
 const steps = [
   "اطلاعات بار",
@@ -32,6 +33,9 @@ const defaultTheme = createTheme({
 });
 
 export default function Checkout() {
+  const [cities, setCities] = React.useState('');
+  const [goodTypes, setGoodTypes] = React.useState(null);
+  const [carTypes, setCarTypes] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [type, setType] = React.useState(null);
   const [location, setLocation] = React.useState(null);
@@ -93,6 +97,9 @@ export default function Checkout() {
             setWight={setWight}
             setNumber={setNumber}
             setThickness={setThickness}
+            packing={packing != null && packing}
+            goodTypes={goodTypes != null && goodTypes}
+            
           />
         );
       case 1:
@@ -100,6 +107,7 @@ export default function Checkout() {
           <PaymentForm
             setCoverTypeCarFeatures={setCoverTypeCarFeatures}
             setMechanism={setMechanism}
+            carTypes={carTypes != null && carTypes}
           />
         );
       case 2:
@@ -113,6 +121,7 @@ export default function Checkout() {
             setDownloadInterval={setDownloadInterval}
             setDischargeTime={setDischargeTime}
             setDrainInterval={setDrainInterval}
+            cities={packing != null && cities}
           />
         );
       case 3:
@@ -131,59 +140,54 @@ export default function Checkout() {
     }
   }
   const getData = async (e) => {
-
     try {
       const response = await fetch(
-        "https://vira-etg.ir/api/Generals/getPaking",
+        "https://vira-etg.ir/api/Generals/getPaking"
       );
       const data = await response.json();
-      console.log(data)
+      setPacking(data.pakings.map(option => option.name))
     } catch (e) {
-      // setError(e.message);
     }
   };
   const getData2 = async (e) => {
-
     try {
       const response = await fetch(
-        "https://vira-etg.ir/api/Generals/getCities",
+        "https://vira-etg.ir/api/Generals/getCities"
       );
       const data = await response.json();
-      console.log(data)
+      setCities(data.cities)
     } catch (e) {
       // setError(e.message);
     }
   };
   const getData3 = async (e) => {
-
     try {
       const response = await fetch(
-        "https://vira-etg.ir/api/Generals/getMecanismType",
+        "https://vira-etg.ir/api/Generals/getMecanismType"
       );
       const data = await response.json();
-      console.log(data)
+      setCarTypes(data.mecanismTypes.map(option => option.name))
+      console.log(data);
     } catch (e) {
       // setError(e.message);
     }
   };
   const getData4 = async (e) => {
-
     try {
       const response = await fetch(
         "https://vira-etg.ir/api/Generals/getGoodType",
-        { mode: "cors" , 'Access-Control-Allow-Origin' : '*'}
       );
       const data = await response.json();
-      console.log(data)
+      setGoodTypes(data.goodTypes.map(option => option.name))
     } catch (e) {
       // setError(e.message);
     }
   };
   React.useEffect(() => {
-    getData()
-    getData2()
-    getData3()
-    getData4()
+    getData();
+    getData2();
+    getData3();
+    getData4();
   }, []);
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -196,9 +200,12 @@ export default function Checkout() {
           <Typography component="h1" variant="h3" align="center" mb={5}>
             افزودن بار
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 ,flexWrap:'wrap'}}>
+          <Stepper
+            activeStep={activeStep}
+            sx={{ pt: 3, pb: 5, flexWrap: "wrap" }}
+          >
             {steps.map((label) => (
-              <Step key={label} sx={{my:3}}>
+              <Step key={label} sx={{ my: 3 }}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}

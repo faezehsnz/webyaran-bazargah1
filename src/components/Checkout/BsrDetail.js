@@ -5,7 +5,8 @@ import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import { InputLabel, Select, MenuItem } from "@mui/material";
-export default function AddressForm() {
+import Autocomplete from "@mui/material/Autocomplete";
+export default function AddressForm(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -14,24 +15,12 @@ export default function AddressForm() {
       <Typography>پر کردن فیلد های ستاره دار (*) اجباری است.</Typography>
       <Grid container spacing={3} mt={5}>
         <Grid item xs={12} sm={3}>
-          <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-standard-label">
-            *نوع بار
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              // value={age}
-              // onChange={handleChange}
-              defaultValue={10}
-              label="*نوع بار"
-              required
-            >
-              <MenuItem value={10}>محصولات کشاورزی</MenuItem>
-              {/* <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem> */}
-            </Select>
-          </FormControl>
+        <Autocomplete
+              disablePortal
+              id="clear-on-escape"
+              options={props.goodTypes}
+              renderInput={(params) => <TextField variant="standard" {...params} label="نوع بار" />}
+            />
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField
@@ -44,24 +33,12 @@ export default function AddressForm() {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-standard-label">
-            *نوع بسته بندی
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              // value={age}
-              // onChange={handleChange}
-              defaultValue={10}
-              label="نوع بسته بندی"
-            >
-              <MenuItem value="44"></MenuItem>
-              <MenuItem value={10}>کیسه و گونی</MenuItem>
-              {/* <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem> */}
-            </Select>
-          </FormControl>
+        <Autocomplete
+              disablePortal
+              id="clear-on-escape"
+              options={props.packing}
+              renderInput={(params) => <TextField variant="standard" {...params} label="نوع بسته بندی" />}
+            />
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField
