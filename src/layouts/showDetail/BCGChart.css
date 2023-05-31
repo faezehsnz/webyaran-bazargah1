@@ -1,0 +1,29 @@
+.recharts-surface {
+  display: grid !important;
+  grid-template-columns: repeat(8, 1fr) !important;
+  grid-template-rows: repeat(8, 1fr) !important;
+  width: 400px !important;
+  height: 400px !important;
+}
+.recharts-surface:nth-child(even) {
+    background-color: #2e86ab !important;
+  }
+
+  .recharts-surface:nth-child(odd) {
+    background-color: #f7cac9 !important;
+  }
+
+  .recharts-surface:nth-child(2n+1):nth-child(8n-7),
+  .recharts-surface:nth-child(2n):nth-child(8n) {
+    background-color: #ed6a5a !important;
+  }
+
+  .recharts-surface:nth-child(2n+1):nth-child(8n-5),
+  .recharts-surface:nth-child(2n):nth-child(8n-1) {
+    background-color: #393e46  !important;
+  }
+
+  .recharts-surface {
+    width: 500px;
+    height: 500px;
+  }

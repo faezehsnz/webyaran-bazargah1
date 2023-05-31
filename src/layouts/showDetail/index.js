@@ -25,6 +25,7 @@ import Map from "./map";
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import { Typography } from "@mui/material";
+import BCGChart from "./test";
 
 function ShowDetail() {
   const { columns, rows } = authorsTableData();
@@ -41,7 +42,17 @@ function ShowDetail() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-
+      <BCGChart
+        data={[
+          { x: 50, y: 50, size: 10, color: 'red' },
+          { x: 100, y: 100, size: 5, color: 'blue' },
+          { x: 150, y: 50, size: 15, color: 'green' },
+          { x: 200, y: 150, size: 7, color: 'orange' },
+          { x: 250, y: 100, size: 12, color: 'purple' }
+        ]}
+        width={300}
+        height={200}
+      />
       <Grid container spacing={6} mt={5}>
         <Grid item xs={6} ml={4}>
           <Card>
@@ -70,11 +81,11 @@ function ShowDetail() {
         </Grid>
         <Grid item xs={5}>
           <Box py={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6} lg={12}>
-                  <Map />
-                </Grid>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} lg={12}>
+                <Map />
               </Grid>
+            </Grid>
           </Box>
         </Grid>
       </Grid>
