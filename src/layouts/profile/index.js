@@ -1,5 +1,4 @@
-
-// @mui material components
+import React from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 
@@ -24,14 +23,19 @@ import Header from "layouts/profile/components/Header";
 
 // Data
 import profilesListData from "layouts/profile/data/profilesListData";
+import BasicModal from "./modal";
 
 // Images
 function Ticket() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <DashboardLayout>
+      <BasicModal handleClose={handleClose} handleOpen={handleOpen} open={open}/>
       <DashboardNavbar />
       <Box mb={2} />
-      <Header>
+      <Header handleOpen={handleOpen}>
         <Box mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>

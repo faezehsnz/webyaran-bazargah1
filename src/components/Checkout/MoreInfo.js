@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -34,7 +34,7 @@ export default function MoreInfoForm(props) {
             <Autocomplete
               disablePortal
               id="clear-on-escape"
-              // options={props.cities != null ? props.cities.map((option) => option.sazmaniCityName) :null}
+              options={props.cities != null ? props.cities :null}
               renderInput={(params) => <TextField variant="standard" {...params} label="مبدا" />}
             />
             {/* <Select
@@ -87,7 +87,7 @@ export default function MoreInfoForm(props) {
             <Autocomplete
               disablePortal
               id="clear-on-escape"
-              options={props.cities.map((option) => option.sazmaniCityName)}
+              options={props.cities != null ? props.cities :null}
               renderInput={(params) => <TextField variant="standard" {...params} label="مقصد" />}
             />
         </Grid>

@@ -24,7 +24,7 @@ import { useMaterialUIController, setDirection } from "context";
 import Map from "./map";
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import BCGChart from "./test";
 
 function ShowDetail() {
@@ -42,7 +42,7 @@ function ShowDetail() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <BCGChart
+      {/* <BCGChart
         data={[
           { x: 50, y: 50, size: 10, color: 'red' },
           { x: 100, y: 100, size: 5, color: 'blue' },
@@ -52,9 +52,84 @@ function ShowDetail() {
         ]}
         width={300}
         height={200}
-      />
-      <Grid container spacing={6} mt={5}>
-        <Grid item xs={6} ml={4}>
+      /> */}
+      <Grid container spacing={4} mt={3} justifyContent="center">
+        <Grid
+          container
+          spacing={1}
+          mb={5}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Grid item xs={12} md={3.5}>
+            <Alert variant="filled" severity="success" sx={{ color: "#FFF" }}>
+              وضعیت بار فعال است!
+            </Alert>
+          </Grid>
+          <Grid item xs={12} md={3.5}>
+            <Alert variant="filled" severity="info">
+              بار در وضعیت "در انتظار" قرار دارد
+            </Alert>
+          </Grid>
+          <Grid item xs={12} md={3.5}>
+            <Alert variant="filled" severity="warning" sx={{ color: "#FFF" }}>
+              کرایه در "مبداء"
+            </Alert>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                sx={{ backgroundColor: "#344767" }}
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <Typography color="#FFF">اطلاعات بار</Typography>
+              </MDBox>
+              <MDBox pt={3}>
+                {/* <DataTable
+                table={{ columns, rows }}
+                isSorted={false}
+                entriesPerPage={false}
+                showTotalEntries={false}
+                noEndBorder
+              /> */}
+              </MDBox>
+            </Card>
+          </Grid>
+          <Grid item xs={12} mt={6}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                sx={{ backgroundColor: "#344767" }}
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <Typography color="#FFF">اطلاعات راننده </Typography>
+              </MDBox>
+              <MDBox pt={3}>
+                {/* <DataTable
+                table={{ columns, rows }}
+                isSorted={false}
+                entriesPerPage={false}
+                showTotalEntries={false}
+                noEndBorder
+              /> */}
+              </MDBox>
+            </Card>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={5}>
           <Card>
             <MDBox
               mx={2}
@@ -66,9 +141,17 @@ function ShowDetail() {
               borderRadius="lg"
               coloredShadow="info"
             >
-              <Typography color="#FFF">اطلاعات بار</Typography>
+              <Typography color="#FFF">موقعیت </Typography>
             </MDBox>
             <MDBox pt={3}>
+              <Typography mx={3} variant="h6">
+                زمان بارگیری:
+              </Typography>
+              <Typography mx={3} mt={2} variant="h6">
+                زمان تخلیه:
+              </Typography>
+
+              <Map />
               {/* <DataTable
                 table={{ columns, rows }}
                 isSorted={false}
@@ -78,15 +161,6 @@ function ShowDetail() {
               /> */}
             </MDBox>
           </Card>
-        </Grid>
-        <Grid item xs={5}>
-          <Box py={3}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6} lg={12}>
-                <Map />
-              </Grid>
-            </Grid>
-          </Box>
         </Grid>
       </Grid>
 

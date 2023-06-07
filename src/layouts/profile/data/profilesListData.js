@@ -32,7 +32,7 @@ export default [
       type: "internal",
       route: "/pages/profile/profile-overview",
       color: "info",
-      label: "reply",
+      label: "پاسخ",
     },
   },
   {
@@ -44,7 +44,7 @@ export default [
       type: "internal",
       route: "/pages/profile/profile-overview",
       color: "info",
-      label: "reply",
+      label: "پاسخ",
     },
   },
   {
@@ -56,7 +56,7 @@ export default [
       type: "internal",
       route: "/pages/profile/profile-overview",
       color: "info",
-      label: "reply",
+      label: "پاسخ",
     },
   },
   {
@@ -68,7 +68,7 @@ export default [
       type: "internal",
       route: "/pages/profile/profile-overview",
       color: "info",
-      label: "reply",
+      label: "پاسخ",
     },
   },
   {
@@ -80,7 +80,7 @@ export default [
       type: "internal",
       route: "/pages/profile/profile-overview",
       color: "info",
-      label: "reply",
+      label: "پاسخ",
     },
   },
 ];

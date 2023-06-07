@@ -38,7 +38,7 @@ import breakpoints from "assets/theme/base/breakpoints";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 import { Button } from "@mui/material";
 
-function Header({ children }) {
+function Header({ children ,handleOpen}) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -101,6 +101,7 @@ function Header({ children }) {
               <Button
                 variant="contained"
                 sx={{ color: "#FFF", backgroundColor: "#1A73E8", fontSize: 15 }}
+                onClick={handleOpen}
               >
                 <AddOutlinedIcon />
                 تیکت جدید

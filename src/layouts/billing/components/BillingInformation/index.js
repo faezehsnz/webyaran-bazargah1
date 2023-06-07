@@ -9,7 +9,12 @@ import { DataGrid, faIR, GridToolbar } from "@mui/x-data-grid";
 // import { setData ,setReport } from '../../store/actions'
 import styled from "@emotion/styled";
 import { useDemoData } from "@mui/x-data-grid-generator";
-import { Button, IconButton } from "@mui/material";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import NotificationItem from "examples/Items/NotificationItem";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
@@ -34,10 +39,44 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 
 function BillingInformation(props) {
   const [openMenu, setOpenMenu] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
-  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const confirmDialog = () => (
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Use Google's location service?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending anonymous
+              location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={handleClose} autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
   const renderMenu = () => (
+    <>
     <Menu
       anchorEl={openMenu}
       anchorReference={null}
@@ -51,9 +90,10 @@ function BillingInformation(props) {
     >
       <NotificationItem onClick={() => window.open('/bar/show' ,'_self')} icon={<VisibilityOutlinedIcon/>} title="نمایش" />
       <NotificationItem icon={<ModeEditOutlineOutlinedIcon/>} title="ویرایش" />
-      <NotificationItem icon={<DeleteOutlineOutlinedIcon/>} title="حذف" />
+      <NotificationItem icon={<DeleteOutlineOutlinedIcon/> } title="حذف" />
       <NotificationItem icon={<MenuOutlinedIcon/>} title="حواله کردن" />
     </Menu>
+    </>
   );
   const { data } = useDemoData({
     dataSet: "Commodity",
@@ -146,6 +186,7 @@ function BillingInformation(props) {
             move_vert
           </MoreHorizOutlinedIcon>
           {renderMenu()}
+          {/* {confirmDialog()} */}
         </>
       ),
     },

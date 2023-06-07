@@ -138,7 +138,7 @@ export default function Checkout() {
   const getData = async (e) => {
     try {
       const response = await fetch(
-        "https://vira-etg.ir/api/Generals/getPaking"
+        "https://hagbaar.com/api/Generals/getPaking"
       );
       const data = await response.json();
       setPacking(data.pakings.map(option => option.name))
@@ -148,10 +148,12 @@ export default function Checkout() {
   const getData2 = async (e) => {
     try {
       const response = await fetch(
-        "https://vira-etg.ir/api/Generals/getCities"
+        "https://hagbaar.com/api/Generals/getCities",
+        // {mode:'cors' ,method:'POST'}
       );
       const data = await response.json();
-      setCities(data.cities)
+      setCities(data.cities.map(option => option.sazmaniCityName))
+      console.log(data.cities);
     } catch (e) {
       // setError(e.message);
     }
@@ -159,11 +161,10 @@ export default function Checkout() {
   const getData3 = async (e) => {
     try {
       const response = await fetch(
-        "https://vira-etg.ir/api/Generals/getMecanismType"
+        "https://hagbaar.com/api/Generals/getMecanismType"
       );
       const data = await response.json();
       setCarTypes(data.mecanismTypes.map(option => option.name))
-      console.log(data);
     } catch (e) {
       // setError(e.message);
     }
@@ -171,7 +172,7 @@ export default function Checkout() {
   const getData4 = async (e) => {
     try {
       const response = await fetch(
-        "https://vira-etg.ir/api/Generals/getGoodType",
+        "https://hagbaar.com/api/Generals/getGoodType",
       );
       const data = await response.json();
       setGoodTypes(data.goodTypes.map(option => option.name))

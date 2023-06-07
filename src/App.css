@@ -22,3 +22,6 @@ body {
 .MuiInputLabel-root {
   line-height: 1.3 !important;
 }
+.MuiAutocomplete-root{
+  font-family: 'IRANSansWeb' !important;
+}
