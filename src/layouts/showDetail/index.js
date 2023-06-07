@@ -115,7 +115,7 @@ function ShowDetail() {
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <Typography color="#FFF">اطلاعات راننده </Typography>
+                <Typography color="#FFF">اطلاعات راننده و ماشین</Typography>
               </MDBox>
               <MDBox pt={3}>
                 {/* <DataTable
