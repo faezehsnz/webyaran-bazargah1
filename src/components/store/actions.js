@@ -16,4 +16,10 @@ export const setType = (value) => {
       value
    }
 };
+export const setMobile = (value) => {
+   return {
+      type:'SET_MOBILE',
+      value
+   }
+};
 

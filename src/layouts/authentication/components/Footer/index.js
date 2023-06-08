@@ -51,10 +51,11 @@ function Footer({ light }) {
             
           >
             <span className="float-md-left d-block d-md-inline-block mt-25">
-              © 2021 کلیه حقوق این وب سایت متعلق به
+              © کلیه حقوق این وب سایت متعلق به
               <a className="ml-25" href="#" target="_blank">
                 {" "}
-                ....
+                 هاگ بار 
+                 {" "}
                 {/* شرکت کالابران انتخاب{" "} */}
               </a>
               <span className="d-none d-sm-inline-block">می باشد.</span>
@@ -85,7 +86,7 @@ function Footer({ light }) {
                   color={light ? "white" : "dark"}
                 >
                   <span className="float-md-right d-none d-md-block">
-                    طراحی شده توسط تیم 
+                    طراحی شده توسط تیم هاگ بار
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"

@@ -71,11 +71,11 @@ function Form3(props) {
             <Typography variant="button" color="text">
               قبلا ثبت نام کرده اید؟
               <Typography
-                  to="/"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
+                to="/"
+                variant="button"
+                color="info"
+                fontWeight="medium"
+                // textgradient
               >
                 ورود
               </Typography>
@@ -83,6 +83,7 @@ function Form3(props) {
           </Box>
         </Box>
       </Box>
+
     </Card>
   );
 }

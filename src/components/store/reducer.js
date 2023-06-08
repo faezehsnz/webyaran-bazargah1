@@ -2,7 +2,8 @@
 export const initialState = {
     data: [],
     report:null,
-    type:0
+    type:0,
+    mobile:null
 };
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -23,6 +24,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 type: action.value
+            };
+            case 'SET_MOBILE':
+            return {
+                ...state,
+                mobile: action.value
             };
         default:
             return state;

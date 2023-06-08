@@ -3,21 +3,47 @@ import Grid from "@mui/material/Grid";
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
 
-// Material Dashboard 2 React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import MasterCard from "examples/Cards/MasterCard";
 import { Link } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import { InputLabel } from "@mui/material";
 // Billing page components
-import BillingInformation from "layouts/billing/components/BillingInformation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Card } from "@mui/material";
+import { useState } from "react";
+import { connect } from "react-redux";
+import { setType } from "components/store/actions";
+import { setMobile } from "components/store/actions";
 
 function Form2(props) {
+  const [code , setCode] = useState(null)
+  const postCode = async (e) => {
+    console.log(props.type)
+    var bodyFormData = new FormData();
+    bodyFormData.append('role' ,  props.type)
+    bodyFormData.append('mobile' ,  props.mobile)
+    bodyFormData.append('activationalCode' ,code)
+    try {
+      const response = await fetch("https://hagbaar.com/api/auth/createUser", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
+      });
+      const data = await response.json();
+      if(data.error == 0){
+        props.setValue(3)
+      }
+      if(data.error == 1){
+        toast.error(data.detail)
+      }
+    } catch (e) {
+      toast(e.detail)
+      // setError(e.message);
+
+    }
+  };
   return (
     <Card sx={{ mt: -13 }}>
       <Box
@@ -34,7 +60,7 @@ function Form2(props) {
           ثبت نام
         </Typography>
         <Typography display="block" variant="button" color="white" my={3}>
-          لطفا کد پیامک شده را وارد کنید!
+           فرآیند ثبت نام آغاز شد. لطفا کد پیامک شده را وارد کنید.
         </Typography>
       </Box>
       <Box pt={4} pb={3} px={3}>
@@ -49,12 +75,13 @@ function Form2(props) {
               label="تلفن همراه"
               variant="standard"
               fullWidth
+              onChange={(e) => setCode(e.target.value)}
             />
           </Box>
 
           <Box mt={4} mb={1}>
             <Button
-              onClick={() => props.setValue(3)}
+              onClick={() => postCode()}
               variant="contained"
               fullWidth
             >
@@ -77,8 +104,31 @@ function Form2(props) {
           </Box>
         </Box>
       </Box>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </Card>
   );
 }
+const mapStateToProps = (state) => ({
+  type: state.type,
+  mobile: state.mobile
+});
 
-export default Form2;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setType: (value) => dispatch(setType(value)),
+    setMobile: (value) => dispatch(setMobile(value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form2);
