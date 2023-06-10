@@ -34,9 +34,9 @@ const routes = [
   {
     type: "collapse",
     name: "بارهای در صف پذیرش",
-    key: "billing",
+    key: "waiting",
     icon: <Icon fontSize="small">list_alt</Icon>,
-    route: "/billing",
+    route: "/waiting",
     component: <Billing />,
   },
   {
@@ -50,25 +50,25 @@ const routes = [
   {
     type: "collapse",
     name: "بارهای حواله شده در بازارگاه",
-    key: "rtl",
+    key: "havale",
     icon: <Icon fontSize="small">drafts</Icon>,
-    route: "/rtl",
+    route: "/havale",
     component: <RTL />,
   },
   {
     type: "collapse",
     name: "افزودن بارنامه",
-    key: "tables",
+    key: "addbarname",
     icon: <Icon fontSize="small">add_box</Icon>,
-    route: "/tables",
+    route: "/addbarname",
     component: <Tables />,
   },
   {
     type: "collapse",
     name: "بارهای درحال حمل",
-    key: "notifications",
+    key: "intheway",
     icon: <Icon fontSize="small">local_shipping</Icon>,
-    route: "/notifications",
+    route: "/intheway",
     component: <Notifications />,
   },
   {

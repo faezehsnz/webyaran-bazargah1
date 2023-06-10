@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormHelperText ,InputAdornment ,FormControl , InputLabel, Select, MenuItem} from '@mui/material';
 
-export default function FinancialInfoForm() {
+export default function FinancialInfoForm(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -14,7 +14,7 @@ export default function FinancialInfoForm() {
       </Typography>
       <p>پر کردن فیلد های ستاره دار (*) اجباری است.</p>
       <Grid container spacing={3} mt={5}>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={3}>
         <FormControl variant="standard" fullWidth>
             <InputLabel id="demo-simple-select-standard-label">
               نوع پرداخت کرایه
@@ -23,22 +23,24 @@ export default function FinancialInfoForm() {
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
               // value={age}
-              // onChange={handleChange}
+              onChange={(e) => props.setTypeOfWage(e.target.value)}
               defaultValue={10}
-              label="پوشش ماشین*"
+              label=""
             >
-              <MenuItem value="44"></MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              {/* <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem> */}
+              <MenuItem value={0}>در مقصد</MenuItem>
+              <MenuItem value={1}>در مبدا</MenuItem>
+               <MenuItem value={3}>کیف پول</MenuItem>
+              {/*<MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={3}>
+          
         <TextField
             id="standard-start-adornment"
             variant="standard"
             label="ارزش کالا"
+            onChange={(e) => props.setCustomerOfferFare(e.target.value)}
             dir="ltr"
             InputProps={{
               startAdornment: (
@@ -47,22 +49,25 @@ export default function FinancialInfoForm() {
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
-          <TextField
-            id="address1"
-            name="address1"
-            label="حداقل کرایه"
-            fullWidth
-            variant="standard"
-          />
-          <FormHelperText>این فیلد از سازمان گرفته میشود</FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={2}>
+       
+        <Grid item xs={12} sm={3}>
         <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-standard-label">
-              نوع کرایه پیشنهادی
-            </InputLabel>
-            <Select
+            {/* <InputLabel id="demo-simple-select-standard-label">
+               کرایه پیشنهادی
+            </InputLabel> */}
+            <TextField
+            id="standard-start-adornment"
+            variant="standard"
+            label="کرایه پیشنهادی"
+            onChange={(e) => props.setFare(e.target.value)}
+            dir="ltr"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="end">ریال</InputAdornment>
+              ),
+            }}
+          />
+            {/* <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
               // value={age}
@@ -70,25 +75,11 @@ export default function FinancialInfoForm() {
               defaultValue={10}
               label="پوشش ماشین"
             >
-              <MenuItem value="44"></MenuItem>
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+            </Select> */}
           </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={2}>
-        <TextField
-            id="standard-start-adornment"
-            variant="standard"
-            label="کرایه پیشنهادی مشتری"
-            dir="ltr"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="end">ریال</InputAdornment>
-              ),
-            }}
-          />
         </Grid>
       </Grid>
     </React.Fragment>

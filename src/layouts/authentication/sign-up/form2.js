@@ -3,14 +3,15 @@ import Grid from "@mui/material/Grid";
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
 
-import { Link } from "@mui/material";
+import { FormHelperText } from "@mui/material";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import { InputLabel } from "@mui/material";
 // Billing page components
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Card } from "@mui/material";
 import { useState } from "react";
 import { connect } from "react-redux";
@@ -18,30 +19,36 @@ import { setType } from "components/store/actions";
 import { setMobile } from "components/store/actions";
 
 function Form2(props) {
-  const [code , setCode] = useState(null)
+  const [code, setCode] = useState(null);
+  const [error, setError] = useState(false);
   const postCode = async (e) => {
-    console.log(props.type)
-    var bodyFormData = new FormData();
-    bodyFormData.append('role' ,  props.type)
-    bodyFormData.append('mobile' ,  props.mobile)
-    bodyFormData.append('activationalCode' ,code)
-    try {
-      const response = await fetch("https://hagbaar.com/api/auth/createUser", {
-        mode: "cors",
-        method: "POST",
-        body: bodyFormData,
-      });
-      const data = await response.json();
-      if(data.error == 0){
-        props.setValue(3)
+    if (code === null) {
+      setError(true);
+    } else {
+      var bodyFormData = new FormData();
+      bodyFormData.append("role", props.type);
+      bodyFormData.append("mobile", props.mobile);
+      bodyFormData.append("activationalCode", code);
+      try {
+        const response = await fetch(
+          "https://hagbaar.com/api/auth/createUser",
+          {
+            mode: "cors",
+            method: "POST",
+            body: bodyFormData,
+          }
+        );
+        const data = await response.json();
+        if (data.error == 0) {
+          props.setValue(3);
+        }
+        if (data.error == 1) {
+          toast.error(data.detail);
+        }
+      } catch (e) {
+        toast(e.detail);
+        // setError(e.message);
       }
-      if(data.error == 1){
-        toast.error(data.detail)
-      }
-    } catch (e) {
-      toast(e.detail)
-      // setError(e.message);
-
     }
   };
   return (
@@ -60,31 +67,29 @@ function Form2(props) {
           ثبت نام
         </Typography>
         <Typography display="block" variant="button" color="white" my={3}>
-           فرآیند ثبت نام آغاز شد. لطفا کد پیامک شده را وارد کنید.
+          فرآیند ثبت نام آغاز شد. لطفا کد پیامک شده را وارد کنید.
         </Typography>
       </Box>
       <Box pt={4} pb={3} px={3}>
         <Box component="form" role="form">
           <Box mb={2}>
-            <InputLabel htmlFor="standard-adornment-password">
-              کد
-            </InputLabel>
+            <InputLabel htmlFor="standard-adornment-password">کد</InputLabel>
             <Input
               required
               type="number"
               label="تلفن همراه"
               variant="standard"
               fullWidth
+              error={error}
               onChange={(e) => setCode(e.target.value)}
             />
+            {error == true && (
+              <FormHelperText sx={{color:'red'}}> فیلد کد نمیتواند خالی باشد</FormHelperText>
+            )}
           </Box>
 
           <Box mt={4} mb={1}>
-            <Button
-              onClick={() => postCode()}
-              variant="contained"
-              fullWidth
-            >
+            <Button onClick={() => postCode()} variant="contained" fullWidth>
               وارد کردن اطلاعات
             </Button>
           </Box>
@@ -121,13 +126,13 @@ function Form2(props) {
 }
 const mapStateToProps = (state) => ({
   type: state.type,
-  mobile: state.mobile
+  mobile: state.mobile,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setType: (value) => dispatch(setType(value)),
-    setMobile: (value) => dispatch(setMobile(value))
+    setMobile: (value) => dispatch(setMobile(value)),
   };
 };
 

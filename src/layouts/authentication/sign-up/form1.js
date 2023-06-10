@@ -1,24 +1,22 @@
 import React from "react";
-import { AppBar } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import {
+  AppBar,
+  Grid,
+  Box,
+  Typography,
+  Input,
+  Button,
+  InputLabel,
+  Card,
+} from "@mui/material";
 
-// Material Dashboard 2 React components
-import Box from "@mui/material/Box";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import {Tab} from "@mui/material";
+import { Link } from "react-router-dom";
 
-// Material Dashboard 2 React examples
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import { Link } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
-import { InputLabel } from "@mui/material";
 // Billing page components
 import { connect } from "react-redux";
 import { setType } from "components/store/actions";
-import { Card } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -58,7 +56,6 @@ function Form1(props) {
         bodyFormData.append("lastName", lastName);
         bodyFormData.append("nationalCode", nationalCode);
         bodyFormData.append("adrres", address);
-
       } else {
         bodyFormData.append("role", props.type);
         bodyFormData.append("mobile", props.mobile);
@@ -79,7 +76,6 @@ function Form1(props) {
       bodyFormData.append("sabtNumber", sabtNumber);
       bodyFormData.append("hamlCode", hamlCode);
       bodyFormData.append("adrres", address);
-
     }
     try {
       const response = await fetch("https://hagbaar.com/api/auth/updateUser", {
@@ -89,10 +85,10 @@ function Form1(props) {
       });
       const data = await response.json();
       if (data.error == 0) {
-        toast.success(data.detail)
+        toast.success(data.detail);
         // props.setValue(2);
       }
-      if (data.error == 1) {
+      if (data.error != 0) {
         toast.error(data.detail);
       }
     } catch (e) {
@@ -214,7 +210,7 @@ function Form1(props) {
                 <Grid item xs={12} md={12} lg={12}>
                   <AppBar position="static">
                     <TabList onChange={handleChange}>
-                      <Tab  value="0" label="حقیقی" />
+                      <Tab value="0" label="حقیقی" />
                       <Tab value="1" label="حقوقی" />
                     </TabList>
                   </AppBar>
@@ -459,7 +455,7 @@ function Form1(props) {
               </Box>
               <Box mt={4} mb={1}>
                 <Button
-                 onClick={postInfo}
+                  onClick={postInfo}
                   // component={Link}
                   // to="/dashboard"
                   variant="contained"

@@ -1,22 +1,14 @@
 import { useState } from "react";
-import Grid from "@mui/material/Grid";
-
-// Material Dashboard 2 React components
-import Box from "@mui/material/Box";
-
-// Material Dashboard 2 React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import MasterCard from "examples/Cards/MasterCard";
-import { Link } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
-import { InputLabel } from "@mui/material";
-// Billing page components
-import BillingInformation from "layouts/billing/components/BillingInformation";
-import { Card } from "@mui/material";
+import {
+  FormHelperText,
+  Typography,
+  Input,
+  Button,
+  InputLabel,
+  Card,
+  Box,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
@@ -24,27 +16,34 @@ import { setType } from "components/store/actions";
 import { setMobile } from "components/store/actions";
 
 function Form4(props) {
+  const [error, setError] = useState(false);
   const postPhoneNumber = async (e) => {
-    console.log(props.mobile ,props.type);
-    var bodyFormData = new FormData();
-    bodyFormData.append("role", props.type);
-    bodyFormData.append("mobile", props.mobile);
-    try {
-      const response = await fetch("https://hagbaar.com/api/auth/createUser", {
-        mode: "cors",
-        method: "POST",
-        body: bodyFormData,
-      });
-      const data = await response.json();
-      if (data.error == 0) {
-        props.setValue(2);
+    if (props.mobile === null) {
+      setError(true);
+    } else {
+      var bodyFormData = new FormData();
+      bodyFormData.append("role", props.type);
+      bodyFormData.append("mobile", props.mobile);
+      try {
+        const response = await fetch(
+          "https://hagbaar.com/api/auth/createUser",
+          {
+            mode: "cors",
+            method: "POST",
+            body: bodyFormData,
+          }
+        );
+        const data = await response.json();
+        if (data.error == 0) {
+          props.setValue(2);
+        }
+        if (data.error == 1) {
+          toast.error(data.detail);
+        }
+      } catch (e) {
+        toast(e.detail);
+        // setError(e.message);
       }
-      if (data.error == 1) {
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      toast(e.detail);
-      // setError(e.message);
     }
   };
 
@@ -76,11 +75,17 @@ function Form4(props) {
             <Input
               required
               type="number"
+              error={error}
               label="تلفن همراه"
               variant="standard"
               fullWidth
               onChange={(e) => props.setMobile(e.target.value)}
             />
+            {error === true && (
+              <FormHelperText sx={{ color: "red" }}>
+                فیلد تلفن همراه نمیتواند خالی باشد
+              </FormHelperText>
+            )}
           </Box>
 
           <Box mt={4} mb={1}>
@@ -126,13 +131,13 @@ function Form4(props) {
 }
 const mapStateToProps = (state) => ({
   type: state.type,
-  mobile: state.mobile
+  mobile: state.mobile,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setType: (value) => dispatch(setType(value)),
-    setMobile: (value) => dispatch(setMobile(value))
+    setMobile: (value) => dispatch(setMobile(value)),
   };
 };
 

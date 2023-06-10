@@ -25,3 +25,9 @@ body {
 .MuiAutocomplete-root{
   font-family: 'IRANSansWeb' !important;
 }
+.rtl-wi8ueh-MuiFormLabel-root-MuiInputLabel-root{
+  color:black !important;
+}
+.rtl-15dzvn8-MuiFormLabel-root-MuiInputLabel-root.MuiInputLabel-shrink{
+  color:black !important;
+}

@@ -37,24 +37,24 @@ function Breadcrumbs({ icon, title, route, light }) {
     if(e === 'addbar'){
       return 'افزودن بار'
     }
-    if(e === 'tables'){
+    if(e === 'addbarname'){
       return 'افزودن بارنامه'
     }
-    if(e === 'billing'){
+    if(e === 'waiting'){
       return 'بارهای درصف پذیرش'
     }
-    if(e === 'rtl'){
+    if(e === 'havale'){
       return 'بارهای حواله شده'
     }
-    if(e === 'notifications'){
+    if(e === 'intheway'){
       return 'بارهای درحال حمل'
     }
     if(e === 'canceled'){
       return 'بارهای کنسلی'
     }
-    if(e === 'form'){
-      return 'افزودن بار'
-    }
+    // if(e === 'form'){
+    //   return 'افزودن بار'
+    // }
     if(e === 'ticket'){
       return 'تیکت'
     }

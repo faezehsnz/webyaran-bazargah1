@@ -2,7 +2,7 @@ import React from "react";
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
 
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { InputLabel } from "@mui/material";
@@ -71,6 +71,7 @@ function Form3(props) {
             <Typography variant="button" color="text">
               قبلا ثبت نام کرده اید؟
               <Typography
+              component={Link}
                 to="/"
                 variant="button"
                 color="info"
