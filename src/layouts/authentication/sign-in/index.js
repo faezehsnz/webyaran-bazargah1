@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 // Material Dashboard 2 React components
 import {
@@ -31,6 +31,8 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/Connected-truck-telematics.jpg";
 import { TextField } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -49,29 +51,34 @@ function Basic() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const login = async (e) => {
-    var bodyFormData = new FormData();
-    if (username != null) {
-      bodyFormData.append("username", username);
+    if (username === "123456" && password === "123456") {
+      window.open(`/dashboard`, "_self");
+    }else{
+      toast.error('نام کاربری یا رمز عبور اشتباه است')
     }
-    if (password != null) {
-      bodyFormData.append("password", password);
-    }
+    // var bodyFormData = new FormData();
+    // if (username != null) {
+    //   bodyFormData.append("username", username);
+    // }
+    // if (password != null) {
+    //   bodyFormData.append("password", password);
+    // }
 
-    try {
-      setLoading(true);
-      const response = await fetch(
-        // "https://www.vira-rte.com/api/barnameh/getBarnamehs",
-        { mode: "cors", method: "POST", body: bodyFormData }
-      );
-      const data = await response.json();
-      localStorage.setItem("token", data.access_token);
-      setTimeout(function () {
-        window.open(`/dashboard`, "_self");
-      }, 1000);
-      setLoading(false);
-    } catch (e) {
-      setError(e.message);
-    }
+    // try {
+    //   setLoading(true);
+    //   const response = await fetch(
+    //     // "https://www.vira-rte.com/api/barnameh/getBarnamehs",
+    //     { mode: "cors", method: "POST", body: bodyFormData }
+    //   );
+    //   const data = await response.json();
+    //   localStorage.setItem("token", data.access_token);
+    //   setTimeout(function () {
+    //     window.open(`/dashboard`, "_self");
+    //   }, 1000);
+    //   setLoading(false);
+    // } catch (e) {
+    //   setError(e.message);
+    // }
   };
   return (
     <BasicLayout image={bgImage}>
@@ -182,6 +189,18 @@ function Basic() {
           </Box>
         </Box>
       </Card>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </BasicLayout>
   );
 }

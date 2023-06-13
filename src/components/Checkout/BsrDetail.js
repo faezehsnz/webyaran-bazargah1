@@ -19,6 +19,7 @@ export default function AddressForm(props) {
             disablePortal
             id="clear-on-escape"
             options={props.goodTypes}
+            // open={true}
             getOptionLabel={(option) => option.name}
             onChange={(e , value)=> props.setType(value.id)}
             renderInput={(params) => (

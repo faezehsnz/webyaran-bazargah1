@@ -11,6 +11,7 @@ import {
   StepLabel,
   Button,
   Typography,
+  Alert,
 } from "@mui/material";
 import AddressForm from "./BsrDetail";
 import PaymentForm from "./PaymentForm";
@@ -79,7 +80,6 @@ export default function Checkout() {
   const [barnameId, setBarnameId] = React.useState(null);
   const [specialGoods, setSpecialGoods] = React.useState(null);
   const [cargoDescription, setCargoDescription] = React.useState(null);
-  console.log(type);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === steps.length - 1) {
@@ -195,11 +195,10 @@ export default function Checkout() {
         body: bodyFormData,
       });
       const data = await response.json();
-      console.log(data);
       if (data.error == 0) {
         toast.success(data.detail);
         setTimeout(() => {
-          window.open('/waiting' ,'_self')
+          window.open("/waiting", "_self");
         }, 3000);
         // props.setValue(2);
       }
@@ -213,18 +212,15 @@ export default function Checkout() {
     }
   };
   const getData = async (e) => {
-    setLoading(true)
     try {
       const response = await fetch(
         "https://hagbaar.com/api/Generals/getPaking"
       );
       const data = await response.json();
       setPacking(data.pakings.map((option) => option));
-      setLoading(false)
     } catch (e) {}
   };
   const getData2 = async (e) => {
-    setLoading(true)
     try {
       const response = await fetch(
         "https://hagbaar.com/api/Generals/getCities"
@@ -232,31 +228,32 @@ export default function Checkout() {
       );
       const data = await response.json();
       setCities(data.cities.map((option) => option));
-      setLoading(false)
     } catch (e) {
       // setError(e.message);
     }
   };
   const getData3 = async (e) => {
-    setLoading(true)
     try {
       const response = await fetch(
         "https://hagbaar.com/api/Generals/getMecanismType"
       );
       const data = await response.json();
       setCarTypes(data.mecanismTypes.map((option) => option));
-      setLoading(false)
     } catch (e) {
       // setError(e.message);
     }
   };
   const getData4 = async (e) => {
+    setLoading(true);
     try {
       const response = await fetch(
         "https://hagbaar.com/api/Generals/getGoodType"
       );
       const data = await response.json();
       setGoodTypes(data.goodTypes.map((option) => option));
+      if (data.goodTypes != null) {
+        setLoading(false);
+      }
     } catch (e) {
       // setError(e.message);
     }
@@ -278,7 +275,7 @@ export default function Checkout() {
           <Typography component="h1" variant="h3" align="center" mb={5}>
             افزودن بار
           </Typography>
-          {loading == false && 
+
           <Stepper
             activeStep={activeStep}
             sx={{ pt: 3, pb: 5, flexWrap: "wrap" }}
@@ -289,7 +286,7 @@ export default function Checkout() {
               </Step>
             ))}
           </Stepper>
-          }
+
           {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
@@ -297,7 +294,7 @@ export default function Checkout() {
                 اطلاعات با موفقیت ثبت شد!
               </Typography>
               <Typography variant="subtitle1">
-                 به صفحه
+                به صفحه
                 <Typography component={Link} to="/waiting" variant="button">
                   {" "}
                   بارهای در صف پذیرش{" "}
@@ -307,7 +304,13 @@ export default function Checkout() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep)}
+              {loading === false ? (
+                <>{getStepContent(activeStep)}</>
+              ) : (
+                <Alert variant="filled" severity="warning">
+                  مشکلی پیش آمده است لطفا صفحه را رفرش کنید
+                </Alert>
+              )}
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

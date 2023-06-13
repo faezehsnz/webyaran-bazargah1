@@ -37,7 +37,7 @@ function Form4(props) {
         if (data.error == 0) {
           props.setValue(2);
         }
-        if (data.error == 1) {
+        if (data.error !== 0) {
           toast.error(data.detail);
         }
       } catch (e) {

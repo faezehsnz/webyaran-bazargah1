@@ -31,7 +31,7 @@ function Form2(props) {
       bodyFormData.append("activationalCode", code);
       try {
         const response = await fetch(
-          "https://hagbaar.com/api/auth/createUser",
+          "https://hagbaar.com/api/auth/mobileValidation",
           {
             mode: "cors",
             method: "POST",
@@ -42,7 +42,7 @@ function Form2(props) {
         if (data.error == 0) {
           props.setValue(3);
         }
-        if (data.error == 1) {
+        if (data.error !== 0) {
           toast.error(data.detail);
         }
       } catch (e) {

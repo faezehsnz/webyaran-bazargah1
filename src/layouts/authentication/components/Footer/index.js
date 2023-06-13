@@ -32,7 +32,7 @@ function Footer({ light }) {
   const { size } = typography;
 
   return (
-    <Box position="absolute" width="100%" bottom={0} py={4} >
+    <Box position="absolute" width="100%" bottom={0} py={4} display={{ xs: "none", lg: "flex" }}>
         <Box
           width="100%"
           display="flex"
@@ -42,7 +42,7 @@ function Footer({ light }) {
           px={4}
         >
           <Box
-            display={{ xs: "none", lg: "flex" }}
+            
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"

@@ -31,3 +31,18 @@ body {
 .rtl-15dzvn8-MuiFormLabel-root-MuiInputLabel-root.MuiInputLabel-shrink{
   color:black !important;
 }
+.rtl-1h51icj-MuiAutocomplete-root .MuiInput-root .MuiInput-input{
+  font-family: 'IRANSansWeb' !important;
+}
+.MuiAutocomplete-popper{
+  font-family: 'IRANSansWeb' !important;
+}
+.MuiPopper-root{
+  font-family: 'IRANSansWeb' !important;
+}
+.MuiAutocomplete-groupLabel{
+  font-family: 'IRANSansWeb' !important;
+}
+.MuiAutocomplete-option	{
+  font-family: 'IRANSansWeb' !important;
+}

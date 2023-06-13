@@ -194,15 +194,15 @@ function BillingInformation(props) {
   // var date = new Date(props.report.issueDate * 1000);
   // var rowID = props.report.map((row) => row.paymentStatus)
   const rows = [
-    { id: 1, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 2, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 3, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 4, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 5, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 6, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 7, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 8, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
-    { id: 9, paymentStatus: "Snow", payToDriver: "Jon", type: 35 },
+    { id: 1, name: "Snow", lname: "Jon", type: 35 },
+    { id: 2, name: "Snow", lname: "Jon", type: 35 },
+    { id: 3, name: "Snow", lname: "Jon", type: 35 },
+    { id: 4, name: "Snow", lname: "Jon", type: 35 },
+    { id: 5, name: "Snow", lname: "Jon", type: 35 },
+    { id: 6, name: "Snow", lname: "Jon", type: 35 },
+    { id: 7, name: "Snow", lname: "Jon", type: 35 },
+    { id: 8, name: "Snow", lname: "Jon", type: 35 },
+    { id: 9, name: "Snow", lname: "Jon", type: 35 },
   ];
   return (
     <Card id="delete-account">

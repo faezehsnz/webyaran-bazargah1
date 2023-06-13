@@ -11,12 +11,12 @@ import {
 } from "@mui/material";
 
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import {Tab} from "@mui/material";
+import { Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
 // Billing page components
 import { connect } from "react-redux";
-import { setType } from "components/store/actions";
+import { setType, setMobile } from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -32,38 +32,51 @@ function Form1(props) {
   const [brandName, setBrandName] = React.useState("");
   const [sabtNumber, setSAbtNumber] = React.useState("");
   const [address, setaddress] = React.useState("");
+  const [phone, setPhone] = React.useState("");
   const [hamlCode, setHamlCode] = React.useState("");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const postInfo = async (e) => {
-    console.log(props.mobile, props.type);
     var bodyFormData = new FormData();
     if (props.type === 1) {
       bodyFormData.append("role", props.type);
       bodyFormData.append("mobile", props.mobile);
       bodyFormData.append("name", name);
       bodyFormData.append("lastName", lastName);
+      bodyFormData.append("fatherName", fatherName);
       bodyFormData.append("nationalCode", nationalCode);
       bodyFormData.append("ghavinameNumber", lisenceCode);
       bodyFormData.append("hoshmandNumber", smartCode);
     }
     if (props.type === 2) {
-      if (value === 0) {
+      console.log(value);
+      if (value == 0) {
         bodyFormData.append("role", props.type);
+        bodyFormData.append("type", 2);
         bodyFormData.append("mobile", props.mobile);
         bodyFormData.append("name", name);
         bodyFormData.append("lastName", lastName);
+        bodyFormData.append("fatherName", fatherName);
+        bodyFormData.append("phone", phone);
         bodyFormData.append("nationalCode", nationalCode);
+        bodyFormData.append("phone", phone);
         bodyFormData.append("adrres", address);
-      } else {
+        bodyFormData.append("sabtNumber", sabtNumber);
+        bodyFormData.append("brandName", brandName);
+      }
+      if (value == 1) {
         bodyFormData.append("role", props.type);
+        bodyFormData.append("type", 1);
         bodyFormData.append("mobile", props.mobile);
         bodyFormData.append("brandName", brandName);
         bodyFormData.append("nationalCode", nationalCode);
         bodyFormData.append("sabtNumber", sabtNumber);
         bodyFormData.append("name", name);
-        bodyFormData.append("lastName", smartCode);
+        bodyFormData.append("lastName", lastName);
+        bodyFormData.append("fatherName", fatherName);
+        bodyFormData.append("phone", phone);
+        bodyFormData.append("adrres", address);
       }
     }
     if (props.type === 3) {
@@ -75,6 +88,7 @@ function Form1(props) {
       bodyFormData.append("brandName", brandName);
       bodyFormData.append("sabtNumber", sabtNumber);
       bodyFormData.append("hamlCode", hamlCode);
+      bodyFormData.append("phone", phone);
       bodyFormData.append("adrres", address);
     }
     try {
@@ -86,6 +100,7 @@ function Form1(props) {
       const data = await response.json();
       if (data.error == 0) {
         toast.success(data.detail);
+        window.open('/' , '_self')
         // props.setValue(2);
       }
       if (data.error != 0) {
@@ -97,7 +112,7 @@ function Form1(props) {
     }
   };
   return (
-    <Card sx={{ marginTop: -20 }}>
+    <Card sx={{ marginTop: -25 }}>
       <Box
         variant="gradient"
         bgcolor="info"
@@ -254,6 +269,55 @@ function Form1(props) {
                       fullWidth
                       onChange={(e) => setNationalCode(e.target.value)}
                     />
+                    </Box>
+                    <Box mb={2}>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام پدر
+                      </InputLabel>
+                      <Input
+                        required
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setFatherName(e.target.value)}
+                      />
+                    </Box>
+                    <Box mb={2}>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام شرکت
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام شرکت"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setBrandName(e.target.value)}
+                      />
+                    </Box>
+                    <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      شماره ثبت
+                    </InputLabel>
+                    <Input
+                      required
+                      type="number"
+                      label="شماره ثبت"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setSAbtNumber(e.target.value)}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      تلفن ثابت
+                    </InputLabel>
+                    <Input
+                      required
+                      type="text"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
                   </Box>
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
@@ -333,6 +397,43 @@ function Form1(props) {
                       variant="standard"
                       fullWidth
                       onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      نام پدر رابط
+                    </InputLabel>
+                    <Input
+                      required
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setFatherName(e.target.value)}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      تلفن ثابت
+                    </InputLabel>
+                    <Input
+                      required
+                      type="text"
+                      label="آدرس"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      آدرس
+                    </InputLabel>
+                    <Input
+                      required
+                      type="text"
+                      label="آدرس"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setaddress(e.target.value)}
                     />
                   </Box>
                   {/* <Box mb={2}>
@@ -443,6 +544,18 @@ function Form1(props) {
                 />
               </Box>
               <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      تلفن ثابت
+                    </InputLabel>
+                    <Input
+                      required
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </Box>
+              <Box mb={2}>
                 <InputLabel htmlFor="standard-adornment-password">
                   آدرس
                 </InputLabel>
@@ -505,11 +618,13 @@ function Form1(props) {
 
 const mapStateToProps = (state) => ({
   type: state.type,
+  mobile: state.mobile,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setType: (value) => dispatch(setType(value)),
+    setMobile: (value) => dispatch(setMobile(value)),
   };
 };
 
