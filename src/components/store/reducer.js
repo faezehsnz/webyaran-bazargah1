@@ -2,8 +2,9 @@
 export const initialState = {
     data: [],
     report:null,
-    type:0,
-    mobile:null
+    type:null,
+    mobile:null,
+    userId:null
 };
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -29,6 +30,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 mobile: action.value
+            };
+            case 'SET_USERID':
+            return {
+                ...state,
+                userId: action.value
             };
         default:
             return state;

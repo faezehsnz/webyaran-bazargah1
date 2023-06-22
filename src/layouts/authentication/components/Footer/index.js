@@ -54,7 +54,7 @@ function Footer({ light }) {
               © کلیه حقوق این وب سایت متعلق به
               <a className="ml-25" href="#" target="_blank">
                 {" "}
-                 هاگ بار 
+                 {/* هاگ بار  */}
                  {" "}
                 {/* شرکت کالابران انتخاب{" "} */}
               </a>
@@ -86,7 +86,7 @@ function Footer({ light }) {
                   color={light ? "white" : "dark"}
                 >
                   <span className="float-md-right d-none d-md-block">
-                    طراحی شده توسط تیم هاگ بار
+                    {/* طراحی شده توسط تیم هاگ بار */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"

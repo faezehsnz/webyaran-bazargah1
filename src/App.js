@@ -45,7 +45,8 @@ import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
-
+import {routes2} from "routes";
+import {routes3} from "routes";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import { Provider } from 'react-redux'
@@ -54,8 +55,10 @@ import { store } from 'components/store';
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import { setType ,setMobile , setUserID } from "components/store/actions";
+import { connect } from "react-redux";
 import 'App.css'
-export default function App() {
+function App(props) {
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -69,6 +72,7 @@ export default function App() {
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
+  // const [routes, setRoutes] = useState(null);
   const { pathname } = useLocation();
 
   // Cache for the rtl
@@ -107,12 +111,14 @@ export default function App() {
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
+    
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
+      
       if (route.collapse) {
         return getRoutes(route.collapse);
       }
@@ -123,7 +129,7 @@ export default function App() {
 
       return null;
     });
-
+    
   return (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
@@ -150,3 +156,19 @@ export default function App() {
     </CacheProvider>
   );
 }
+
+const mapStateToProps = (state) => ({
+  type: state.type,
+  mobile: state.mobile,
+  userId: state.userId
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setType: (value) => dispatch(setType(value)),
+    setMobile: (value) => dispatch(setMobile(value)),
+    setUserID: (value) => dispatch(setUserID(value)),
+  };
+};
+
+export default App

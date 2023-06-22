@@ -9,18 +9,20 @@ import {
   InputLabel,
   Card,
 } from "@mui/material";
-
+import Autocomplete from "@mui/material/Autocomplete";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Tab } from "@mui/material";
+import { Tab ,TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 
 // Billing page components
 import { connect } from "react-redux";
-import { setType, setMobile } from "components/store/actions";
+import { setType, setMobile ,setUserID} from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Form1(props) {
+  const [cities, setCities] = React.useState("");
+  const [origin, setOrigin] = React.useState(null);
   const [value, setValue] = React.useState("1");
   const [name, setName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -34,6 +36,21 @@ function Form1(props) {
   const [address, setaddress] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [hamlCode, setHamlCode] = React.useState("");
+  const getData2 = async (e) => {
+    try {
+      const response = await fetch(
+        "https://hagbaar.com/api/Generals/getCities"
+        // {mode:'cors' ,method:'POST'}
+      );
+      const data = await response.json();
+      setCities(data.cities.map((option) => option));
+    } catch (e) {
+      // setError(e.message);
+    }
+  };
+  React.useEffect(() => {
+    getData2();
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -48,6 +65,7 @@ function Form1(props) {
       bodyFormData.append("nationalCode", nationalCode);
       bodyFormData.append("ghavinameNumber", lisenceCode);
       bodyFormData.append("hoshmandNumber", smartCode);
+      bodyFormData.append("cityID", 0);
     }
     if (props.type === 2) {
       console.log(value);
@@ -64,6 +82,7 @@ function Form1(props) {
         bodyFormData.append("adrres", address);
         bodyFormData.append("sabtNumber", sabtNumber);
         bodyFormData.append("brandName", brandName);
+        bodyFormData.append("cityID", 0);
       }
       if (value == 1) {
         bodyFormData.append("role", props.type);
@@ -77,6 +96,7 @@ function Form1(props) {
         bodyFormData.append("fatherName", fatherName);
         bodyFormData.append("phone", phone);
         bodyFormData.append("adrres", address);
+        bodyFormData.append("cityID", 0);
       }
     }
     if (props.type === 3) {
@@ -90,6 +110,7 @@ function Form1(props) {
       bodyFormData.append("hamlCode", hamlCode);
       bodyFormData.append("phone", phone);
       bodyFormData.append("adrres", address);
+      bodyFormData.append("cityID", origin);
     }
     try {
       const response = await fetch("https://hagbaar.com/api/auth/updateUser", {
@@ -99,18 +120,19 @@ function Form1(props) {
       });
       const data = await response.json();
       if (data.error == 0) {
-        toast.success(data.detail);
-        window.open('/' , '_self')
-        // props.setValue(2);
+        toast.success(data);
+        window.open('/dashboard' , '_self')
+        props.setUserID(data);
       }
       if (data.error != 0) {
-        toast.error(data.detail);
+        toast.error(data);
       }
     } catch (e) {
       toast(e.detail);
       // setError(e.message);
     }
   };
+  console.log(props.userId)
   return (
     <Card sx={{ marginTop: -25 }}>
       <Box
@@ -269,32 +291,32 @@ function Form1(props) {
                       fullWidth
                       onChange={(e) => setNationalCode(e.target.value)}
                     />
-                    </Box>
-                    <Box mb={2}>
-                      <InputLabel htmlFor="standard-adornment-password">
-                        نام پدر
-                      </InputLabel>
-                      <Input
-                        required
-                        variant="standard"
-                        fullWidth
-                        onChange={(e) => setFatherName(e.target.value)}
-                      />
-                    </Box>
-                    <Box mb={2}>
-                      <InputLabel htmlFor="standard-adornment-password">
-                        نام شرکت
-                      </InputLabel>
-                      <Input
-                        required
-                        type="نام شرکت"
-                        label="Name"
-                        variant="standard"
-                        fullWidth
-                        onChange={(e) => setBrandName(e.target.value)}
-                      />
-                    </Box>
-                    <Box mb={2}>
+                  </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      نام پدر
+                    </InputLabel>
+                    <Input
+                      required
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setFatherName(e.target.value)}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      نام شرکت
+                    </InputLabel>
+                    <Input
+                      required
+                      type="نام شرکت"
+                      label="Name"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setBrandName(e.target.value)}
+                    />
+                  </Box>
+                  <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       شماره ثبت
                     </InputLabel>
@@ -544,17 +566,17 @@ function Form1(props) {
                 />
               </Box>
               <Box mb={2}>
-                    <InputLabel htmlFor="standard-adornment-password">
-                      تلفن ثابت
-                    </InputLabel>
-                    <Input
-                      required
-                      type="number"
-                      variant="standard"
-                      fullWidth
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
-                  </Box>
+                <InputLabel htmlFor="standard-adornment-password">
+                  تلفن ثابت
+                </InputLabel>
+                <Input
+                  required
+                  type="number"
+                  variant="standard"
+                  fullWidth
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </Box>
               <Box mb={2}>
                 <InputLabel htmlFor="standard-adornment-password">
                   آدرس
@@ -564,6 +586,26 @@ function Form1(props) {
                   variant="standard"
                   fullWidth
                   onChange={(e) => setaddress(e.target.value)}
+                />
+              </Box>
+              <Box mb={2}>
+                <Autocomplete
+                  disablePortal
+                  id="clear-on-escape"
+                  options={cities != null ? cities : null}
+                  getOptionLabel={(option) => option.sazmaniCityName}
+                  onChange={(e, value) => setOrigin(value.ID)}
+                  renderInput={(params) => (
+                    <TextField
+                      variant="standard"
+                      {...params}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                      label="شهر"
+                    />
+                  )}
                 />
               </Box>
               <Box mt={4} mb={1}>
@@ -619,12 +661,14 @@ function Form1(props) {
 const mapStateToProps = (state) => ({
   type: state.type,
   mobile: state.mobile,
+  userId: state.userId
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setType: (value) => dispatch(setType(value)),
     setMobile: (value) => dispatch(setMobile(value)),
+    setUserID: (value) => dispatch(setUserID(value)),
   };
 };
 

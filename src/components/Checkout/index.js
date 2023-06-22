@@ -36,7 +36,7 @@ const defaultTheme = createTheme({
 });
 
 export default function Checkout() {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState("1");
   const [cities, setCities] = React.useState("");
   const [goodTypes, setGoodTypes] = React.useState(null);
   const [carTypes, setCarTypes] = React.useState(null);
@@ -202,12 +202,13 @@ export default function Checkout() {
         }, 3000);
         // props.setValue(2);
       }
-      if (data.error == 1) {
+      if (data.error != 1 && data.error != 0) {
         toast.error(data.detail);
         setActiveStep(0);
       }
     } catch (e) {
       toast(e.detail);
+      setActiveStep(0);
       // setError(e.message);
     }
   };
@@ -244,7 +245,7 @@ export default function Checkout() {
     }
   };
   const getData4 = async (e) => {
-    setLoading(true);
+    setLoading("1");
     try {
       const response = await fetch(
         "https://hagbaar.com/api/Generals/getGoodType"
@@ -252,9 +253,10 @@ export default function Checkout() {
       const data = await response.json();
       setGoodTypes(data.goodTypes.map((option) => option));
       if (data.goodTypes != null) {
-        setLoading(false);
+        setLoading("2");
       }
     } catch (e) {
+      setLoading("3");
       // setError(e.message);
     }
   };
@@ -270,7 +272,7 @@ export default function Checkout() {
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } ,backgroundColor:'#e5eaf5' }}
         >
           <Typography component="h1" variant="h3" align="center" mb={5}>
             افزودن بار
@@ -304,12 +306,16 @@ export default function Checkout() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {loading === false ? (
+              {loading === "2" ? (
                 <>{getStepContent(activeStep)}</>
-              ) : (
+              ) : loading === "3" ? (
                 <Alert variant="filled" severity="warning">
                   مشکلی پیش آمده است لطفا صفحه را رفرش کنید
                 </Alert>
+              ) : (
+                <>
+                  <Typography>لطفا منتظر بمانید...</Typography>
+                </>
               )}
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (

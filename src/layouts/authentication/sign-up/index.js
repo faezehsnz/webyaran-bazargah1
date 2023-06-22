@@ -12,16 +12,17 @@ import { InputLabel } from "@mui/material";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 import Form1 from "./form1";
 import Form2 from "./form2";
+import Form3 from "./form3";
+import Form4 from "./form4";
 // Images
 import bgImage from "assets/images/shutterstock_723474445.jpg";
 import Footer from "examples/Footer";
 
 
-import Form3 from "./form3";
-import Form4 from "./form4";
-function Cover() {
-  const [value, setValue] = React.useState(0);
 
+function Cover(props) {
+  const [value, setValue] = React.useState(0);
+  console.log(props.userId)
   return (
     <CoverLayout image={bgImage} >
       {value == 1 ? (

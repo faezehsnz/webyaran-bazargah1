@@ -22,4 +22,10 @@ export const setMobile = (value) => {
       value
    }
 };
+export const setUserID = (value) => {
+   return {
+      type:'SET_USERID',
+      value
+   }
+};
 

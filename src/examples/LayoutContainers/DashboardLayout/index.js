@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useEffect } from "react";
 
 // react-router-dom components
@@ -26,12 +11,13 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setLayout } from "context";
-
-function DashboardLayout({ children }) {
+import { setType,setMobile ,setUserID } from "components/store/actions";
+import { connect } from "react-redux";
+function DashboardLayout({ children ,userId}) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav } = controller;
   const { pathname } = useLocation();
-
+console.log(userId)
   useEffect(() => {
     setLayout(dispatch, "dashboard");
   }, [pathname]);
@@ -43,7 +29,7 @@ function DashboardLayout({ children }) {
         position: "relative",
 
         [breakpoints.up("xl")]: {
-          marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
+          marginLeft: miniSidenav ? pxToRem(120) : pxToRem(300),
           transition: transitions.create(["margin-left", "margin-right"], {
             easing: transitions.easing.easeInOut,
             duration: transitions.duration.standard,
@@ -61,4 +47,18 @@ DashboardLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default DashboardLayout;
+const mapStateToProps = (state) => ({
+  type: state.type,
+  mobile: state.mobile,
+  userId: state.userId
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setType: (value) => dispatch(setType(value)),
+    setMobile: (value) => dispatch(setMobile(value)),
+    setUserID: (value) => dispatch(setUserID(value)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardLayout);

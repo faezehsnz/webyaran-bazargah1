@@ -69,7 +69,7 @@ function CoverLayout({ coverHeight, image, children }) {
           </Grid>
         </Grid>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
     </PageLayout>
   );
 }

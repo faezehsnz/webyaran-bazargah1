@@ -17,22 +17,6 @@ import ShowDetail from "layouts/showDetail";
 const routes = [
   {
     type: "collapse",
-    name: "داشبورد",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
-  },
-  {
-    type: "collapse",
-    name: "افزودن بار",
-    key: "addbar",
-    icon: <Icon fontSize="small">add_box</Icon>,
-    route: "/addbar",
-    component: <Tables />,
-  },
-  {
-    type: "collapse",
     name: "بارهای در صف پذیرش",
     key: "waiting",
     icon: <Icon fontSize="small">list_alt</Icon>,
@@ -54,14 +38,6 @@ const routes = [
     icon: <Icon fontSize="small">drafts</Icon>,
     route: "/havale",
     component: <RTL />,
-  },
-  {
-    type: "collapse",
-    name: "افزودن بارنامه",
-    key: "addbarname",
-    icon: <Icon fontSize="small">add_box</Icon>,
-    route: "/addbarname",
-    component: <Tables />,
   },
   {
     type: "collapse",
@@ -112,5 +88,4 @@ const routes = [
     component: <ShowDetail />,
   },
 ];
-
-export default routes;
+export default routes

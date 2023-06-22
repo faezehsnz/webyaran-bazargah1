@@ -162,7 +162,6 @@ function Basic() {
                 </LoadingButton>
               ) : (
                 <Button
-                  loa
                   variant="contained"
                   sx={{ color: "#FFF" }}
                   onClick={login}
