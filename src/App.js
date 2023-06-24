@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
@@ -58,6 +43,8 @@ import brandDark from "assets/images/logo-ct-dark.png";
 import { setType ,setMobile , setUserID } from "components/store/actions";
 import { connect } from "react-redux";
 import 'App.css'
+import Rouess from "components/routes.js";
+
 function App(props) {
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -147,28 +134,13 @@ function App(props) {
             />
           </>
         )}
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+         <Rouess />
         </Provider>
       </ThemeProvider>
     </CacheProvider>
   );
 }
 
-const mapStateToProps = (state) => ({
-  type: state.type,
-  mobile: state.mobile,
-  userId: state.userId
-});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setType: (value) => dispatch(setType(value)),
-    setMobile: (value) => dispatch(setMobile(value)),
-    setUserID: (value) => dispatch(setUserID(value)),
-  };
-};
 
 export default App

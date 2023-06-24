@@ -1,19 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
@@ -28,16 +13,57 @@ import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 
 // Billing page components
 import BillingInformation from "layouts/billing/components/BillingInformation";
+import { connect } from "react-redux";
+import { setUserID, setCityID } from "components/store/actions";
+import { setBarData } from "components/store/actions";
+import { Alert } from "@mui/material";
 
-function Billing() {
+function Billing(props) {
+  const [open, setOpen] = React.useState(false);
+  const [report, setReport] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const getData = async (e) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("userID", 10);
+    bodyFormData.append("role", props.userId);
+    bodyFormData.append("cityID", props.cityId);
+    try {
+      setLoading(true);
+      const response = await fetch("https://hagbaar.com/api/bar/getBars", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
+      });
+      const data = await response.json();
+      setReport(data.bars);
+      setLoading(false);
+      if (error !== "0") {
+        setError(data.detail);
+      }
+    } catch (e) {
+      // handleClickOpen();
+      setError(e.detail);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [1]);
   return (
     <DashboardLayout>
-      <DashboardNavbar/>
+      <DashboardNavbar />
       <Box mt={8}>
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <BillingInformation title='بارهای در صف پذیرش'/>
+              {report != null ? (
+                <BillingInformation
+                  report={report}
+                  title="بارهای در صف پذیرش"
+                />
+              ) : (
+                <Alert severity="error">{error}</Alert>
+              )}
             </Grid>
           </Grid>
         </Box>
@@ -46,5 +72,17 @@ function Billing() {
     </DashboardLayout>
   );
 }
+const mapStateToProps = (state) => ({
+  userId: state.userId,
+  cityId: state.cityId,
+  barData: state.barData,
+});
 
-export default Billing;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserID: (value) => dispatch(setUserID(value)),
+    setCityID: (value) => dispatch(setCityID(value)),
+    setBarData: (value) => dispatch(setBarData(value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Billing);

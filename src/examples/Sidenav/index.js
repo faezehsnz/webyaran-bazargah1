@@ -21,7 +21,8 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
-
+import { connect } from "react-redux";
+import {setUserID} from "components/store/actions";
 // Material Dashboard 2 React context
 import {
   useMaterialUIController,
@@ -30,8 +31,9 @@ import {
   setWhiteSidenav,
 } from "context";
 
-function Sidenav({ color, brand, brandName, routes, ...rest }) {
+function Sidenav({ color,userId, brand, brandName, routes, ...rest }) {
   var e = routes.filter(e => e.key !== 'sign-up' && e.key !== 'sign-in' && e.key !== 'show')
+  
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
@@ -66,7 +68,19 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   }, [dispatch, location]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = e.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
+  if(userId == 1){
+    var x = e.filter(e => e.key !== 'dashboard' && e.key !== 'addbar' && e.key !== 'addbarn')
+  }
+  if(userId == 2){
+    var x = e.filter(e => e.key !== 'dashboard' &&  e.key !== 'addbarn')
+  }
+  if(userId == 3){
+    var x = e.filter(e.key !== 'addbar')
+  }
+  if(userId == null){
+    var x = e
+  }
+  const renderRoutes = x.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
     let returnValue;
 
     if (type === "collapse") {
@@ -177,5 +191,13 @@ Sidenav.propTypes = {
   brandName: PropTypes.string.isRequired,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+const mapStateToProps = (state) => ({
+  userId: state.userId
+});
 
-export default Sidenav;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserID: (value) => dispatch(setUserID(value)),
+  };
+};
+export default  connect(mapStateToProps, mapDispatchToProps)(Sidenav);

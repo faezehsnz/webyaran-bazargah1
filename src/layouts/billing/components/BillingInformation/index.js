@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
@@ -9,20 +9,23 @@ import { DataGrid, faIR, GridToolbar } from "@mui/x-data-grid";
 // import { setData ,setReport } from '../../store/actions'
 import styled from "@emotion/styled";
 import { useDemoData } from "@mui/x-data-grid-generator";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import NotificationItem from "examples/Items/NotificationItem";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { connect } from "react-redux";
+import { setUserID, setCityID } from "components/store/actions";
+import { setBarData } from "components/store/actions";
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .super-app-theme--2": {
     backgroundColor: "rgb(192, 216, 193)",
@@ -40,86 +43,75 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 function BillingInformation(props) {
   const [openMenu, setOpenMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const confirmDialog = () => (
-      <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Use Google's location service?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous
-              location data to Google, even when no apps are running.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button onClick={handleClose} autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
-  const renderMenu = () => (
+  const renderMenu = (params) => (
     <>
-    <Menu
-      anchorEl={openMenu}
-      anchorReference={null}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
-      }}
-      open={Boolean(openMenu)}
-      onClose={handleCloseMenu}
-      sx={{ mt: 2 }}
-    >
-      <NotificationItem onClick={() => window.open('/bar/show' ,'_self')} icon={<VisibilityOutlinedIcon/>} title="نمایش" />
-      <NotificationItem icon={<ModeEditOutlineOutlinedIcon/>} title="ویرایش" />
-      <NotificationItem icon={<DeleteOutlineOutlinedIcon/> } title="حذف" />
-      <NotificationItem icon={<MenuOutlinedIcon/>} title="حواله کردن" />
-    </Menu>
+      {}
+      <Menu
+        anchorEl={openMenu}
+        anchorReference={null}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={Boolean(openMenu)}
+        onClose={handleCloseMenu}
+        sx={{ mt: 2 }}
+      >
+        {/* <NotificationItem
+          onClick={() => {
+            // window.open("/bar/show", "_self");
+            props.setBarData(params)
+            console.log(params)
+          }}
+          icon={<VisibilityOutlinedIcon />}
+          title="نمایش"
+        /> */}
+        <NotificationItem
+          icon={<ModeEditOutlineOutlinedIcon />}
+          title="ویرایش"
+        />
+        <NotificationItem icon={<DeleteOutlineOutlinedIcon />} title="حذف" />
+        <NotificationItem icon={<MenuOutlinedIcon />} title="حواله کردن" />
+      </Menu>
     </>
   );
-  const { data } = useDemoData({
-    dataSet: "Commodity",
-    rowLength: 5,
-    maxColumns: 6,
-  });
   const columns = [
     {
-      field: "type",
+      field: "cargo_description",
       headerName: "نوع بار",
       headerAlign: "center",
+      width: 130,
     },
     {
       field: "loading_time",
       headerName: "زمان بارگیری",
       headerAlign: "center",
       width: 130,
+      renderCell: (params) => {
+        var date = params.value;
+        var validDate = new Date(date * 1000).toLocaleDateString("fa-IR");
+        return <p>{validDate}</p>;
+      },
     },
     {
-      field: "destinationWeight",
+      field: "type_of_wage",
       headerName: "نوع پرداخت کرایه",
       headerAlign: "center",
       width: 150,
+      renderCell: (params) => {
+        return <p>{params.value == 1 ? 'کرایه در مبدا' : 'کرایه در مقصد'}</p>;
+      },
     },
     {
-      field: "origin",
+      field: "download_location",
       headerName: "شهر مبدا",
       headerAlign: "center",
       // renderCell: (params) => {
@@ -129,63 +121,55 @@ function BillingInformation(props) {
       // }
     },
     {
-      field: "destination",
+      field: "discharge_location",
       headerName: "شهر مقصد",
       headerAlign: "center",
     },
     {
-      field: "receiverCityName",
-      headerName: "نوع کرایه پیشنهادی",
+      field: "fare",
+      headerName: "مقدار کرایه",
       headerAlign: "center",
       width: 160,
     },
     {
-      field: "fullName",
+      field: "the_status",
       headerName: "وضعیت حمل",
       headerAlign: "center",
       width: 190,
-      // valueGetter: (params) =>
-      // `${params.row.driver1FirstName || ''} ${params.row.driver1LastName || ''}`,
+      renderCell: (params) => {
+        return <p>{params.value === 0 ? 'در انتظار پذیرش' : 'پذیرش شده'}</p>;
+      },
     },
     {
-      field: "payToDriver",
+      field: "transportationCompani",
       headerName: "شرکت حمل",
       headerAlign: "center",
-      width: 120,
+      width: 140,
+      renderCell: (params) => {
+        return <p>{params.value === 0 ? 'در انتظار ' : 'پذیرش شده'}</p>;
+      },
     },
     {
-      field: "paymentDate",
+      field: "receipt",
       headerName: "وضعیت تحویل",
       headerAlign: "center",
-      width: 110,
-      // renderCell: (params) => {
-      //   var date = params.value;
-      //   var validDate = new Date(date * 1000).toLocaleDateString("fa-IR");
-      //   return <p>{params.value != null ? validDate : " "}</p>;
-      // },
-    },
-    {
-      field: "paymentStatus",
-      headerName: "وضعیت",
-      headerAlign: "center",
-      width: 160,
-      // renderCell: (params) => {
-      //   const isRejected = params.value == 0;
-      //   return <p>{isRejected ? "پرداخت نشده" : "پرداخت شده"}</p>;
-      // },
+      width: 140,
+      renderCell: (params) => {
+        return <p>{params.value === 0 ? 'در مبدا ' : params.value === 2 ?'درحال حمل' : 'درمقصد'}</p>;
+      },
     },
     {
       field: "asssss",
       headerName: "عملیات",
       headerAlign: "center",
-      align: 'center',
+      align: "center",
       width: 110,
       renderCell: (params) => (
         <>
-          <MoreHorizOutlinedIcon onClick={handleOpenMenu} >
+          <MoreHorizOutlinedIcon onClick={handleOpenMenu}>
             move_vert
           </MoreHorizOutlinedIcon>
-          {renderMenu()}
+          {renderMenu(params.row)}
           {/* {confirmDialog()} */}
         </>
       ),
@@ -228,7 +212,7 @@ function BillingInformation(props) {
             slots={{ toolbar: GridToolbar }}
             localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
             columns={columns}
-            rows={rows}
+            rows={props.report}
             // {...data}
             initialState={{
               pagination: {
@@ -247,5 +231,17 @@ function BillingInformation(props) {
     </Card>
   );
 }
+const mapStateToProps = (state) => ({
+  userId: state.userId,
+  cityId: state.cityId,
+  barData: state.barData,
+});
 
-export default BillingInformation;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserID: (value) => dispatch(setUserID(value)),
+    setCityID: (value) => dispatch(setCityID(value)),
+    setBarData: (value) => dispatch(setBarData(value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(BillingInformation);

@@ -24,8 +24,21 @@ export const setMobile = (value) => {
 };
 export const setUserID = (value) => {
    return {
-      type:'SET_USERID',
+      type:'SET_USER_ID',
       value
    }
 };
+export const setCityID = (value) => {
+   return {
+      type:'SET_CITY_ID',
+      value
+   }
+};
+export const setBarData = (value) => {
+   return {
+      type:'SET_BAR_DATA',
+      value
+   }
+};
+
 

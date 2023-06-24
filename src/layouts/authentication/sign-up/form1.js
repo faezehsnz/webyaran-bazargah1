@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 // Billing page components
 import { connect } from "react-redux";
-import { setType, setMobile ,setUserID} from "components/store/actions";
+import { setType, setMobile ,setUserID ,setCityID ,setBarData} from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -66,6 +66,7 @@ function Form1(props) {
       bodyFormData.append("ghavinameNumber", lisenceCode);
       bodyFormData.append("hoshmandNumber", smartCode);
       bodyFormData.append("cityID", 0);
+      props.setCityID(0)
     }
     if (props.type === 2) {
       console.log(value);
@@ -98,6 +99,7 @@ function Form1(props) {
         bodyFormData.append("adrres", address);
         bodyFormData.append("cityID", 0);
       }
+      props.setCityID(0)
     }
     if (props.type === 3) {
       bodyFormData.append("role", props.type);
@@ -111,6 +113,7 @@ function Form1(props) {
       bodyFormData.append("phone", phone);
       bodyFormData.append("adrres", address);
       bodyFormData.append("cityID", origin);
+      props.setCityID(origin)
     }
     try {
       const response = await fetch("https://hagbaar.com/api/auth/updateUser", {
@@ -121,7 +124,7 @@ function Form1(props) {
       const data = await response.json();
       if (data.error == 0) {
         toast.success(data);
-        window.open('/dashboard' , '_self')
+        window.open('/waiting' , '_self')
         props.setUserID(data);
       }
       if (data.error != 0) {
@@ -661,7 +664,9 @@ function Form1(props) {
 const mapStateToProps = (state) => ({
   type: state.type,
   mobile: state.mobile,
-  userId: state.userId
+  userId: state.userId,
+  cityId: state.cityId,
+  barData: state.barData,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -669,6 +674,8 @@ const mapDispatchToProps = (dispatch) => {
     setType: (value) => dispatch(setType(value)),
     setMobile: (value) => dispatch(setMobile(value)),
     setUserID: (value) => dispatch(setUserID(value)),
+    setCityID: (value) => dispatch(setCityID(value)),
+    setBarData: (value) => dispatch(setBarData(value)),
   };
 };
 

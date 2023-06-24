@@ -2,6 +2,7 @@
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
+import Tables2 from "layouts/tables copy";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
@@ -15,6 +16,22 @@ import Canceled from "layouts/canceled";
 import Reservation from "layouts/reservation";
 import ShowDetail from "layouts/showDetail";
 const routes = [
+  {
+    type: "collapse",
+    name: "داشبورد",
+    key: "dashboard",
+    icon: <Icon fontSize="small">list_alt</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "افزودن بار",
+    key: "addbar",
+    icon: <Icon fontSize="small">list_alt</Icon>,
+    route: "/addbar",
+    component: <Tables />,
+  },
   {
     type: "collapse",
     name: "بارهای در صف پذیرش",
@@ -38,6 +55,14 @@ const routes = [
     icon: <Icon fontSize="small">drafts</Icon>,
     route: "/havale",
     component: <RTL />,
+  },
+  {
+    type: "collapse",
+    name: "افزودن بارنامه",
+    key: "addbarn",
+    icon: <Icon fontSize="small">list_alt</Icon>,
+    route: "/addbarn",
+    component: <Tables2 />,
   },
   {
     type: "collapse",

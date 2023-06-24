@@ -52,7 +52,7 @@ function Basic() {
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const login = async (e) => {
     if (username === "123456" && password === "123456") {
-      window.open(`/dashboard`, "_self");
+      window.open(`/waiting`, "_self");
     }else{
       toast.error('نام کاربری یا رمز عبور اشتباه است')
     }
