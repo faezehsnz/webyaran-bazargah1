@@ -5,10 +5,14 @@ import TextField from "@mui/material/TextField";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
-import { DatePicker ,MobileDateTimePicker  ,DesktopDateTimePicker } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  MobileDateTimePicker,
+  DesktopDateTimePicker,
+} from "@mui/x-date-pickers";
 import Autocomplete from "@mui/material/Autocomplete";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 export default function MoreInfoForm(props) {
   return (
@@ -38,7 +42,7 @@ export default function MoreInfoForm(props) {
             id="clear-on-escape"
             options={props.cities != null ? props.cities : null}
             getOptionLabel={(option) => option.sazmaniCityName}
-            onChange={(e , value) => props.setOrigin(value.id)}
+            onChange={(e, value) => props.setOrigin(value.ID)}
             renderInput={(params) => (
               <TextField
                 variant="standard"
@@ -65,22 +69,23 @@ export default function MoreInfoForm(props) {
         </Grid>
         <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-          <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker   
-            ampm={false}
-              label="زمان بارگیری(از)"
-              onChange={(e) => props.setLoadingTime(e)}
-            />
+            <DemoContainer components={["DateTimePicker"]}>
+              <DateTimePicker
+                ampm={false}
+                label="زمان بارگیری(از)"
+                onChange={(e) => props.setLoadingTime(e)}
+              />
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-          <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker
-              label="زمان بارگیری(تا)"
-              onChange={(e) => props.setDownloadInterval(e)}
-            />
+            <DemoContainer components={["DateTimePicker"]}>
+              <DateTimePicker
+                ampm={false}
+                label="زمان بارگیری(تا)"
+                onChange={(e) => props.setDownloadInterval(e)}
+              />
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
@@ -102,7 +107,7 @@ export default function MoreInfoForm(props) {
             id="clear-on-escape"
             options={props.cities != null ? props.cities : null}
             getOptionLabel={(option) => option.sazmaniCityName}
-            onChange={(e , value) => props.setDestination(value.id)}
+            onChange={(e, value) => props.setDestination(value.ID)}
             renderInput={(params) => (
               <TextField
                 variant="standard"
@@ -129,23 +134,23 @@ export default function MoreInfoForm(props) {
         </Grid>
         <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-          <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker
-                 ampm={false}
-              label="زمان تخلیه(از)"
-              onChange={(e) => props.setDischargeTime(e)}
-            />
+            <DemoContainer components={["DateTimePicker"]}>
+              <DateTimePicker
+                ampm={false}
+                label="زمان تخلیه(از)"
+                onChange={(e) => props.setDischargeTime(e)}
+              />
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-          <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker
-            ampm={false}
-              label="زمان تخلیه(تا)"
-              onChange={(e) => props.setDrainInterval(e)}
-            />
+            <DemoContainer components={["DateTimePicker"]}>
+              <DateTimePicker
+                ampm={false}
+                label="زمان تخلیه(تا)"
+                onChange={(e) => props.setDrainInterval(e)}
+              />
             </DemoContainer>
             {/* </DemoItem> */}
           </LocalizationProvider>

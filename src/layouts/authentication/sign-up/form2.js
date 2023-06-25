@@ -38,9 +38,11 @@ function Form2(props) {
             body: bodyFormData,
           }
         );
+        // window.open('/dashboard' , '_self')
         const data = await response.json();
         if (data.error == 0) {
           props.setValue(3);
+          // window.open('/dashboard' , '_self')
         }
         if (data.error !== 0) {
           toast.error(data.detail);

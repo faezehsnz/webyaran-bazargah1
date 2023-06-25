@@ -16,13 +16,13 @@ import { connect } from "react-redux";
 import Tables from "layouts/tables";
 import Tables2 from "layouts/tables copy";
 function Rouess(props) {
-    console.log(props.userId)
+  const local = JSON.parse(localStorage.getItem('key'))
   return (
     <Routes>
       <Route index element={<SignIn />} />
-      {props.userId === 2 ?  <Route path="addbar" element={<Tables />} /> :null}
-      {props.userId === 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null}
-      {props.userId === 2 ?  <Route path="dashboard" element={<Dashboard />} /> :null}
+      {local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null}
+      {local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null}
+      {local.role == 2 ?  <Route path="dashboard" element={<Dashboard />} /> :null}
       <Route path="reservation" element={<Reservation />} />
       <Route path="waiting" element={<Billing />} />
       <Route path="havale" element={<RTL />} />

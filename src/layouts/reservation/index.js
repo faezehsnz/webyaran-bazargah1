@@ -1,33 +1,55 @@
-import { useEffect } from "react";
-
-// @mui material components
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
-
-// Material Dashboard 2 React example components
+import { Alert } from "@mui/material";
+// Material Dashboard 2 React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import MasterCard from "examples/Cards/MasterCard";
+import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
+
+// Billing page components
 import BillingInformation from "layouts/billing/components/BillingInformation";
-// Data
+import { connect } from "react-redux";
+import { setUserID, setCityID } from "components/store/actions";
+import { setBarData ,setID} from "components/store/actions";
 
-// RTL components
-import Projects from "layouts/rtl/components/Projects";
-
-// Material Dashboard 2 React contexts
-import { useMaterialUIController, setDirection } from "context";
-
-function Reservation() {
-  const [, dispatch] = useMaterialUIController();
-
-  // Changing the direction to rtl
+function Reservation(props) {
+  const local = localStorage.getItem('data')
+  const [open, setOpen] = React.useState(false);
+  const [report, setReport] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const getData = async (e) => {
+    var bodyFormData = new FormData();
+    const local = JSON.parse(localStorage.getItem('key'))
+    bodyFormData.append("userID", local.userInfo.ID);
+    bodyFormData.append("role", local.role);
+    bodyFormData.append("cityID", local.userInfo.cityID);
+    try {
+      setLoading(true);
+      const response = await fetch("https://hagbaar.com/api/bar/getReservationBars", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
+      });
+      const data = await response.json();
+      setReport(data.bars);
+      setLoading(false);
+      if (error !== "0") {
+        setError(data.detail);
+      }
+    } catch (e) {
+      // handleClickOpen();
+      setError(e.detail);
+    }
+  };
   useEffect(() => {
-    setDirection(dispatch, "rtl");
-
-    return () => setDirection(dispatch, "rtl");
-  }, []);
-
+    getData();
+  }, [1]);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -35,7 +57,11 @@ function Reservation() {
         <Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={12}>
-              <BillingInformation title='بارهای رزرو شده'/>
+              {loading === true ? (
+                <BillingInformation report={report} title="بارهای رزرو شده" />
+              ) : (
+                <Alert severity="error">{error}</Alert>
+              )}
             </Grid>
           </Grid>
         </Box>
@@ -44,5 +70,19 @@ function Reservation() {
     </DashboardLayout>
   );
 }
+const mapStateToProps = (state) => ({
+  userId: state.userId,
+  cityId: state.cityId,
+  barData: state.barData,
+  id: state.id,
+});
 
-export default Reservation;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserID: (value) => dispatch(setUserID(value)),
+    setCityID: (value) => dispatch(setCityID(value)),
+    setID: (value) => dispatch(setID(value)),
+    setBarData: (value) => dispatch(setBarData(value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Reservation);

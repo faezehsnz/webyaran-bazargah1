@@ -66,18 +66,19 @@ function Sidenav({ color,userId, brand, brandName, routes, ...rest }) {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
+  const local = JSON.parse(localStorage.getItem('key'))
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  if(userId == 1){
+  if(local.role == 1){
     var x = e.filter(e => e.key !== 'dashboard' && e.key !== 'addbar' && e.key !== 'addbarn')
   }
-  if(userId == 2){
+  if(local.role == 2){
     var x = e.filter(e => e.key !== 'dashboard' &&  e.key !== 'addbarn')
   }
-  if(userId == 3){
-    var x = e.filter(e.key !== 'addbar')
+  if(local.role == 3){
+    var x = e.filter(e => e.key !== 'addbar')
   }
-  if(userId == null){
+  if(local.role == null){
     var x = e
   }
   const renderRoutes = x.map(({ type, name, icon, title, noCollapse, key, href, route }) => {

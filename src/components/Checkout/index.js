@@ -159,7 +159,7 @@ export default function Checkout() {
     bodyFormData.append("type", type);
     bodyFormData.append("packing", packing);
     bodyFormData.append("weight", weight);
-    bodyFormData.append("lnsurance_value", customerOfferFare);
+    bodyFormData.append("fare", customerOfferFare);
     bodyFormData.append("download_location", downloadLocation);
     bodyFormData.append("discharge_location", dischargeLocation);
     bodyFormData.append(
@@ -199,7 +199,7 @@ export default function Checkout() {
         toast.success(data.detail);
         setTimeout(() => {
           window.open("/waiting", "_self");
-        }, 3000);
+        }, 4000);
         // props.setValue(2);
       }
       if (data.error != 1 && data.error != 0) {

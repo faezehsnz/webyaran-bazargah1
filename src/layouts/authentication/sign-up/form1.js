@@ -11,16 +11,28 @@ import {
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Tab ,TextField } from "@mui/material";
+import { Tab, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Billing page components
 import { connect } from "react-redux";
-import { setType, setMobile ,setUserID ,setCityID ,setBarData} from "components/store/actions";
+import {
+  setType,
+  setMobile,
+  setUserID,
+  setCityID,
+  setBarData,
+  setID,
+  setData2,
+} from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 function Form1(props) {
+  const navigate = useNavigate();
+
   const [cities, setCities] = React.useState("");
   const [origin, setOrigin] = React.useState(null);
   const [value, setValue] = React.useState("1");
@@ -66,10 +78,9 @@ function Form1(props) {
       bodyFormData.append("ghavinameNumber", lisenceCode);
       bodyFormData.append("hoshmandNumber", smartCode);
       bodyFormData.append("cityID", 0);
-      props.setCityID(0)
+      // props.setCityID(0)
     }
     if (props.type === 2) {
-      console.log(value);
       if (value == 0) {
         bodyFormData.append("role", props.type);
         bodyFormData.append("type", 2);
@@ -83,7 +94,7 @@ function Form1(props) {
         bodyFormData.append("adrres", address);
         bodyFormData.append("sabtNumber", sabtNumber);
         bodyFormData.append("brandName", brandName);
-        bodyFormData.append("cityID", 0);
+        bodyFormData.append("cityID", 1);
       }
       if (value == 1) {
         bodyFormData.append("role", props.type);
@@ -97,9 +108,9 @@ function Form1(props) {
         bodyFormData.append("fatherName", fatherName);
         bodyFormData.append("phone", phone);
         bodyFormData.append("adrres", address);
-        bodyFormData.append("cityID", 0);
+        bodyFormData.append("cityID", 1);
       }
-      props.setCityID(0)
+      // props.setCityID(0)
     }
     if (props.type === 3) {
       bodyFormData.append("role", props.type);
@@ -113,7 +124,7 @@ function Form1(props) {
       bodyFormData.append("phone", phone);
       bodyFormData.append("adrres", address);
       bodyFormData.append("cityID", origin);
-      props.setCityID(origin)
+      // props.setCityID(origin)
     }
     try {
       const response = await fetch("https://hagbaar.com/api/auth/updateUser", {
@@ -121,12 +132,19 @@ function Form1(props) {
         method: "POST",
         body: bodyFormData,
       });
+      e.preventDefault();
       const data = await response.json();
-      if (data.error == 0) {
-        toast.success(data);
-        window.open('/waiting' , '_self')
-        props.setUserID(data);
+      if (data.error === "0") {
+        props.setData2(data);
+        localStorage.setItem('key', JSON.stringify(data))
+        
+        // localStorage.setItem("data", JSON.stringify(data));
+        props.setCityID(data.userInfo.cityID)
+        props.setID(data.userInfo.ID)
+        props.setUserID(data.role)
+        navigate("/waiting");
       }
+
       if (data.error != 0) {
         toast.error(data);
       }
@@ -135,7 +153,6 @@ function Form1(props) {
       // setError(e.message);
     }
   };
-  console.log(props.userId)
   return (
     <Card sx={{ marginTop: -25 }}>
       <Box
@@ -667,6 +684,8 @@ const mapStateToProps = (state) => ({
   userId: state.userId,
   cityId: state.cityId,
   barData: state.barData,
+  id: state.id,
+  data2: state.data2,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -676,6 +695,8 @@ const mapDispatchToProps = (dispatch) => {
     setUserID: (value) => dispatch(setUserID(value)),
     setCityID: (value) => dispatch(setCityID(value)),
     setBarData: (value) => dispatch(setBarData(value)),
+    setID: (value) => dispatch(setID(value)),
+    setData2: (value) => dispatch(setData2(value)),
   };
 };
 

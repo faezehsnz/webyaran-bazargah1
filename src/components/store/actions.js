@@ -40,5 +40,19 @@ export const setBarData = (value) => {
       value
    }
 };
+   export const setID = (value) => {
+      return {
+         type:'SET_ID',
+         value
+      }
+      
+};
+export const setData2 = (value) => {
+   return {
+      type:'SET_DATA_2',
+      value
+   }
+   
+};
 
 

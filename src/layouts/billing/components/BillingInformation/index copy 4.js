@@ -45,171 +45,17 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 function BillingInformation(props) {
   const [openMenu, setOpenMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const [param, setParam] = React.useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
-
   const handleCloseMenu = () => setOpenMenu(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const local = JSON.parse(localStorage.getItem("key"));
-  const getData = async (params) => {
-    var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem("key"));
-    bodyFormData.append("userID", local.userInfo.ID);
-    bodyFormData.append("role", local.role);
-    bodyFormData.append("barID", params.id);
-    try {
-      setLoading(true);
-      const response = await fetch("https://hagbaar.com/api/bar/receptionBar", {
-        mode: "cors",
-        method: "POST",
-        body: bodyFormData,
-      });
-      const data = await response.json();
-      setLoading(false);
-      if (data.error == 0) {
-        toast.success(data.detail);
-        // window.open('reservation' ,'_self')
-      }
-      if (data.error != 0) {
-        setError(data.detail);
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      // handleClickOpen();
-      setError(e.detail);
-    }
-  };
-  const getData1 = async (params) => {
-    var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem("key"));
-    bodyFormData.append("userID", local.userInfo.ID);
-    bodyFormData.append("role", local.role);
-    bodyFormData.append("barID", params.id);
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://hagbaar.com/api/bar/getBarByDriver",
-        {
-          mode: "cors",
-          method: "POST",
-          body: bodyFormData,
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (data.error == 0) {
-        toast.success(data.detail);
-        // window.open('reservation' ,'_self')
-      }
-      if (data.error != 0) {
-        setError(data.detail);
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      // handleClickOpen();
-      setError(e.detail);
-    }
-  };
-  const getData2 = async (params) => {
-    var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem("key"));
-    bodyFormData.append("userID", local.userInfo.ID);
-    bodyFormData.append("role", local.role);
-    bodyFormData.append("barID", params.id);
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://hagbaar.com/api/bar/getRemittanceBar",
-        {
-          mode: "cors",
-          method: "POST",
-          body: bodyFormData,
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (data.error == 0) {
-        toast.success(data.detail);
-        // window.open('reservation' ,'_self')
-      }
-      if (data.error != 0) {
-        setError(data.detail);
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      // handleClickOpen();
-      setError(e.detail);
-    }
-  };
-  const getData3 = async (params) => {
-    var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem("key"));
-    bodyFormData.append("userID", local.userInfo.ID);
-    bodyFormData.append("role", local.role);
-    bodyFormData.append("barID", params.id);
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://hagbaar.com/api/bar/getBarnamehBar",
-        {
-          mode: "cors",
-          method: "POST",
-          body: bodyFormData,
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (data.error == 0) {
-        toast.success(data.detail);
-        // window.open('reservation' ,'_self')
-      }
-      if (data.error != 0) {
-        setError(data.detail);
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      // handleClickOpen();
-      setError(e.detail);
-    }
-  };
-  const getData4 = async (params) => {
-    var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem("key"));
-    bodyFormData.append("userID", local.userInfo.ID);
-    bodyFormData.append("role", local.role);
-    bodyFormData.append("barID", params.id);
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://hagbaar.com/api/bar/getDeliverBar",
-        {
-          mode: "cors",
-          method: "POST",
-          body: bodyFormData,
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (data.error == 0) {
-        toast.success(data.detail);
-        // window.open('reservation' ,'_self')
-      }
-      if (data.error != 0) {
-        setError(data.detail);
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      // handleClickOpen();
-      setError(e.detail);
-    }
-  };
   const renderMenu = (params) => (
     <>
+      {}
       <Menu
         anchorEl={openMenu}
         anchorReference={null}
@@ -221,69 +67,20 @@ function BillingInformation(props) {
         onClose={handleCloseMenu}
         sx={{ mt: 2 }}
       >
-        <NotificationItem
+        {/* <NotificationItem
           onClick={() => {
             // window.open("/bar/show", "_self");
-            props.setBarData(params);
+            props.setBarData(params)
           }}
           icon={<VisibilityOutlinedIcon />}
           title="نمایش"
-        />
+        /> */}
         <NotificationItem
           icon={<ModeEditOutlineOutlinedIcon />}
           title="ویرایش"
         />
         <NotificationItem icon={<DeleteOutlineOutlinedIcon />} title="حذف" />
-        {local.role == 3 &&
-        params.the_status == 0 &&
-        params.transportationCompani == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="پذیرفتن"
-            onClick={() => getData(params)}
-          />
-        ) : local.role == 1 &&
-          params.transportationCompani > 0 &&
-          params.the_status == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="رزرو"
-            onClick={() => getData1(params)}
-          />
-        ) : local.role == 3 &&
-          params.the_status > 0 &&
-          params.transportationCompani > 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="حواله"
-            onClick={() => getData2(params)}
-          />
-        ) : local.role == 3 &&
-          params.the_status > 0 &&
-          params.transportationCompani > 0 &&
-          params.havale_id > 0 &&
-          params.receipt == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="بارنامه کردن"
-            onClick={() => getData3(params)}
-          />
-        ) : params.the_status > 0 &&
-          params.receipt == 2 &&
-          params.active == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="تحویل دادن"
-            onClick={() => getData4(params)}
-          />
-        ) : null}
-        {/* ) : (
-        <NotificationItem
-          icon={<MenuOutlinedIcon />}
-          title="رزرو توسط راننده"
-          onClick={() => getData(params)}
-        />
-        )} */}
+        <NotificationItem icon={<MenuOutlinedIcon />} title="تحویل" onClick={() => toast.success('بار با موفقیت تحویل داده شد.')}/>
       </Menu>
     </>
   );
@@ -311,7 +108,7 @@ function BillingInformation(props) {
       headerAlign: "center",
       width: 150,
       renderCell: (params) => {
-        return <p>{params.value == 1 ? "کرایه در مبدا" : "کرایه در مقصد"}</p>;
+        return <p>{params.value == 1 ? 'کرایه در مبدا' : 'کرایه در مقصد'}</p>;
       },
     },
     {
@@ -341,15 +138,7 @@ function BillingInformation(props) {
       headerAlign: "center",
       width: 250,
       renderCell: (params) => {
-        return (
-          <p>
-            {params.value === 0
-              ? "در انتظار پذیرش"
-              : " پذیرش شده توسط " +
-                params.row.driverName.name +
-                params.row.driverName.lastName}
-          </p>
-        );
+        return <p>{params.value === 0 ? 'در انتظار پذیرش' :' پذیرش شده توسط ' + params.row.driverName.name + params.row.driverName.lastName}</p>;
       },
     },
     {
@@ -358,7 +147,7 @@ function BillingInformation(props) {
       headerAlign: "center",
       width: 140,
       renderCell: (params) => {
-        return <p>{params.value === 0 ? "در انتظار " : "پذیرش شده"}</p>;
+        return <p>{params.value === 0 ? 'در انتظار ' : 'پذیرش شده'}</p>;
       },
     },
     {
@@ -367,15 +156,7 @@ function BillingInformation(props) {
       headerAlign: "center",
       width: 140,
       renderCell: (params) => {
-        return (
-          <p>
-            {params.value === 0
-              ? "در مبدا "
-              : params.value === 2
-              ? "درحال حمل"
-              : "درمقصد"}
-          </p>
-        );
+        return <p>{params.value === 0 ? 'در مبدا ' : params.value === 2 ?'درحال حمل' : 'درمقصد'}</p>;
       },
     },
     {
@@ -386,8 +167,7 @@ function BillingInformation(props) {
       width: 110,
       renderCell: (params) => (
         <>
-          {/* {setParam(params)} */}
-          <MoreHorizOutlinedIcon onClick={(e) => handleOpenMenu(e)}>
+          <MoreHorizOutlinedIcon onClick={handleOpenMenu}>
             move_vert
           </MoreHorizOutlinedIcon>
           {renderMenu(params.row)}

@@ -21,7 +21,7 @@ export default function AddressForm(props) {
             options={props.goodTypes}
             // open={true}
             getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setType(value.id)}
+            onChange={(e , value)=> props.setType(value.ID)}
             renderInput={(params) => (
               <TextField variant="standard" 
               {...params}

@@ -1,10 +1,10 @@
 
-// @mui material components
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
-
+import { Alert } from "@mui/material";
 // Material Dashboard 2 React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -14,8 +14,42 @@ import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 
 // Billing page components
 import BillingInformation from "layouts/billing/components/BillingInformation";
+import { connect } from "react-redux";
+import { setUserID, setCityID ,setData2} from "components/store/actions";
+import { setBarData } from "components/store/actions";
 
-function Notifications() {
+function Notifications(props) {
+  const [open, setOpen] = React.useState(false);
+  const [report, setReport] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const getData = async (e) => {
+    var bodyFormData = new FormData();
+    const local = JSON.parse(localStorage.getItem('key'))
+    bodyFormData.append("userID", local.userInfo.ID);
+    bodyFormData.append("role", local.role);
+    bodyFormData.append("cityID", local.userInfo.cityID);
+    try {
+      setLoading(true);
+      const response = await fetch("https://hagbaar.com/api/bar/getLoadBars", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
+      });
+      const data = await response.json();
+      setReport(data.bars);
+      setLoading(false);
+      if (error !== "0") {
+        setError(data.detail);
+      }
+    } catch (e) {
+      // handleClickOpen();
+      setError(e.detail);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [1]);
   return (
     <DashboardLayout>
       <DashboardNavbar/>
@@ -23,7 +57,13 @@ function Notifications() {
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <BillingInformation title='بارهای درحال حمل'/>
+            {loading === true ? (
+                <BillingInformation
+                  report={report}
+                  title='بارهای درحال حمل'                />
+              ) : (
+                <Alert severity="error">{error}</Alert>
+              )}
             </Grid>
           </Grid>
         </Box>
@@ -33,4 +73,19 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+const mapStateToProps = (state) => ({
+  userId: state.userId,
+  cityId: state.cityId,
+  barData: state.barData,
+  data2: state.data2
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserID: (value) => dispatch(setUserID(value)),
+    setCityID: (value) => dispatch(setCityID(value)),
+    setBarData: (value) => dispatch(setBarData(value)),
+    setData2: (value) => dispatch(setData2(value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

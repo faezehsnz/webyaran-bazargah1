@@ -22,7 +22,6 @@ import Footer from "examples/Footer";
 
 function Cover(props) {
   const [value, setValue] = React.useState(0);
-  console.log(props.userId)
   return (
     <CoverLayout image={bgImage} >
       {value == 1 ? (

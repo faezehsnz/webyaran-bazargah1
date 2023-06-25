@@ -14,20 +14,20 @@ import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 // Billing page components
 import BillingInformation from "layouts/billing/components/BillingInformation";
 import { connect } from "react-redux";
-import { setUserID, setCityID } from "components/store/actions";
-import { setBarData } from "components/store/actions";
+import { setUserID, setCityID ,setData2} from "components/store/actions";
+import { setBarData ,setID} from "components/store/actions";
 import { Alert } from "@mui/material";
 
 function Billing(props) {
-  const [open, setOpen] = React.useState(false);
   const [report, setReport] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const getData = async (e) => {
     var bodyFormData = new FormData();
-    bodyFormData.append("userID", 10);
-    bodyFormData.append("role", props.userId);
-    bodyFormData.append("cityID", props.cityId);
+    const local = JSON.parse(localStorage.getItem('key'))
+    bodyFormData.append("userID", local.userInfo.ID);
+    bodyFormData.append("role", local.role);
+    bodyFormData.append("cityID", local.userInfo.cityID);
     try {
       setLoading(true);
       const response = await fetch("https://hagbaar.com/api/bar/getBars", {
@@ -56,19 +56,20 @@ function Billing(props) {
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              {report != null ? (
+              {report !== null ? (
                 <BillingInformation
                   report={report}
                   title="بارهای در صف پذیرش"
                 />
               ) : (
-                <Alert severity="error">{error}</Alert>
+                <Alert severity="error">{error == null ? 'با مشخصات شما هیچ باری وجود ندارد' : error}</Alert>
               )}
             </Grid>
           </Grid>
         </Box>
       </Box>
       {/* <Footer /> */}
+      
     </DashboardLayout>
   );
 }
@@ -76,6 +77,9 @@ const mapStateToProps = (state) => ({
   userId: state.userId,
   cityId: state.cityId,
   barData: state.barData,
+  id:state.id,
+  data2:state.data2,
+  data:state.data
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -83,6 +87,9 @@ const mapDispatchToProps = (dispatch) => {
     setUserID: (value) => dispatch(setUserID(value)),
     setCityID: (value) => dispatch(setCityID(value)),
     setBarData: (value) => dispatch(setBarData(value)),
+    setID: (value) => dispatch(setID(value)),
+    setData2: (value) => dispatch(setData2(value)),
+
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Billing);

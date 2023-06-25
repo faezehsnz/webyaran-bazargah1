@@ -30,19 +30,23 @@ import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
-import {routes2} from "routes";
-import {routes3} from "routes";
+import { routes2 } from "routes";
+import { routes3 } from "routes";
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
-import { Provider } from 'react-redux'
-import { store } from 'components/store';
+import {
+  useMaterialUIController,
+  setMiniSidenav,
+  setOpenConfigurator,
+} from "context";
+import { Provider } from "react-redux";
+import { store } from "components/store";
 
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-import { setType ,setMobile , setUserID } from "components/store/actions";
+import { setType, setMobile, setUserID } from "components/store/actions";
 import { connect } from "react-redux";
-import 'App.css'
+import "App.css";
 import Rouess from "components/routes.js";
 
 function App(props) {
@@ -89,7 +93,8 @@ function App(props) {
   };
 
   // Change the openConfigurator state
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpen = () =>
+    setOpenConfigurator(dispatch, !openConfigurator);
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -98,49 +103,56 @@ function App(props) {
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
-    
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
-      
       if (route.collapse) {
         return getRoutes(route.collapse);
       }
 
       if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
+        return (
+          <Route
+            exact
+            path={route.route}
+            element={route.component}
+            key={route.key}
+          />
+        );
       }
 
       return null;
     });
-    
+
   return (
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={themeRTL}>
-      <Provider store={store}>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Material Dashboard 2"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-          </>
-        )}
-         <Rouess />
-        </Provider>
-      </ThemeProvider>
-    </CacheProvider>
+    <Provider store={store}>
+      <CacheProvider value={rtlCache}>
+        <ThemeProvider theme={themeRTL}>
+          <CssBaseline />
+          {layout === "dashboard" && (
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={
+                  (transparentSidenav && !darkMode) || whiteSidenav
+                    ? brandDark
+                    : brandWhite
+                }
+                brandName="Material Dashboard 2"
+                routes={routes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+            </>
+          )}
+          <Rouess />
+        </ThemeProvider>
+      </CacheProvider>
+    </Provider>
   );
 }
 
-
-
-export default App
+export default App;
