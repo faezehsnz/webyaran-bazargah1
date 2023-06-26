@@ -46,6 +46,7 @@ function Billing(props) {
       setError(e.detail);
     }
   };
+  console.log()
   useEffect(() => {
     getData();
   }, [1]);
@@ -56,7 +57,7 @@ function Billing(props) {
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              {report !== null ? (
+              {report !== [] ? (
                 <BillingInformation
                   report={report}
                   title="بارهای در صف پذیرش"

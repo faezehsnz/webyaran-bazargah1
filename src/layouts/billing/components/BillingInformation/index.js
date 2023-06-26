@@ -336,47 +336,41 @@ function BillingInformation(props) {
       width: 160,
     },
     {
-      field: "the_status",
-      headerName: "وضعیت حمل",
-      headerAlign: "center",
+      field: 'the_status',
+      headerName: 'وضعیت حمل',
+      headerAlign: 'center',
       width: 250,
       renderCell: (params) => {
         return (
           <p>
-            {params.value === 0
-              ? "در انتظار پذیرش"
-              : params.value === 3 ? " پذیرش شده توسط " +
-                params.row.driverName.name +
-                params.row.driverName.lastName :null}
+            {params.value == 0
+              ? 'در انتظار پذیرش'
+              : params.value > 0
+              ? ' پذیرش شده توسط ' + params.row.driverName.name + params.row.driverName.lastName
+              : null}
           </p>
         );
-      },
+      }
     },
     {
-      field: "transportationCompani",
-      headerName: "شرکت حمل",
-      headerAlign: "center",
-      width: 140,
-      renderCell: (params) => {
-        return <p>{params.value === 0 ? "در انتظار " : "پذیرش شده"}</p>;
-      },
-    },
-    {
-      field: "receipt",
-      headerName: "وضعیت تحویل",
-      headerAlign: "center",
+      field: 'transportationCompani',
+      headerName: 'شرکت حمل',
+      headerAlign: 'center',
       width: 140,
       renderCell: (params) => {
         return (
-          <p>
-            {params.value === 0
-              ? "در مبدا "
-              : params.value === 2
-              ? "درحال حمل"
-              : "درمقصد"}
-          </p>
+          <p>{params.value == 0 ? 'در انتظار ' : params.value > 0 ? ' پذیرش شده توسط ' + params.row.hamlCompanyName.brandName : null}</p>
         );
-      },
+      }
+    },
+    {
+      field: 'receipt',
+      headerName: 'وضعیت تحویل',
+      headerAlign: 'center',
+      width: 140,
+      renderCell: (params) => {
+        return <p>{params.value == 0 ? 'در انتظار حمل ' : params.value == 2 ? 'درحال حمل' : 'درمقصد'}</p>;
+      }
     },
     {
       field: "asssss",

@@ -57,10 +57,10 @@ function Notifications(props) {
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-            {loading === true ? (
+            {report != [] ? (
                 <BillingInformation
                   report={report}
-                  title='بارهای درحال حمل'                />
+                  title='بارهای درحال حمل'/>
               ) : (
                 <Alert severity="error">{error}</Alert>
               )}
