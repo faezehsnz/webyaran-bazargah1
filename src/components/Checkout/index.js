@@ -29,7 +29,7 @@ const steps = [
   "اطلاعات مالی",
   // "بازبینی",
 ];
-
+import City from './city.json'
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme({
   fontFamily: "IRANSansWeb",
@@ -37,6 +37,7 @@ const defaultTheme = createTheme({
 
 export default function Checkout() {
   const [loading, setLoading] = React.useState("1");
+  const [loading2, setLoading2] = React.useState("1");
   const [cities, setCities] = React.useState("");
   const [goodTypes, setGoodTypes] = React.useState(null);
   const [carTypes, setCarTypes] = React.useState(null);
@@ -114,14 +115,6 @@ export default function Checkout() {
             type={type}
           />
         );
-      // case 1:
-      //   return (
-      //     <PaymentForm
-      //       setCoverTypeCarFeatures={setCoverTypeCarFeatures}
-      //       setMechanism={setMechanism}
-      //       carTypes={carTypes != null && carTypes}
-      //     />
-      //   );
       case 1:
         return (
           <MoreInfoForm
@@ -155,7 +148,8 @@ export default function Checkout() {
   }
   const postInfo = async (e) => {
     var bodyFormData = new FormData();
-    bodyFormData.append("userID", 3);
+    const local = JSON.parse(localStorage.getItem('key'))
+    bodyFormData.append("userID", local.userInfo.ID);
     bodyFormData.append("type", type);
     bodyFormData.append("packing", packing);
     bodyFormData.append("weight", weight);
@@ -222,16 +216,19 @@ export default function Checkout() {
     } catch (e) {}
   };
   const getData2 = async (e) => {
-    try {
-      const response = await fetch(
-        "https://hagbaar.com/api/Generals/getCities"
-        // {mode:'cors' ,method:'POST'}
-      );
-      const data = await response.json();
-      setCities(data.cities.map((option) => option));
-    } catch (e) {
-      // setError(e.message);
-    }
+    setLoading2("1");
+    // try {
+    //   const response = await fetch(
+    //     "https://hagbaar.com/api/Generals/getCities"
+    //     // {mode:'cors' ,method:'POST'}
+    //   );
+    //   const data = await response.json();
+// console.log(City.cities.map((option) => option))
+      setCities(City.cities.map((option) => option));
+      setLoading2("2");
+    // } catch (e) {
+    //   // setError(e.message);
+    // }
   };
   const getData3 = async (e) => {
     try {
@@ -306,7 +303,7 @@ export default function Checkout() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {loading === "2" ? (
+              {loading === "2" && loading2 === "2" ? (
                 <>{getStepContent(activeStep)}</>
               ) : loading === "3" ? (
                 <Alert variant="filled" severity="warning">

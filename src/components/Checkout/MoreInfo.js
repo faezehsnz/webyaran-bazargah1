@@ -37,12 +37,22 @@ export default function MoreInfoForm(props) {
             <InputLabel id="demo-simple-select-standard-label">
               شهر مبدا*
             </InputLabel> */}
-          <Autocomplete
+            <Grid item xs={12} sm={12}>
+          <TextField
+            id="firstName"
+            name="firstName"
+            label="شهر مبدا*"
+            fullWidth
+            variant="standard"
+            onChange={(e) => props.setOrigin(e.target.value)}
+          />
+        </Grid>
+          {/* <Autocomplete
             disablePortal
             id="clear-on-escape"
             options={props.cities != null ? props.cities : null}
             getOptionLabel={(option) => option.sazmaniCityName}
-            onChange={(e, value) => props.setOrigin(value.ID)}
+            onChange={(e, value) => props.setOrigin(value)}
             renderInput={(params) => (
               <TextField
                 variant="standard"
@@ -54,7 +64,7 @@ export default function MoreInfoForm(props) {
                 label="مبدا"
               />
             )}
-          />
+          /> */}
         </Grid>
         <Grid item xs={12} sm={2}>
           <TextField
@@ -102,7 +112,7 @@ export default function MoreInfoForm(props) {
           />
         </Grid>
         <Grid item xs={12} sm={2}>
-          <Autocomplete
+          {/* <Autocomplete
             disablePortal
             id="clear-on-escape"
             options={props.cities != null ? props.cities : null}
@@ -119,7 +129,22 @@ export default function MoreInfoForm(props) {
                 label="مقصد"
               />
             )}
+          /> */}
+          {/* <Grid item xs={12} sm={2}> */}
+          {/* <FormControl variant="standard" fullWidth>
+            <InputLabel id="demo-simple-select-standard-label">
+              شهر مبدا*
+            </InputLabel> */}
+            <Grid item xs={12} sm={12}>
+          <TextField
+            id="firstName"
+            name="firstName"
+            label="شهر مقصد*"
+            fullWidth
+            variant="standard"
+            onChange={(e) => props.setDestination(e.target.value)}
           />
+        </Grid>
         </Grid>
         <Grid item xs={12} sm={2}>
           <TextField

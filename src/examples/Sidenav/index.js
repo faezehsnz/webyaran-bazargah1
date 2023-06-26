@@ -69,6 +69,7 @@ function Sidenav({ color,userId, brand, brandName, routes, ...rest }) {
   const local = JSON.parse(localStorage.getItem('key'))
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
+  if(local != null){
   if(local.role == 1){
     var x = e.filter(e => e.key !== 'dashboard' && e.key !== 'addbar' && e.key !== 'addbarn')
   }
@@ -77,8 +78,8 @@ function Sidenav({ color,userId, brand, brandName, routes, ...rest }) {
   }
   if(local.role == 3){
     var x = e.filter(e => e.key !== 'addbar')
-  }
-  if(local.role == null){
+  }}
+  else{
     var x = e
   }
   const renderRoutes = x.map(({ type, name, icon, title, noCollapse, key, href, route }) => {

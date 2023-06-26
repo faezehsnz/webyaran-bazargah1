@@ -345,9 +345,9 @@ function BillingInformation(props) {
           <p>
             {params.value === 0
               ? "در انتظار پذیرش"
-              : " پذیرش شده توسط " +
+              : params.value === 3 ? " پذیرش شده توسط " +
                 params.row.driverName.name +
-                params.row.driverName.lastName}
+                params.row.driverName.lastName :null}
           </p>
         );
       },
