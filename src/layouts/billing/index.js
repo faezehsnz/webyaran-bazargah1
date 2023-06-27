@@ -14,11 +14,12 @@ import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 // Billing page components
 import BillingInformation from "layouts/billing/components/BillingInformation";
 import { connect } from "react-redux";
-import { setUserID, setCityID ,setData2} from "components/store/actions";
-import { setBarData ,setID} from "components/store/actions";
+import { setUserID, setCityID ,setShowData ,setBarData ,setID} from "components/store/actions";
 import { Alert } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 function Billing(props) {
+  const navigate = useNavigate();
+
   const [report, setReport] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -56,7 +57,7 @@ function Billing(props) {
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              {report !== null ? (
+              {report !== [] ? (
                 <BillingInformation
                   report={report}
                   title="بارهای در صف پذیرش"
@@ -78,7 +79,7 @@ const mapStateToProps = (state) => ({
   cityId: state.cityId,
   barData: state.barData,
   id:state.id,
-  data2:state.data2,
+  showID:state.showID,
   data:state.data
 });
 
@@ -88,7 +89,7 @@ const mapDispatchToProps = (dispatch) => {
     setCityID: (value) => dispatch(setCityID(value)),
     setBarData: (value) => dispatch(setBarData(value)),
     setID: (value) => dispatch(setID(value)),
-    setData2: (value) => dispatch(setData2(value)),
+    setShowData: (value) => dispatch(setShowData(value)),
 
   };
 };

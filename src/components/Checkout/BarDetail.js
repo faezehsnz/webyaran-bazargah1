@@ -50,7 +50,7 @@ export default function AddressForm(props) {
             id="clear-on-escape"
             options={props.packing}
             getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setPacking(value.id)}
+            onChange={(e , value)=> props.setPacking(value.ID)}
             renderInput={(params) => (
               <TextField variant="standard" 
               {...params}

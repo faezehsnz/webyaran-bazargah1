@@ -20,9 +20,9 @@ function Rouess(props) {
   return (
     <Routes>
       <Route index element={<SignIn />} />
-      {local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null}
-      {local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null}
-      {local.role == 2 ?  <Route path="dashboard" element={<Dashboard />} /> :null}
+      {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
+      {local != null ? local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null :null}
+      <Route path="dashboard" element={<Dashboard />} />
       <Route path="reservation" element={<Reservation />} />
       <Route path="waiting" element={<Billing />} />
       <Route path="havale" element={<RTL />} />

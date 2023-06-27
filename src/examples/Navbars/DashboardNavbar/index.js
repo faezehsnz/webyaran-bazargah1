@@ -35,6 +35,7 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
 } from "context";
+import { Typography } from "@mui/material";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -104,6 +105,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       return colorValue;
     },
   });
+  const local = JSON.parse(localStorage.getItem('key'))
 
   return (
     <AppBar
@@ -145,6 +147,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               </IconButton>
               {renderMenu()}
             </MDBox>
+            <Typography>{local !== null && local.role == 1 ?'راننده' : local.role == 2 ? 'صاحب کالا' : local.role == 3 ? 'شرکت حمل' :null}</Typography>
           </MDBox>
         )}
       </Toolbar>

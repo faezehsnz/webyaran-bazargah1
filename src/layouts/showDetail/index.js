@@ -5,15 +5,11 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
-import Box from "@mui/material/Box";
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import DataTable from "examples/Tables/DataTable";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import BillingInformation from "layouts/billing/components/BillingInformation";
 // Data
 
 // RTL components
@@ -22,16 +18,15 @@ import Projects from "layouts/rtl/components/Projects";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setDirection } from "context";
 import Map from "./map";
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
 import { Alert, Typography } from "@mui/material";
-import BCGChart from "./test";
+import { connect } from "react-redux";
+import { setShowData } from "components/store/actions";
+import Table from "./table";
+import DriverTable from "./driverTable";
 
-function ShowDetail() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+function ShowDetail(props) {
   const [, dispatch] = useMaterialUIController();
-
+  console.log(props.showID.type_of_wage)
   // Changing the direction to rtl
   useEffect(() => {
     setDirection(dispatch, "rtl");
@@ -63,17 +58,17 @@ function ShowDetail() {
         >
           <Grid item xs={12} md={3.5}>
             <Alert variant="filled" severity="success" sx={{ color: "#FFF" }}>
-              وضعیت بار فعال است!
+              وضعیت بار {props.showID !== null ? props.showID.active == 1 ? 'فعال ' : 'غیرفعال'  :'نامشخص'} است!
             </Alert>
           </Grid>
           <Grid item xs={12} md={3.5}>
             <Alert variant="filled" severity="info">
-              بار در وضعیت "در انتظار" قرار دارد
+              بار در وضعیت {props.showID !== null ? props.showID.receipt == 0 ? 'در انتظار حمل ' : props.showID.receipt == 2 ? 'درحال حمل' : 'درمقصد' :'نامشخص'} قرار دارد
             </Alert>
           </Grid>
           <Grid item xs={12} md={3.5}>
             <Alert variant="filled" severity="warning" sx={{ color: "#FFF" }}>
-              کرایه در "مبداء"
+              {props.showID !== null ? props.showID.type_of_wage == 0 ? "کرایه در مبدا" :props.showID.type_of_wage == 1 ? "کرایه در مقصد" : 'نامشخص'  :null}
             </Alert>
           </Grid>
         </Grid>
@@ -93,13 +88,9 @@ function ShowDetail() {
                 <Typography color="#FFF">اطلاعات بار</Typography>
               </MDBox>
               <MDBox pt={3}>
-                {/* <DataTable
-                table={{ columns, rows }}
-                isSorted={false}
-                entriesPerPage={false}
-                showTotalEntries={false}
-                noEndBorder
-              /> */}
+                {props.showID !== null ?
+                <Table report={props.showID}/>
+               : 'اطلاعاتی جهت نمایش وجود ندارد'}
               </MDBox>
             </Card>
           </Grid>
@@ -118,13 +109,10 @@ function ShowDetail() {
                 <Typography color="#FFF">اطلاعات راننده و ماشین</Typography>
               </MDBox>
               <MDBox pt={3}>
-                {/* <DataTable
-                table={{ columns, rows }}
-                isSorted={false}
-                entriesPerPage={false}
-                showTotalEntries={false}
-                noEndBorder
-              /> */}
+              {props.showID !== null ?
+                <DriverTable report={props.showID}/>
+               : 'اطلاعاتی جهت نمایش وجود ندارد'}
+                
               </MDBox>
             </Card>
           </Grid>
@@ -145,20 +133,13 @@ function ShowDetail() {
             </MDBox>
             <MDBox pt={3}>
               <Typography mx={3} variant="h6">
-                زمان بارگیری:
+                زمان بارگیری:{props.showID !== null ? new Date(props.showID.loading_time * 1000).toLocaleDateString("fa-IR"):null}
               </Typography>
               <Typography mx={3} mt={2} variant="h6">
-                زمان تخلیه:
+                زمان تخلیه: {props.showID !== null ? new Date(props.showID.discharge_time * 1000).toLocaleDateString("fa-IR"):null}
               </Typography>
 
               <Map />
-              {/* <DataTable
-                table={{ columns, rows }}
-                isSorted={false}
-                entriesPerPage={false}
-                showTotalEntries={false}
-                noEndBorder
-              /> */}
             </MDBox>
           </Card>
         </Grid>
@@ -168,5 +149,13 @@ function ShowDetail() {
     </DashboardLayout>
   );
 }
+const mapStateToProps = (state) => ({
+  showID: state.showID
+});
 
-export default ShowDetail;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setShowData: (value) => dispatch(setShowData(value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ShowDetail);

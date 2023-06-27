@@ -32,17 +32,27 @@ export default function MoreInfoForm(props) {
             onChange={(e) => props.setSender(e.target.value)}
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={3}>
           {/* <FormControl variant="standard" fullWidth>
             <InputLabel id="demo-simple-select-standard-label">
               شهر مبدا*
             </InputLabel> */}
+            {/* <Grid item xs={12} sm={12}>
+          <TextField
+            id="firstName"
+            name="firstName"
+            label="شهر مبدا*"
+            fullWidth
+            variant="standard"
+            onChange={(e) => props.setOrigin(e.target.value)}
+          />
+        </Grid> */}
           <Autocomplete
             disablePortal
             id="clear-on-escape"
             options={props.cities != null ? props.cities : null}
             getOptionLabel={(option) => option.sazmaniCityName}
-            onChange={(e, value) => props.setOrigin(value.ID)}
+            onChange={(e, value) => props.setOrigin(value)}
             renderInput={(params) => (
               <TextField
                 variant="standard"
@@ -67,24 +77,26 @@ export default function MoreInfoForm(props) {
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker
                 ampm={false}
                 label="زمان بارگیری(از)"
                 onChange={(e) => props.setLoadingTime(e)}
+                minDate={new Date()}
               />
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker
                 ampm={false}
                 label="زمان بارگیری(تا)"
                 onChange={(e) => props.setDownloadInterval(e)}
+                minDate={props.loadingTime}
               />
             </DemoContainer>
           </LocalizationProvider>
@@ -99,9 +111,10 @@ export default function MoreInfoForm(props) {
             onChange={(e) => props.setReceiver(e.target.value)}
             fullWidth
             variant="standard"
+            
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={3}>
           <Autocomplete
             disablePortal
             id="clear-on-escape"
@@ -132,24 +145,26 @@ export default function MoreInfoForm(props) {
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker
                 ampm={false}
                 label="زمان تخلیه(از)"
                 onChange={(e) => props.setDischargeTime(e)}
+                minDate={props.downloadInterval}
               />
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker
                 ampm={false}
                 label="زمان تخلیه(تا)"
                 onChange={(e) => props.setDrainInterval(e)}
+                minDate={props.dischargeTime}
               />
             </DemoContainer>
             {/* </DemoItem> */}
