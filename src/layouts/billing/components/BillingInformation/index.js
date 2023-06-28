@@ -85,7 +85,6 @@ function BillingInformation(props) {
       setError(e.detail);
     }
   };
-  console.log(props.showID)
   const getData1 = async (params) => {
     var bodyFormData = new FormData();
     const local = JSON.parse(localStorage.getItem("key"));
@@ -233,9 +232,8 @@ function BillingInformation(props) {
           title="ویرایش"
         />
         <NotificationItem icon={<DeleteOutlineOutlinedIcon />} title="حذف" />
-        {props.showID !== null ? <>
+        {props.showID !== [] ? <>
         {local.role == 3 &&
-        props.showID !== null &&
         props.showID.the_status == 0 &&
         props.showID.transportationCompani == 0 ? (
           <NotificationItem
@@ -244,7 +242,7 @@ function BillingInformation(props) {
             onClick={() => getData(props.showID)}
           />
         ) : local.role == 1 &&
-        props.showID !== null &&
+        props.showID !== [] &&
         props.showID.transportationCompani > 0 &&
         props.showID.the_status == 0 ? (
           <NotificationItem
@@ -254,7 +252,6 @@ function BillingInformation(props) {
           />
         ) : local.role == 3 &&
         props.showID.the_status > 0 &&
-          props.showID !== null &&
           props.showID.transportationCompani > 0 ? (
           <NotificationItem
             icon={<MenuOutlinedIcon />}
@@ -262,7 +259,6 @@ function BillingInformation(props) {
             onClick={() => getData2(props.showID)}
           />
         ) : local.role == 3 &&
-        props.showID !== null &&
         props.showID.the_status > 0 &&
         props.showID.transportationCompani > 0 &&
         props.showID.havale_id > 0 &&
@@ -273,7 +269,6 @@ function BillingInformation(props) {
             onClick={() => getData3(props.showID)}
           />
         ) : props.showID.the_status > 0 &&
-          props.showID !== null &&
           props.showID.receipt == 2 &&
           props.showID.active == 0 ? (
           <NotificationItem
@@ -346,7 +341,9 @@ function BillingInformation(props) {
       headerAlign: 'center',
       width: 250,
       renderCell: (params) => {
+        
         return (
+          
           <p>
             {params.value == 0
               ? 'در انتظار پذیرش'
@@ -361,7 +358,7 @@ function BillingInformation(props) {
       field: 'transportationCompani',
       headerName: 'شرکت حمل',
       headerAlign: 'center',
-      width: 180,
+      width: 220,
       renderCell: (params) => {
         return (
           <p>{params.value == 0 ? 'در انتظار ' : params.value > 0 ? ' پذیرش شده توسط ' + params.row.hamlCompanyName.brandName : null}</p>

@@ -26,7 +26,6 @@ import DriverTable from "./driverTable";
 
 function ShowDetail(props) {
   const [, dispatch] = useMaterialUIController();
-  console.log(props.showID.type_of_wage)
   // Changing the direction to rtl
   useEffect(() => {
     setDirection(dispatch, "rtl");
@@ -58,17 +57,17 @@ function ShowDetail(props) {
         >
           <Grid item xs={12} md={3.5}>
             <Alert variant="filled" severity="success" sx={{ color: "#FFF" }}>
-              وضعیت بار {props.showID !== null ? props.showID.active == 1 ? 'فعال ' : 'غیرفعال'  :'نامشخص'} است!
+              وضعیت بار {props.showID !== [] ? props.showID.active == 1 ? 'فعال ' : 'غیرفعال'  :'نامشخص'} است!
             </Alert>
           </Grid>
           <Grid item xs={12} md={3.5}>
             <Alert variant="filled" severity="info">
-              بار در وضعیت {props.showID !== null ? props.showID.receipt == 0 ? 'در انتظار حمل ' : props.showID.receipt == 2 ? 'درحال حمل' : 'درمقصد' :'نامشخص'} قرار دارد
+              بار در وضعیت {props.showID !== [] ? props.showID.receipt == 0 ? 'در انتظار حمل ' : props.showID.receipt == 2 ? 'درحال حمل' : 'درمقصد' :'نامشخص'} قرار دارد
             </Alert>
           </Grid>
           <Grid item xs={12} md={3.5}>
             <Alert variant="filled" severity="warning" sx={{ color: "#FFF" }}>
-              {props.showID !== null ? props.showID.type_of_wage == 0 ? "کرایه در مبدا" :props.showID.type_of_wage == 1 ? "کرایه در مقصد" : 'نامشخص'  :null}
+              {props.showID !== [] ? props.showID.type_of_wage == 0 ? "کرایه در مبدا" :props.showID.type_of_wage == 1 ? "کرایه در مقصد" : 'نامشخص'  :null}
             </Alert>
           </Grid>
         </Grid>
@@ -88,7 +87,7 @@ function ShowDetail(props) {
                 <Typography color="#FFF">اطلاعات بار</Typography>
               </MDBox>
               <MDBox pt={3}>
-                {props.showID !== null ?
+                {props.showID !== [] ?
                 <Table report={props.showID}/>
                : 'اطلاعاتی جهت نمایش وجود ندارد'}
               </MDBox>
@@ -109,7 +108,7 @@ function ShowDetail(props) {
                 <Typography color="#FFF">اطلاعات راننده و ماشین</Typography>
               </MDBox>
               <MDBox pt={3}>
-              {props.showID !== null ?
+              {props.showID !== [] ?
                 <DriverTable report={props.showID}/>
                : 'اطلاعاتی جهت نمایش وجود ندارد'}
                 
@@ -133,10 +132,10 @@ function ShowDetail(props) {
             </MDBox>
             <MDBox pt={3}>
               <Typography mx={3} variant="h6">
-                زمان بارگیری:{props.showID !== null ? new Date(props.showID.loading_time * 1000).toLocaleDateString("fa-IR"):null}
+                زمان بارگیری:{props.showID !== [] ? new Date(props.showID.loading_time * 1000).toLocaleDateString("fa-IR"):null}
               </Typography>
               <Typography mx={3} mt={2} variant="h6">
-                زمان تخلیه: {props.showID !== null ? new Date(props.showID.discharge_time * 1000).toLocaleDateString("fa-IR"):null}
+                زمان تخلیه: {props.showID !== [] ? new Date(props.showID.discharge_time * 1000).toLocaleDateString("fa-IR"):null}
               </Typography>
 
               <Map />

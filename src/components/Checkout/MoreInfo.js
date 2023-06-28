@@ -77,7 +77,7 @@ export default function MoreInfoForm(props) {
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker
@@ -89,7 +89,7 @@ export default function MoreInfoForm(props) {
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker
@@ -145,7 +145,7 @@ export default function MoreInfoForm(props) {
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker
@@ -157,7 +157,7 @@ export default function MoreInfoForm(props) {
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
             <DemoContainer components={["DateTimePicker"]}>
               <DateTimePicker

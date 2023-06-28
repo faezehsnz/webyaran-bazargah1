@@ -8,7 +8,7 @@ export const initialState = {
   cityId: null,
   barData: null,
   data2: null,
-  showID:null
+  showID:[]
 };
 // ==============================|| COMBINE REDUCER ||============================== //
 
