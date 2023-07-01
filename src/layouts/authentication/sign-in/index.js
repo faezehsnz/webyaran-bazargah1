@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import LoadingButton from "@mui/lab/LoadingButton";
-
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 // Material Dashboard 2 React components
 import {
   Box,
@@ -40,7 +41,8 @@ function Basic() {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [mobile, setMobile] = useState(null);
+  const [role, setRole] = useState(null);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -51,34 +53,31 @@ function Basic() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const login = async (e) => {
-    if (username === "123456" && password === "123456") {
-      window.open(`/waiting`, "_self");
-    }else{
-      toast.error('نام کاربری یا رمز عبور اشتباه است')
-    }
-    // var bodyFormData = new FormData();
-    // if (username != null) {
-    //   bodyFormData.append("username", username);
-    // }
-    // if (password != null) {
-    //   bodyFormData.append("password", password);
-    // }
+    var bodyFormData = new FormData();
+    bodyFormData.append('role', role);
+    bodyFormData.append('mobile', username);
+    bodyFormData.append('password', password);
 
-    // try {
-    //   setLoading(true);
-    //   const response = await fetch(
-    //     // "https://www.vira-rte.com/api/barnameh/getBarnamehs",
-    //     { mode: "cors", method: "POST", body: bodyFormData }
-    //   );
-    //   const data = await response.json();
-    //   localStorage.setItem("token", data.access_token);
-    //   setTimeout(function () {
-    //     window.open(`/dashboard`, "_self");
-    //   }, 1000);
-    //   setLoading(false);
-    // } catch (e) {
-    //   setError(e.message);
-    // }
+    try {
+      const response = await fetch('https://hagbaar.com/api/auth/loginByPass', {
+        mode: 'cors',
+        method: 'POST',
+        body: bodyFormData
+      });
+      const data = await response.json();
+      console.log(data.error);
+      if (data.error == 0) {
+        // props.setData2(data);
+        localStorage.setItem('key', JSON.stringify(data));
+        navigate('/dashboard/default');
+      }
+      if (data.error != 0) {
+        toast.error(data.detail);
+      }
+    } catch (e) {
+      toast(e.detail);
+      // setError(e.message);
+    }
   };
   return (
     <BasicLayout image={bgImage}>
@@ -134,6 +133,25 @@ function Basic() {
                   }
                 />
               </FormControl>
+            </Box>
+            <Box mt={3}>
+            <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-standard-label">
+          نقش
+        </InputLabel>
+        <Select
+        variant="standard"
+          fullWidth
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          // value={props.type}
+          onChange={(event) => setRole(event.target.value)}
+        >
+          <MenuItem value={1}>راننده</MenuItem>
+          <MenuItem value={2}>صاحب کالا</MenuItem>
+          <MenuItem value={3}>شرکت حمل</MenuItem>
+        </Select>
+      </FormControl>
             </Box>
             <Box display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
