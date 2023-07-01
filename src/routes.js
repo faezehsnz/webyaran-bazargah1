@@ -15,6 +15,7 @@ import Ticket from "layouts/profile";
 import Canceled from "layouts/canceled";
 import Reservation from "layouts/reservation";
 import ShowDetail from "layouts/showDetail";
+import Accepted from 'layouts/reservation copy/index'
 const routes = [
   {
     type: "collapse",
@@ -39,6 +40,14 @@ const routes = [
     icon: <Icon fontSize="small">list_alt</Icon>,
     route: "/waiting",
     component: <Billing />,
+  },
+  {
+    type: "collapse",
+    name: "بارهای پذیرش شده",
+    key: "accepted",
+    icon: <Icon fontSize="small">list_alt</Icon>,
+    route: "/accepted",
+    component: <Accepted />,
   },
   {
     type: "collapse",

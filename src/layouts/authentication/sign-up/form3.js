@@ -62,6 +62,11 @@ function Form3(props) {
             <Button
               variant="contained"
               onClick={() => props.setValue(1)}
+              onKeyUp={(event) => {
+                if (event.ctrlKey && event.key == "Enter") {
+                  props.setValue(1)
+                }
+              }}
               fullWidth
             >
               بعدی

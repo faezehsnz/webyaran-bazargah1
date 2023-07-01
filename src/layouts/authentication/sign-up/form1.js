@@ -24,7 +24,7 @@ import {
   setCityID,
   setBarData,
   setID,
-  setShowData
+  setShowData,
 } from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -61,6 +61,7 @@ function Form1(props) {
   const [nationalCode, setNationalCode] = React.useState("");
   const [lisenceCode, setLisenceCode] = React.useState("");
   const [smartCode, setSmartCode] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [type, setType] = React.useState("");
   const [brandName, setBrandName] = React.useState("");
   const [sabtNumber, setSAbtNumber] = React.useState("");
@@ -87,6 +88,7 @@ function Form1(props) {
       bodyFormData.append("nationalCode", nationalCode);
       bodyFormData.append("ghavinameNumber", lisenceCode);
       bodyFormData.append("hoshmandNumber", smartCode);
+      bodyFormData.append("password", password);
       bodyFormData.append("cityID", 0);
       // props.setCityID(0)
     }
@@ -104,6 +106,7 @@ function Form1(props) {
         bodyFormData.append("adrres", address);
         bodyFormData.append("sabtNumber", sabtNumber);
         bodyFormData.append("brandName", brandName);
+        bodyFormData.append("password", password);
         bodyFormData.append("cityID", 1);
       }
       if (value == 1) {
@@ -118,6 +121,7 @@ function Form1(props) {
         bodyFormData.append("fatherName", fatherName);
         bodyFormData.append("phone", phone);
         bodyFormData.append("adrres", address);
+        bodyFormData.append("password", password);
         bodyFormData.append("cityID", 1);
       }
       // props.setCityID(0)
@@ -133,6 +137,7 @@ function Form1(props) {
       bodyFormData.append("hamlCode", hamlCode);
       bodyFormData.append("phone", phone);
       bodyFormData.append("adrres", address);
+      bodyFormData.append("password", password);
       bodyFormData.append("cityID", origin);
       // props.setCityID(origin)
     }
@@ -166,7 +171,7 @@ function Form1(props) {
     <Card
       sx={{
         marginTop: -25,
-        width: { md: "40vw"},
+        width: { md: "40vw" },
         marginLeft: { md: "-4vw", xs: "0px" },
       }}
     >
@@ -191,7 +196,7 @@ function Form1(props) {
         <Box component="form" role="form">
           {props.type == 1 ? (
             <>
-              <Box display="flex" justifyContent='space-around' mb={2}>
+              <Box display="flex" justifyContent="space-around" mb={2}>
                 <Box>
                   <InputLabel htmlFor="standard-adornment-password">
                     نام
@@ -266,9 +271,26 @@ function Form1(props) {
                   onChange={(e) => setSmartCode(e.target.value)}
                 />
               </Box>
+              <Box mb={2}>
+                <InputLabel htmlFor="standard-adornment-password">
+                  رمز عبور
+                </InputLabel>
+                <Input
+                  required
+                  type="number"
+                  variant="standard"
+                  fullWidth
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Box>
               <Box mt={4} mb={1}>
                 <Button
                   onClick={postInfo}
+                  onKeyUp={(event) => {
+                    if (event.ctrlKey && event.key == "Enter") {
+                      postInfo();
+                    }
+                  }}
                   // component={Link}
                   // to="/dashboard"
                   variant="contained"
@@ -290,34 +312,34 @@ function Form1(props) {
                   </AppBar>
                 </Grid>
                 <TabPanel value="0">
-                <Box display="flex" justifyContent='space-around' mb={2}>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Box>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام خانوادگی
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Box>
-              </Box>
+                  <Box display="flex" justifyContent="space-around" mb={2}>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </Box>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام خانوادگی
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </Box>
+                  </Box>
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       کدملی
@@ -393,6 +415,18 @@ function Form1(props) {
                       onChange={(e) => setaddress(e.target.value)}
                     />
                   </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      رمز عبور
+                    </InputLabel>
+                    <Input
+                      required
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Box>
                 </TabPanel>
                 <TabPanel value="1">
                   <Box mb={2}>
@@ -434,35 +468,35 @@ function Form1(props) {
                       onChange={(e) => setSAbtNumber(e.target.value)}
                     />
                   </Box>
-                  <Box display="flex" justifyContent='space-around' mb={2}>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام رابط
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Box>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام خانوادگی رابط
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Box>
-              </Box>
-                 
+                  <Box display="flex" justifyContent="space-around" mb={2}>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام رابط
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </Box>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام خانوادگی رابط
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </Box>
+                  </Box>
+
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       نام پدر رابط
@@ -500,6 +534,18 @@ function Form1(props) {
                       onChange={(e) => setaddress(e.target.value)}
                     />
                   </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      رمز عبور
+                    </InputLabel>
+                    <Input
+                      required
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Box>
                   {/* <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       کدملی رابط
@@ -520,6 +566,11 @@ function Form1(props) {
                   // component={Link}
                   // to="/dashboard"
                   onClick={postInfo}
+                  onKeyUp={(event) => {
+                    if (event.ctrlKey && event.key == "Enter") {
+                      postInfo();
+                    }
+                  }}
                   variant="contained"
                   fullWidth
                 >
@@ -650,11 +701,28 @@ function Form1(props) {
                   )}
                 />
               </Box>
+              <Box mb={2}>
+                <InputLabel htmlFor="standard-adornment-password">
+                  رمز عبور
+                </InputLabel>
+                <Input
+                  required
+                  type="number"
+                  variant="standard"
+                  fullWidth
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Box>
               <Box mt={4} mb={1}>
                 <Button
                   onClick={postInfo}
                   // component={Link}
                   // to="/dashboard"
+                  onKeyUp={(event) => {
+                    if (event.ctrlKey && event.key == "Enter") {
+                      postInfo();
+                    }
+                  }}
                   variant="contained"
                   fullWidth
                 >

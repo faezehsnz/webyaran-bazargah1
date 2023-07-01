@@ -19,9 +19,8 @@ export default function AddressForm(props) {
             disablePortal
             id="clear-on-escape"
             options={props.goodTypes}
-            // open={true}
             getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setType(value.id)}
+            onChange={(e , value)=> props.setType(value.ID)}
             renderInput={(params) => (
               <TextField variant="standard" 
               {...params}
@@ -38,6 +37,7 @@ export default function AddressForm(props) {
             id="lastName"
             name="lastName"
             label="شرح محموله"
+            defaultValue={props.data.cargo_description}
             onChange={(e) => props.setCargoDescription(e.target.value)}
             fullWidth
             autoComplete="family-name"
@@ -67,6 +67,7 @@ export default function AddressForm(props) {
           <Grid item xs={12} sm={2}>
             <TextField
               id="standard-start-adornment"
+              defaultValue={props.data.weight}
               variant="standard"
               label="وزن*"
               onChange={(e) => props.setWight(e.target.value)}
@@ -83,6 +84,7 @@ export default function AddressForm(props) {
               id="standard-start-adornment"
               variant="standard"
               label="عرض بار*"
+              defaultValue={props.data.thickness}
               onChange={(e) => props.setWidth(e.target.value)}
               dir="ltr"
               InputProps={{
@@ -97,6 +99,7 @@ export default function AddressForm(props) {
               id="standard-start-adornment"
               variant="standard"
               label="طول بار*"
+              defaultValue={props.data.width}
               onChange={(e) => props.setLength(e.target.value)}
               dir="ltr"
               InputProps={{
@@ -125,6 +128,7 @@ export default function AddressForm(props) {
               id="standard-start-adornment"
               variant="standard"
               label="تعداد"
+              defaultValue={props.data.number}
               onChange={(e) => props.setNumber(e.target.value)}
               dir="ltr"
               InputProps={{
@@ -163,6 +167,7 @@ export default function AddressForm(props) {
               <Input
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
+                defaultValue={props.data.cover_type_car_features}
                 // value={age}
                 // onChange={handleChange}
                 // onChange={(e) => props.setNumber(e.target.value)}

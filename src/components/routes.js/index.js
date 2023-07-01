@@ -15,13 +15,17 @@ import Dashboard from "layouts/dashboard";
 import { connect } from "react-redux";
 import Tables from "layouts/tables";
 import Tables2 from "layouts/tables copy";
+import Accepted from 'layouts/reservation copy/index'
+
 function Rouess(props) {
   const local = JSON.parse(localStorage.getItem('key'))
+  console.log(local.role)
   return (
     <Routes>
       <Route index element={<SignIn />} />
       {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
       {local != null ? local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null :null}
+      {local != null ? local.role == 3 ?  <Route path="accepted" element={<Accepted />} /> :null :null}
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="reservation" element={<Reservation />} />
       <Route path="waiting" element={<Billing />} />

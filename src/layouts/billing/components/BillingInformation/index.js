@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
-
+import City from "components/Checkout/data.json";
+import Bar from "components/Checkout/bar.json";
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { DataGrid, faIR, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  faIR,
+  gridColumnsTotalWidthSelector,
+  GridToolbar,
+} from "@mui/x-data-grid";
 // import { connect } from 'react-redux';
 // import { setData ,setReport } from '../../store/actions'
 import styled from "@emotion/styled";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import NotificationItem from "examples/Items/NotificationItem";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
@@ -24,11 +24,19 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { connect } from "react-redux";
-import { setUserID, setCityID ,setShowData ,setBarData} from "components/store/actions";
+import {
+  setUserID,
+  setCityID,
+  setShowData,
+  setBarData,
+} from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import FullScreenDialog from "../modal";
+
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+  // direction: 'rtl',
   "& .super-app-theme--2": {
     backgroundColor: "rgb(192, 216, 193)",
   },
@@ -47,15 +55,47 @@ function BillingInformation(props) {
   const [openMenu, setOpenMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [param, setParam] = React.useState(null);
+  const [packing, setPacking] = React.useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
-
-  const handleCloseMenu = () => setOpenMenu(false);
+  const [defaultP, setDefaultP] = React.useState(null);
+  const [defaultC, setDefaultC] = React.useState(null);
+  const [defaultD, setDefaultD] = React.useState(null);
+  const [cities, setCities] = React.useState([
+    {
+      ID: "1",
+      sazmaniCityXID: "26441030",
+      sazmaniCityName: "نوجه ده سادات",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "37.9098127",
+      Longitude: "46.9631703",
+      active: "1",
+    },
+    {
+      ID: "2",
+      sazmaniCityXID: "26441031",
+      sazmaniCityName: "کرگان",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "38.1067244",
+      Longitude: "48.4829618",
+      active: "1",
+    },
+  ]);
+  const [goodTypes, setGoodTypes] = React.useState(null);
+  const [carTypes, setCarTypes] = React.useState(null);
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
+
+  const handleCloseMenu = () => setOpenMenu(false);
+
   const local = JSON.parse(localStorage.getItem("key"));
   const getData = async (params) => {
     var bodyFormData = new FormData();
@@ -209,8 +249,52 @@ function BillingInformation(props) {
       setError(e.detail);
     }
   };
+  const getProps = async (e) => {
+    setCities(City.cities.map((option) => option));
+    setPacking(City.pakings.map((option) => option));
+    setCarTypes(City.mecanismTypes.map((option) => option));
+    setGoodTypes(Bar.goodTypes.map((option) => option));
+  };
+  const FindIndexPacking = () => {
+    if (props.showID !== [] && packing !== null) {
+      const e = packing.filter((i) => i.id == props.showID.packing);
+      setDefaultP(e);
+      console.log(e);
+    }
+  };
+console.log(props.showID)
+  const FindIndexCity = async () => {
+    if (props.showID !== [] && cities !== null) {
+      console.log(cities, props.showID);
+      const e = cities.filter((i) => i.ID == props.showID.origin);
+      setDefaultC(e);
+    }
+  };
+  const FindIndexDist = async () => {
+    if (props.showID !== [] && cities !== null) {
+      const e = cities.filter((i) => i.ID == props.showID.destination);
+      console.log(e)
+      setDefaultD(e);
+    }
+  };
+  console.log(defaultD);
+  useEffect(() => {
+    getProps();
+    FindIndexCity();
+    FindIndexPacking();
+    FindIndexDist();
+  }, [open]);
   const renderMenu = (params) => (
     <>
+      <FullScreenDialog
+        dd={defaultD}
+        dc={defaultC}
+        dp={defaultP}
+        data={props.showID !== null ? props.showID :null}
+        open={open}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+      />
       <Menu
         anchorEl={openMenu}
         anchorReference={null}
@@ -225,58 +309,73 @@ function BillingInformation(props) {
         <NotificationItem
           icon={<VisibilityOutlinedIcon />}
           title="نمایش"
-          onClick={() => navigate('/bar/show')}
+          onClick={() => navigate("/bar/show")}
         />
-        <NotificationItem
-          icon={<ModeEditOutlineOutlinedIcon />}
-          title="ویرایش"
-        />
+        {props.showID !== null ? (
+          <>
+            {props.showID.active == 1 ? (
+              <NotificationItem
+                onClick={handleClickOpen}
+                icon={<ModeEditOutlineOutlinedIcon />}
+                title="ویرایش"
+              />
+            ) : null}
+          </>
+        ) : null}
+
         <NotificationItem icon={<DeleteOutlineOutlinedIcon />} title="حذف" />
-        {props.showID !== [] ? <>
-        {local.role == 3 &&
-        props.showID.the_status == 0 &&
-        props.showID.transportationCompani == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="پذیرفتن"
-            onClick={() => getData(props.showID)}
-          />
-        ) : local.role == 1 &&
-        props.showID !== [] &&
-        props.showID.transportationCompani > 0 &&
-        props.showID.the_status == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="رزرو"
-            onClick={() => getData1(props.showID)}
-          />
-        ) : local.role == 3 &&
-        props.showID.the_status > 0 &&
-          props.showID.transportationCompani > 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="حواله"
-            onClick={() => getData2(props.showID)}
-          />
-        ) : local.role == 3 &&
-        props.showID.the_status > 0 &&
-        props.showID.transportationCompani > 0 &&
-        props.showID.havale_id > 0 &&
-        props.showID.receipt == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="بارنامه کردن"
-            onClick={() => getData3(props.showID)}
-          />
-        ) : props.showID.the_status > 0 &&
-          props.showID.receipt == 2 &&
-          props.showID.active == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="تحویل دادن"
-            onClick={() => getData4(props.showID)}
-          />
-        ) : null} </>:null}
+        {props.showID !== null ? (
+          <>
+            {local.role == 3 &&
+            props.showID !== null &&
+            props.showID.the_status == 0 &&
+            props.showID.transportationCompani == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="پذیرفتن"
+                onClick={() => getData(props.showID)}
+              />
+            ) : local.role == 1 &&
+              props.showID !== null &&
+              props.showID.transportationCompani > 0 &&
+              props.showID.the_status == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="رزرو"
+                onClick={() => getData1(props.showID)}
+              />
+            ) : local.role == 3 &&
+              props.showID.the_status > 0 &&
+              props.showID.havale_id == 0 &&
+              props.showID.transportationCompani > 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="حواله"
+                onClick={() => getData2(props.showID)}
+              />
+            ) : local.role == 3 &&
+              props.showID !== null &&
+              props.showID.the_status > 0 &&
+              props.showID.transportationCompani > 0 &&
+              props.showID.havale_id > 0 &&
+              props.showID.receipt == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="بارنامه کردن"
+                onClick={() => getData3(props.showID)}
+              />
+            ) : props.showID.the_status > 0 &&
+              props.showID !== null &&
+              props.showID.receipt == 2 &&
+              props.showID.active == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="تحویل دادن"
+                onClick={() => getData4(props.showID)}
+              />
+            ) : null}{" "}
+          </>
+        ) : null}
         {/* ) : (
         <NotificationItem
           icon={<MenuOutlinedIcon />}
@@ -287,6 +386,7 @@ function BillingInformation(props) {
       </Menu>
     </>
   );
+  console.log(props.showID)
   const columns = [
     {
       field: "cargo_description",
@@ -315,9 +415,10 @@ function BillingInformation(props) {
       },
     },
     {
-      field: "download_location",
+      field: "originName",
       headerName: "شهر مبدا",
       headerAlign: "center",
+      width: 150,
       // renderCell: (params) => {
       //   var date = params.value
       //   var validDate = new Date(date * 1000).toLocaleDateString('fa-IR');
@@ -325,9 +426,16 @@ function BillingInformation(props) {
       // }
     },
     {
-      field: "discharge_location",
+      field: "destinationName",
       headerName: "شهر مقصد",
       headerAlign: "center",
+      width: 170,
+    },
+    {
+      field: "ownerName",
+      headerName: "صاحب بار",
+      headerAlign: "center",
+      width: 140,
     },
     {
       field: "fare",
@@ -336,43 +444,57 @@ function BillingInformation(props) {
       width: 160,
     },
     {
-      field: 'the_status',
-      headerName: 'وضعیت حمل',
-      headerAlign: 'center',
+      field: "the_status",
+      headerName: "وضعیت حمل",
+      headerAlign: "center",
       width: 250,
       renderCell: (params) => {
-        
         return (
-          
           <p>
             {params.value == 0
-              ? 'در انتظار پذیرش'
+              ? "در انتظار پذیرش"
               : params.value > 0
-              ? ' پذیرش شده توسط ' + params.row.driverName.name + params.row.driverName.lastName
+              ? " پذیرش شده توسط " +
+                params.row.driverName.name +
+                params.row.driverName.lastName
               : null}
           </p>
         );
-      }
+      },
     },
     {
-      field: 'transportationCompani',
-      headerName: 'شرکت حمل',
-      headerAlign: 'center',
+      field: "transportationCompani",
+      headerName: "شرکت حمل",
+      headerAlign: "center",
       width: 220,
       renderCell: (params) => {
         return (
-          <p>{params.value == 0 ? 'در انتظار ' : params.value > 0 ? ' پذیرش شده توسط ' + params.row.hamlCompanyName.brandName : null}</p>
+          <p>
+            {params.value == 0
+              ? "در انتظار "
+              : params.value > 0
+              ? " پذیرش شده توسط " + params.row.hamlCompanyName.brandName
+              : null}
+          </p>
         );
-      }
+      },
     },
     {
-      field: 'receipt',
-      headerName: 'وضعیت تحویل',
-      headerAlign: 'center',
+      field: "receipt",
+      headerName: "وضعیت تحویل",
+      headerAlign: "center",
       width: 140,
       renderCell: (params) => {
-        return <p>{params.value == 0 ? 'در انتظار حمل ' : params.value == 2 ? 'درحال حمل' : 'درمقصد'}</p>;
-      }
+        return (
+          <p>
+            {params.value == 0
+              ? "در انتظار حمل "
+              : params.value == 2
+              ? "درحال حمل"
+              : "درمقصد"}
+          </p>
+        );
+      },
     },
     {
       field: "action",
@@ -382,17 +504,15 @@ function BillingInformation(props) {
       width: 110,
       renderCell: (params) => (
         <>
-          {/* {setParam(params)} */}
-          {/* {console.log(params)} */}
           <MoreHorizOutlinedIcon onClick={(e) => handleOpenMenu(e)}>
             move_vert
           </MoreHorizOutlinedIcon>
           {renderMenu(params.row)}
-          {/* {confirmDialog()} */}
         </>
       ),
     },
   ];
+
   return (
     <Card id="delete-account">
       <Box
@@ -426,7 +546,9 @@ function BillingInformation(props) {
                 },
               },
             }}
-            onRowClick={(rows)=>{props.setShowData(rows.row)}}
+            onRowClick={(rows) => {
+              props.setShowData(rows.row);
+            }}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
             checkboxSelection
@@ -453,7 +575,7 @@ const mapStateToProps = (state) => ({
   userId: state.userId,
   cityId: state.cityId,
   barData: state.barData,
-  showID: state.showID
+  showID: state.showID,
 });
 
 const mapDispatchToProps = (dispatch) => {

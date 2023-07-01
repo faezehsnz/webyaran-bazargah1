@@ -28,6 +28,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
+import { useNavigate } from 'react-router-dom';
 
 // Images
 import bgImage from "assets/images/Connected-truck-telematics.jpg";
@@ -36,6 +37,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Basic() {
+  const navigate = useNavigate();
+
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -57,7 +60,6 @@ function Basic() {
     bodyFormData.append('role', role);
     bodyFormData.append('mobile', username);
     bodyFormData.append('password', password);
-
     try {
       const response = await fetch('https://hagbaar.com/api/auth/loginByPass', {
         mode: 'cors',
@@ -69,7 +71,7 @@ function Basic() {
       if (data.error == 0) {
         // props.setData2(data);
         localStorage.setItem('key', JSON.stringify(data));
-        navigate('/dashboard/default');
+        navigate('/waiting');
       }
       if (data.error != 0) {
         toast.error(data.detail);
