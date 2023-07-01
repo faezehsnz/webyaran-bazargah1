@@ -13,7 +13,7 @@ import {
   Typography,
   Alert,
 } from "@mui/material";
-import AddressForm from "./BsrDetail";
+import AddressForm from "./BarDetail";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import MoreInfoForm from "./MoreInfo";
@@ -22,6 +22,9 @@ import { Check } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import City from "./data.json";
+import Bar from "./bar.json";
+
 const steps = [
   "اطلاعات بار",
   // "اطلاعات مکانیزم حمل",
@@ -29,7 +32,7 @@ const steps = [
   "اطلاعات مالی",
   // "بازبینی",
 ];
-import City from './city.json'
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme({
   fontFamily: "IRANSansWeb",
@@ -38,7 +41,28 @@ const defaultTheme = createTheme({
 export default function Checkout() {
   const [loading, setLoading] = React.useState("1");
   const [loading2, setLoading2] = React.useState("1");
-  const [cities, setCities] = React.useState("");
+  const [cities, setCities] = React.useState([
+    {
+      ID: "1",
+      sazmaniCityXID: "26441030",
+      sazmaniCityName: "نوجه ده سادات",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "37.9098127",
+      Longitude: "46.9631703",
+      active: "1",
+    },
+    {
+      ID: "2",
+      sazmaniCityXID: "26441031",
+      sazmaniCityName: "کرگان",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "38.1067244",
+      Longitude: "48.4829618",
+      active: "1",
+    },
+  ]);
   const [goodTypes, setGoodTypes] = React.useState(null);
   const [carTypes, setCarTypes] = React.useState(null);
   const [carType, setCarType] = React.useState(null);
@@ -124,6 +148,9 @@ export default function Checkout() {
             setDestination={setDestination}
             setLoadingTime={setLoadingTime}
             setDownloadInterval={setDownloadInterval}
+            downloadInterval={downloadInterval}
+            dischargeTime={dischargeTime}
+            loadingTime={loadingTime}
             setDischargeTime={setDischargeTime}
             setDrainInterval={setDrainInterval}
             setDownloadLocation={setDownloadLocation}
@@ -148,7 +175,7 @@ export default function Checkout() {
   }
   const postInfo = async (e) => {
     var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem('key'))
+    const local = JSON.parse(localStorage.getItem("key"));
     bodyFormData.append("userID", local.userInfo.ID);
     bodyFormData.append("type", type);
     bodyFormData.append("packing", packing);
@@ -207,61 +234,15 @@ export default function Checkout() {
     }
   };
   const getData = async (e) => {
-    try {
-      const response = await fetch(
-        "https://hagbaar.com/api/Generals/getPaking"
-      );
-      const data = await response.json();
-      setPacking(data.pakings.map((option) => option));
-    } catch (e) {}
-  };
-  const getData2 = async (e) => {
-    setLoading2("1");
-    // try {
-    //   const response = await fetch(
-    //     "https://hagbaar.com/api/Generals/getCities"
-    //     // {mode:'cors' ,method:'POST'}
-    //   );
-    //   const data = await response.json();
-// console.log(City.cities.map((option) => option))
-      setCities(City.cities.map((option) => option));
-      setLoading2("2");
-    // } catch (e) {
-    //   // setError(e.message);
-    // }
-  };
-  const getData3 = async (e) => {
-    try {
-      const response = await fetch(
-        "https://hagbaar.com/api/Generals/getMecanismType"
-      );
-      const data = await response.json();
-      setCarTypes(data.mecanismTypes.map((option) => option));
-    } catch (e) {
-      // setError(e.message);
-    }
-  };
-  const getData4 = async (e) => {
     setLoading("1");
-    try {
-      const response = await fetch(
-        "https://hagbaar.com/api/Generals/getGoodType"
-      );
-      const data = await response.json();
-      setGoodTypes(data.goodTypes.map((option) => option));
-      if (data.goodTypes != null) {
-        setLoading("2");
-      }
-    } catch (e) {
-      setLoading("3");
-      // setError(e.message);
-    }
+    setCities(City.cities.map((option) => option));
+    setPacking(City.pakings.map((option) => option));
+    setCarTypes(City.mecanismTypes.map((option) => option));
+    setGoodTypes(Bar.goodTypes.map((option) => option));
+    setLoading("2");
   };
   React.useEffect(() => {
     getData();
-    getData2();
-    getData3();
-    getData4();
   }, []);
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -269,7 +250,11 @@ export default function Checkout() {
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } ,backgroundColor:'#e5eaf5' }}
+          sx={{
+            my: { xs: 3, md: 6 },
+            p: { xs: 2, md: 3 },
+            backgroundColor: "#e5eaf5",
+          }}
         >
           <Typography component="h1" variant="h3" align="center" mb={5}>
             افزودن بار
@@ -303,7 +288,7 @@ export default function Checkout() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {loading === "2" && loading2 === "2" ? (
+              {loading == "2" ? (
                 <>{getStepContent(activeStep)}</>
               ) : loading === "3" ? (
                 <Alert variant="filled" severity="warning">

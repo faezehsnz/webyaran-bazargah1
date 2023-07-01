@@ -8,6 +8,7 @@ export const initialState = {
   cityId: null,
   barData: null,
   data2: null,
+  showID:[]
 };
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -54,10 +55,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         id: action.value,
       };
-    case "SET_DATA_2":
+    case "SET_SHOW_ID":
       return {
         ...state,
-        data2: action.value,
+        showID: action.value,
       };
     default:
       return state;

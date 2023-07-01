@@ -22,7 +22,7 @@ function Rouess(props) {
       <Route index element={<SignIn />} />
       {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
       {local != null ? local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null :null}
-      {local != null ? local.role == 2 ?  <Route path="dashboard" element={<Dashboard />} /> :null :null}
+      <Route path="dashboard" element={<Dashboard />} />
       <Route path="reservation" element={<Reservation />} />
       <Route path="waiting" element={<Billing />} />
       <Route path="havale" element={<RTL />} />

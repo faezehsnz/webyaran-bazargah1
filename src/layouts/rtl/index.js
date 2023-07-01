@@ -60,7 +60,7 @@ function RTL(props) {
         <Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={12}>
-            {loading === true ? (
+            {report !== [] ? (
                 <BillingInformation report={report} title='بارهای حواله شده در بازارگاه' />
               ) : (
                 <Alert severity="error">{error}</Alert>

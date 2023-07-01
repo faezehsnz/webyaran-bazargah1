@@ -14,7 +14,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import City from "components/Checkout/data.json";
 // Billing page components
 import { connect } from "react-redux";
 import {
@@ -24,16 +24,35 @@ import {
   setCityID,
   setBarData,
   setID,
-  setData2,
+  setShowData
 } from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 function Form1(props) {
   const navigate = useNavigate();
-
-  const [cities, setCities] = React.useState("");
+  const [cities, setCities] = React.useState([
+    {
+      ID: "1",
+      sazmaniCityXID: "26441030",
+      sazmaniCityName: "نوجه ده سادات",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "37.9098127",
+      Longitude: "46.9631703",
+      active: "1",
+    },
+    {
+      ID: "2",
+      sazmaniCityXID: "26441031",
+      sazmaniCityName: "کرگان",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "38.1067244",
+      Longitude: "48.4829618",
+      active: "1",
+    },
+  ]);
   const [origin, setOrigin] = React.useState(null);
   const [value, setValue] = React.useState("1");
   const [name, setName] = React.useState("");
@@ -49,16 +68,7 @@ function Form1(props) {
   const [phone, setPhone] = React.useState("");
   const [hamlCode, setHamlCode] = React.useState("");
   const getData2 = async (e) => {
-    try {
-      const response = await fetch(
-        "https://hagbaar.com/api/Generals/getCities"
-        // {mode:'cors' ,method:'POST'}
-      );
-      const data = await response.json();
-      setCities(data.cities.map((option) => option));
-    } catch (e) {
-      // setError(e.message);
-    }
+    setCities(City.cities.map((option) => option));
   };
   React.useEffect(() => {
     getData2();
@@ -135,13 +145,12 @@ function Form1(props) {
       e.preventDefault();
       const data = await response.json();
       if (data.error === "0") {
-        props.setData2(data);
-        localStorage.setItem('key', JSON.stringify(data))
-        
+        localStorage.setItem("key", JSON.stringify(data));
+
         // localStorage.setItem("data", JSON.stringify(data));
-        props.setCityID(data.userInfo.cityID)
-        props.setID(data.userInfo.ID)
-        props.setUserID(data.role)
+        props.setCityID(data.userInfo.cityID);
+        props.setID(data.userInfo.ID);
+        props.setUserID(data.role);
         navigate("/waiting");
       }
 
@@ -154,7 +163,13 @@ function Form1(props) {
     }
   };
   return (
-    <Card sx={{ marginTop: -25 }}>
+    <Card
+      sx={{
+        marginTop: -25,
+        width: { md: "40vw"},
+        marginLeft: { md: "-4vw", xs: "0px" },
+      }}
+    >
       <Box
         variant="gradient"
         bgcolor="info"
@@ -176,31 +191,33 @@ function Form1(props) {
         <Box component="form" role="form">
           {props.type == 1 ? (
             <>
-              <Box mb={2}>
-                <InputLabel htmlFor="standard-adornment-password">
-                  نام
-                </InputLabel>
-                <Input
-                  required
-                  type="نام و نام خانوادگی"
-                  label="Name"
-                  variant="standard"
-                  fullWidth
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Box>
-              <Box mb={2}>
-                <InputLabel htmlFor="standard-adornment-password">
-                  نام خانوادگی
-                </InputLabel>
-                <Input
-                  required
-                  type="نام و نام خانوادگی"
-                  label="Name"
-                  variant="standard"
-                  fullWidth
-                  onChange={(e) => setLastName(e.target.value)}
-                />
+              <Box display="flex" justifyContent='space-around' mb={2}>
+                <Box>
+                  <InputLabel htmlFor="standard-adornment-password">
+                    نام
+                  </InputLabel>
+                  <Input
+                    required
+                    type="نام و نام خانوادگی"
+                    label="Name"
+                    variant="standard"
+                    fullWidth
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Box>
+                <Box>
+                  <InputLabel htmlFor="standard-adornment-password">
+                    نام خانوادگی
+                  </InputLabel>
+                  <Input
+                    required
+                    type="نام و نام خانوادگی"
+                    label="Name"
+                    variant="standard"
+                    fullWidth
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </Box>
               </Box>
               <Box mb={2}>
                 <InputLabel htmlFor="standard-adornment-password">
@@ -273,32 +290,34 @@ function Form1(props) {
                   </AppBar>
                 </Grid>
                 <TabPanel value="0">
-                  <Box mb={2}>
-                    <InputLabel htmlFor="standard-adornment-password">
-                      نام
-                    </InputLabel>
-                    <Input
-                      required
-                      type="نام و نام خانوادگی"
-                      label="Name"
-                      variant="standard"
-                      fullWidth
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </Box>
-                  <Box mb={2}>
-                    <InputLabel htmlFor="standard-adornment-password">
-                      نام خانوادگی
-                    </InputLabel>
-                    <Input
-                      required
-                      type="نام و نام خانوادگی"
-                      label="Name"
-                      variant="standard"
-                      fullWidth
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
-                  </Box>
+                <Box display="flex" justifyContent='space-around' mb={2}>
+                <Box>
+                  <InputLabel htmlFor="standard-adornment-password">
+                    نام
+                  </InputLabel>
+                  <Input
+                    required
+                    type="نام و نام خانوادگی"
+                    label="Name"
+                    variant="standard"
+                    fullWidth
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Box>
+                <Box>
+                  <InputLabel htmlFor="standard-adornment-password">
+                    نام خانوادگی
+                  </InputLabel>
+                  <Input
+                    required
+                    type="نام و نام خانوادگی"
+                    label="Name"
+                    variant="standard"
+                    fullWidth
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </Box>
+              </Box>
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       کدملی
@@ -415,32 +434,35 @@ function Form1(props) {
                       onChange={(e) => setSAbtNumber(e.target.value)}
                     />
                   </Box>
-                  <Box mb={2}>
-                    <InputLabel htmlFor="standard-adornment-password">
-                      نام رابط
-                    </InputLabel>
-                    <Input
-                      required
-                      type="text"
-                      label="نام و نام خانوادگی رابط"
-                      variant="standard"
-                      fullWidth
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </Box>
-                  <Box mb={2}>
-                    <InputLabel htmlFor="standard-adornment-password">
-                      نام خانوادگی رابط
-                    </InputLabel>
-                    <Input
-                      required
-                      type="text"
-                      label="نام و نام خانوادگی رابط"
-                      variant="standard"
-                      fullWidth
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
-                  </Box>
+                  <Box display="flex" justifyContent='space-around' mb={2}>
+                <Box>
+                  <InputLabel htmlFor="standard-adornment-password">
+                    نام رابط
+                  </InputLabel>
+                  <Input
+                    required
+                    type="نام و نام خانوادگی"
+                    label="Name"
+                    variant="standard"
+                    fullWidth
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Box>
+                <Box>
+                  <InputLabel htmlFor="standard-adornment-password">
+                    نام خانوادگی رابط
+                  </InputLabel>
+                  <Input
+                    required
+                    type="نام و نام خانوادگی"
+                    label="Name"
+                    variant="standard"
+                    fullWidth
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </Box>
+              </Box>
+                 
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       نام پدر رابط
@@ -612,7 +634,7 @@ function Form1(props) {
                 <Autocomplete
                   disablePortal
                   id="clear-on-escape"
-                  options={cities != null ? cities : null}
+                  options={cities !== null ? cities : null}
                   getOptionLabel={(option) => option.sazmaniCityName}
                   onChange={(e, value) => setOrigin(value.ID)}
                   renderInput={(params) => (
@@ -685,7 +707,7 @@ const mapStateToProps = (state) => ({
   cityId: state.cityId,
   barData: state.barData,
   id: state.id,
-  data2: state.data2,
+  showID: state.showID,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -696,7 +718,7 @@ const mapDispatchToProps = (dispatch) => {
     setCityID: (value) => dispatch(setCityID(value)),
     setBarData: (value) => dispatch(setBarData(value)),
     setID: (value) => dispatch(setID(value)),
-    setData2: (value) => dispatch(setData2(value)),
+    setShowData: (value) => dispatch(setShowData(value)),
   };
 };
 

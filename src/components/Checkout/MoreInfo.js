@@ -32,12 +32,12 @@ export default function MoreInfoForm(props) {
             onChange={(e) => props.setSender(e.target.value)}
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={3}>
           {/* <FormControl variant="standard" fullWidth>
             <InputLabel id="demo-simple-select-standard-label">
               شهر مبدا*
             </InputLabel> */}
-            <Grid item xs={12} sm={12}>
+            {/* <Grid item xs={12} sm={12}>
           <TextField
             id="firstName"
             name="firstName"
@@ -46,8 +46,8 @@ export default function MoreInfoForm(props) {
             variant="standard"
             onChange={(e) => props.setOrigin(e.target.value)}
           />
-        </Grid>
-          {/* <Autocomplete
+        </Grid> */}
+          <Autocomplete
             disablePortal
             id="clear-on-escape"
             options={props.cities != null ? props.cities : null}
@@ -64,7 +64,7 @@ export default function MoreInfoForm(props) {
                 label="مبدا"
               />
             )}
-          /> */}
+          />
         </Grid>
         <Grid item xs={12} sm={2}>
           <TextField
@@ -84,6 +84,7 @@ export default function MoreInfoForm(props) {
                 ampm={false}
                 label="زمان بارگیری(از)"
                 onChange={(e) => props.setLoadingTime(e)}
+                minDate={new Date()}
               />
             </DemoContainer>
           </LocalizationProvider>
@@ -95,6 +96,7 @@ export default function MoreInfoForm(props) {
                 ampm={false}
                 label="زمان بارگیری(تا)"
                 onChange={(e) => props.setDownloadInterval(e)}
+                minDate={props.loadingTime}
               />
             </DemoContainer>
           </LocalizationProvider>
@@ -109,10 +111,11 @@ export default function MoreInfoForm(props) {
             onChange={(e) => props.setReceiver(e.target.value)}
             fullWidth
             variant="standard"
+            
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
-          {/* <Autocomplete
+        <Grid item xs={12} sm={3}>
+          <Autocomplete
             disablePortal
             id="clear-on-escape"
             options={props.cities != null ? props.cities : null}
@@ -129,22 +132,7 @@ export default function MoreInfoForm(props) {
                 label="مقصد"
               />
             )}
-          /> */}
-          {/* <Grid item xs={12} sm={2}> */}
-          {/* <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-standard-label">
-              شهر مبدا*
-            </InputLabel> */}
-            <Grid item xs={12} sm={12}>
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="شهر مقصد*"
-            fullWidth
-            variant="standard"
-            onChange={(e) => props.setDestination(e.target.value)}
           />
-        </Grid>
         </Grid>
         <Grid item xs={12} sm={2}>
           <TextField
@@ -164,6 +152,7 @@ export default function MoreInfoForm(props) {
                 ampm={false}
                 label="زمان تخلیه(از)"
                 onChange={(e) => props.setDischargeTime(e)}
+                minDate={props.downloadInterval}
               />
             </DemoContainer>
           </LocalizationProvider>
@@ -175,6 +164,7 @@ export default function MoreInfoForm(props) {
                 ampm={false}
                 label="زمان تخلیه(تا)"
                 onChange={(e) => props.setDrainInterval(e)}
+                minDate={props.dischargeTime}
               />
             </DemoContainer>
             {/* </DemoItem> */}

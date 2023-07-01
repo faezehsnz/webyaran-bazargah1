@@ -15,8 +15,7 @@ import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 // Billing page components
 import BillingInformation from "layouts/billing/components/BillingInformation";
 import { connect } from "react-redux";
-import { setUserID, setCityID ,setData2} from "components/store/actions";
-import { setBarData } from "components/store/actions";
+import { setUserID, setCityID ,setShowData ,setBarData} from "components/store/actions";
 
 function Notifications(props) {
   const [open, setOpen] = React.useState(false);
@@ -57,7 +56,7 @@ function Notifications(props) {
         <Box mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-            {report != [] ? (
+            {report !== [] ? (
                 <BillingInformation
                   report={report}
                   title='بارهای درحال حمل'/>
@@ -77,7 +76,7 @@ const mapStateToProps = (state) => ({
   userId: state.userId,
   cityId: state.cityId,
   barData: state.barData,
-  data2: state.data2
+  showID: state.showID
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -85,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
     setUserID: (value) => dispatch(setUserID(value)),
     setCityID: (value) => dispatch(setCityID(value)),
     setBarData: (value) => dispatch(setBarData(value)),
-    setData2: (value) => dispatch(setData2(value)),
+    setShowData: (value) => dispatch(setShowData(value)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

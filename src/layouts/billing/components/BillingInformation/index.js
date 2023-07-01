@@ -24,10 +24,10 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { connect } from "react-redux";
-import { setUserID, setCityID } from "components/store/actions";
-import { setBarData } from "components/store/actions";
+import { setUserID, setCityID ,setShowData ,setBarData} from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .super-app-theme--2": {
     backgroundColor: "rgb(192, 216, 193)",
@@ -43,6 +43,7 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 // import Bill from "layouts/billing/components/Bill";
 
 function BillingInformation(props) {
+  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [param, setParam] = React.useState(null);
@@ -222,61 +223,60 @@ function BillingInformation(props) {
         sx={{ mt: 2 }}
       >
         <NotificationItem
-          onClick={() => {
-            // window.open("/bar/show", "_self");
-            props.setBarData(params);
-          }}
           icon={<VisibilityOutlinedIcon />}
           title="نمایش"
+          onClick={() => navigate('/bar/show')}
         />
         <NotificationItem
           icon={<ModeEditOutlineOutlinedIcon />}
           title="ویرایش"
         />
         <NotificationItem icon={<DeleteOutlineOutlinedIcon />} title="حذف" />
+        {props.showID !== [] ? <>
         {local.role == 3 &&
-        params.the_status == 0 &&
-        params.transportationCompani == 0 ? (
+        props.showID.the_status == 0 &&
+        props.showID.transportationCompani == 0 ? (
           <NotificationItem
             icon={<MenuOutlinedIcon />}
             title="پذیرفتن"
-            onClick={() => getData(params)}
+            onClick={() => getData(props.showID)}
           />
         ) : local.role == 1 &&
-          params.transportationCompani > 0 &&
-          params.the_status == 0 ? (
+        props.showID !== [] &&
+        props.showID.transportationCompani > 0 &&
+        props.showID.the_status == 0 ? (
           <NotificationItem
             icon={<MenuOutlinedIcon />}
             title="رزرو"
-            onClick={() => getData1(params)}
+            onClick={() => getData1(props.showID)}
           />
         ) : local.role == 3 &&
-          params.the_status > 0 &&
-          params.transportationCompani > 0 ? (
+        props.showID.the_status > 0 &&
+          props.showID.transportationCompani > 0 ? (
           <NotificationItem
             icon={<MenuOutlinedIcon />}
             title="حواله"
-            onClick={() => getData2(params)}
+            onClick={() => getData2(props.showID)}
           />
         ) : local.role == 3 &&
-          params.the_status > 0 &&
-          params.transportationCompani > 0 &&
-          params.havale_id > 0 &&
-          params.receipt == 0 ? (
+        props.showID.the_status > 0 &&
+        props.showID.transportationCompani > 0 &&
+        props.showID.havale_id > 0 &&
+        props.showID.receipt == 0 ? (
           <NotificationItem
             icon={<MenuOutlinedIcon />}
             title="بارنامه کردن"
-            onClick={() => getData3(params)}
+            onClick={() => getData3(props.showID)}
           />
-        ) : params.the_status > 0 &&
-          params.receipt == 2 &&
-          params.active == 0 ? (
+        ) : props.showID.the_status > 0 &&
+          props.showID.receipt == 2 &&
+          props.showID.active == 0 ? (
           <NotificationItem
             icon={<MenuOutlinedIcon />}
             title="تحویل دادن"
-            onClick={() => getData4(params)}
+            onClick={() => getData4(props.showID)}
           />
-        ) : null}
+        ) : null} </>:null}
         {/* ) : (
         <NotificationItem
           icon={<MenuOutlinedIcon />}
@@ -341,7 +341,9 @@ function BillingInformation(props) {
       headerAlign: 'center',
       width: 250,
       renderCell: (params) => {
+        
         return (
+          
           <p>
             {params.value == 0
               ? 'در انتظار پذیرش'
@@ -356,7 +358,7 @@ function BillingInformation(props) {
       field: 'transportationCompani',
       headerName: 'شرکت حمل',
       headerAlign: 'center',
-      width: 140,
+      width: 220,
       renderCell: (params) => {
         return (
           <p>{params.value == 0 ? 'در انتظار ' : params.value > 0 ? ' پذیرش شده توسط ' + params.row.hamlCompanyName.brandName : null}</p>
@@ -373,7 +375,7 @@ function BillingInformation(props) {
       }
     },
     {
-      field: "asssss",
+      field: "action",
       headerName: "عملیات",
       headerAlign: "center",
       align: "center",
@@ -381,6 +383,7 @@ function BillingInformation(props) {
       renderCell: (params) => (
         <>
           {/* {setParam(params)} */}
+          {/* {console.log(params)} */}
           <MoreHorizOutlinedIcon onClick={(e) => handleOpenMenu(e)}>
             move_vert
           </MoreHorizOutlinedIcon>
@@ -389,19 +392,6 @@ function BillingInformation(props) {
         </>
       ),
     },
-  ];
-  // var date = new Date(props.report.issueDate * 1000);
-  // var rowID = props.report.map((row) => row.paymentStatus)
-  const rows = [
-    { id: 1, name: "Snow", lname: "Jon", type: 35 },
-    { id: 2, name: "Snow", lname: "Jon", type: 35 },
-    { id: 3, name: "Snow", lname: "Jon", type: 35 },
-    { id: 4, name: "Snow", lname: "Jon", type: 35 },
-    { id: 5, name: "Snow", lname: "Jon", type: 35 },
-    { id: 6, name: "Snow", lname: "Jon", type: 35 },
-    { id: 7, name: "Snow", lname: "Jon", type: 35 },
-    { id: 8, name: "Snow", lname: "Jon", type: 35 },
-    { id: 9, name: "Snow", lname: "Jon", type: 35 },
   ];
   return (
     <Card id="delete-account">
@@ -436,6 +426,7 @@ function BillingInformation(props) {
                 },
               },
             }}
+            onRowClick={(rows)=>{props.setShowData(rows.row)}}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
             checkboxSelection
@@ -462,6 +453,7 @@ const mapStateToProps = (state) => ({
   userId: state.userId,
   cityId: state.cityId,
   barData: state.barData,
+  showID: state.showID
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -469,6 +461,7 @@ const mapDispatchToProps = (dispatch) => {
     setUserID: (value) => dispatch(setUserID(value)),
     setCityID: (value) => dispatch(setCityID(value)),
     setBarData: (value) => dispatch(setBarData(value)),
+    setShowData: (value) => dispatch(setShowData(value)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BillingInformation);

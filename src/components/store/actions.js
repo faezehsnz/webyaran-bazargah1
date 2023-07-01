@@ -47,9 +47,9 @@ export const setBarData = (value) => {
       }
       
 };
-export const setData2 = (value) => {
+export const setShowData = (value) => {
    return {
-      type:'SET_DATA_2',
+      type:'SET_SHOW_ID',
       value
    }
    
