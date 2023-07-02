@@ -3,11 +3,17 @@ import {
   AppBar,
   Grid,
   Box,
-  Typography,
-  Input,
   Button,
-  InputLabel,
   Card,
+  FormControl,
+  FormHelperText,
+  Input,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Stack,
+  Typography,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
@@ -28,6 +34,8 @@ import {
 } from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Form1(props) {
   const navigate = useNavigate();
@@ -68,6 +76,14 @@ function Form1(props) {
   const [address, setaddress] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [hamlCode, setHamlCode] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const getData2 = async (e) => {
     setCities(City.cities.map((option) => option));
   };
@@ -277,10 +293,21 @@ function Form1(props) {
                 </InputLabel>
                 <Input
                   required
-                  type="number"
                   variant="standard"
                   fullWidth
+                  type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
               </Box>
               <Box mt={4} mb={1}>
@@ -421,10 +448,21 @@ function Form1(props) {
                     </InputLabel>
                     <Input
                       required
-                      type="number"
                       variant="standard"
                       fullWidth
                       onChange={(e) => setPassword(e.target.value)}
+                      type={showPassword ? "text" : "password"}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
                     />
                   </Box>
                 </TabPanel>
@@ -497,7 +535,7 @@ function Form1(props) {
                     </Box>
                   </Box>
 
-                  <Box mb={2}>
+                  {/* <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       نام پدر رابط
                     </InputLabel>
@@ -507,7 +545,7 @@ function Form1(props) {
                       fullWidth
                       onChange={(e) => setFatherName(e.target.value)}
                     />
-                  </Box>
+                  </Box> */}
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       تلفن ثابت
@@ -540,10 +578,21 @@ function Form1(props) {
                     </InputLabel>
                     <Input
                       required
-                      type="number"
                       variant="standard"
                       fullWidth
+                      type={showPassword ? "text" : "password"}
                       onChange={(e) => setPassword(e.target.value)}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
                     />
                   </Box>
                   {/* <Box mb={2}>
@@ -707,10 +756,21 @@ function Form1(props) {
                 </InputLabel>
                 <Input
                   required
-                  type="number"
                   variant="standard"
                   fullWidth
+                  type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
               </Box>
               <Box mt={4} mb={1}>

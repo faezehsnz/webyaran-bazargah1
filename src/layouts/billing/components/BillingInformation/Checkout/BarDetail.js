@@ -20,13 +20,13 @@ export default function AddressForm(props) {
             id="clear-on-escape"
             options={props.goodTypes}
             getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setType(value.ID)}
+            onChange={(e , value)=> props.setType(value.id)}
             renderInput={(params) => (
               <TextField variant="standard" 
               {...params}
               inputProps={{
                 ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
+                autoComplete: 'new-password', 
               }}
                label="نوع بار" />
             )}
@@ -50,13 +50,13 @@ export default function AddressForm(props) {
             id="clear-on-escape"
             options={props.packing}
             getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setPacking(value.ID)}
+            onChange={(e , value)=> props.setPacking2(value.id)}
             renderInput={(params) => (
               <TextField variant="standard" 
               {...params}
               inputProps={{
                 ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
+                autoComplete: 'new-password', 
               }}
               label="نوع بسته بندی" />
             )}
@@ -153,7 +153,7 @@ export default function AddressForm(props) {
               {...params}
               inputProps={{
                 ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
+                autoComplete: 'new-password', 
               }}
                 label="نوع ماشین" />
               )}

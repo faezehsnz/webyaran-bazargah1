@@ -26,7 +26,7 @@ import City from "./data.json";
 import Bar from "./bar.json";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
 import {
@@ -50,8 +50,8 @@ const defaultTheme = createTheme({
   fontFamily: "IRANSansWeb",
 });
 
-export default function Checkout({dd , dp ,dc ,data}) {
-  console.log(dd ,dc)
+export default function Checkout({ dd, dp, dc, data, handleClose }) {
+  console.log(dd, dc);
   const [loading, setLoading] = React.useState("1");
   const [loading2, setLoading2] = React.useState("1");
   const [cities, setCities] = React.useState([
@@ -81,12 +81,10 @@ export default function Checkout({dd , dp ,dc ,data}) {
   const [carType, setCarType] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [type, setType] = React.useState(null);
-  const [location, setLocation] = React.useState(null);
   const [packing, setPacking] = React.useState(null);
+  const [packing2, setPacking2] = React.useState(null);
   const [weight, setWight] = React.useState(null);
   const [number, setNumber] = React.useState(null);
-  const [insuranceValue, setInsuranceValue] = React.useState(null);
-  const [productOwner, setProductOwner] = React.useState(null);
   const [downloadLocation, setDownloadLocation] = React.useState(null);
   const [dischargeLocation, setDischargeLocation] = React.useState(null);
   const [loadingTime, setLoadingTime] = React.useState(null);
@@ -109,9 +107,7 @@ export default function Checkout({dd , dp ,dc ,data}) {
   const [comment, setComment] = React.useState(null);
   const [active, setActive] = React.useState(null);
   const [theStatus, setTheStatus] = React.useState(null);
-  const [receipt, setReceipt] = React.useState(null);
   const [fare, setFare] = React.useState(null);
-  const [discount, setDiscount] = React.useState(null);
   const [customerOfferFare, setCustomerOfferFare] = React.useState(null);
   const [commission, setCommission] = React.useState(null);
   const [havaleId, setHavaleId] = React.useState(null);
@@ -128,7 +124,6 @@ export default function Checkout({dd , dp ,dc ,data}) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  console.log(origin)
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -137,6 +132,7 @@ export default function Checkout({dd , dp ,dc ,data}) {
             setType={setType}
             setCargoDescription={setCargoDescription}
             setPacking={setPacking}
+            setPacking2={setPacking2}
             setStoreroom={setStoreroom}
             setWidth={setWidth}
             setLength={setLength}
@@ -157,171 +153,156 @@ export default function Checkout({dd , dp ,dc ,data}) {
       case 1:
         return (
           <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        سایر توضیحات
-      </Typography>
-      <p>پر کردن فیلد های ستاره دار (*) اجباری است.</p>
-      <Grid container spacing={3} mt={5}>
-        <Grid item xs={12} sm={2}>
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="فرستنده*"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setSender(e.target.value)}
-            defaultValue={data.sender}
-          />
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          {/* <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-standard-label">
-              شهر مبدا*
-            </InputLabel> */}
-            {/* <Grid item xs={12} sm={12}>
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="شهر مبدا*"
-            fullWidth
-            variant="standard"
-            onChange={(e) => props.setOrigin(e.target.value)}
-          />
-        </Grid> */}
-          <Autocomplete
-            disablePortal
-            id="clear-on-escape"
-            options={cities != null ? cities : null}
-            getOptionLabel={(option) => option.sazmaniCityName}
-            onChange={(e, value) => setOrigin(value.ID)}
-            defaultValue={{ sazmaniCityName: data.originName }}
-            renderInput={(params) => (
-              <TextField
-                variant="standard"
-                {...params}
-                inputProps={{
-                  ...params.inputProps,
-                  autoComplete: "new-password", // disable autocomplete and autofill
-                }}
-                label="مبدا"
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12} sm={2}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="محل بارگیری"
-            defaultValue={data.download_location}
-            onChange={(e) => setDownloadLocation(e.target.value)}
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-            <DemoContainer components={["DateTimePicker"]}>
-              <DateTimePicker
-                ampm={false}
-                label="زمان بارگیری(از)"
-                onChange={(e) => setLoadingTime(e)}
-                minDate={new Date()}
-                defaultValue={new Date(data.loading_time * 1000 )}
-              />
-            </DemoContainer>
-          </LocalizationProvider>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-            <DemoContainer components={["DateTimePicker"]}>
-              <DateTimePicker
-                ampm={false}
-                label="زمان بارگیری(تا)"
-                onChange={(e) => setDownloadInterval(e)}
-                minDate={loadingTime}
-                defaultValue={new Date(data.DownloadInterval * 1000 )}
-              />
-            </DemoContainer>
-          </LocalizationProvider>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3} mt={5}>
-        <Grid item xs={12} sm={2}>
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="گیرنده*"
-            defaultValue={data.receiver}
-            onChange={(e) => setReceiver(e.target.value)}
-            fullWidth
-            variant="standard"
-            
-          />
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Autocomplete
-            disablePortal
-            id="clear-on-escape"
-            options={cities != null ? cities : null}
-            getOptionLabel={(option) => option.sazmaniCityName}
-            defaultValue={{ sazmaniCityName: data.destinationName }}
-            onChange={(e, value) => setDestination(value.ID)}
-            renderInput={(params) => (
-              <TextField
-                variant="standard"
-                {...params}
-                inputProps={{
-                  ...params.inputProps,
-                  autoComplete: "new-password", // disable autocomplete and autofill
-                }}
-                label="مقصد"
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12} sm={2}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="محل تخلیه"
-            defaultValue={data.discharge_location}
-            onChange={(e) => setDischargeLocation(e.target.value)}
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-            <DemoContainer components={["DateTimePicker"]}>
-              <DateTimePicker
-                ampm={false}
-                label="زمان تخلیه(از)"
-                onChange={(e) => setDischargeTime(e)}
-                minDate={downloadInterval}
-                defaultValue={new Date(data.discharge_time * 1000 )}
-              />
-            </DemoContainer>
-          </LocalizationProvider>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-            <DemoContainer components={["DateTimePicker"]}>
-              <DateTimePicker
-                ampm={false}
-                label="زمان تخلیه(تا)"
-                onChange={(e) => setDrainInterval(e)}
-                minDate={dischargeTime}
-                defaultValue={new Date(data.DrainInterval * 1000 )}
-              />
-            </DemoContainer>
-            {/* </DemoItem> */}
-          </LocalizationProvider>
-        </Grid>
-      </Grid>
-    </React.Fragment>
+            <Typography variant="h6" gutterBottom>
+              سایر توضیحات
+            </Typography>
+            <p>پر کردن فیلد های ستاره دار (*) اجباری است.</p>
+            <Grid container spacing={3} mt={5}>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  id="firstName"
+                  name="firstName"
+                  label="فرستنده*"
+                  fullWidth
+                  variant="standard"
+                  onChange={(e) => setSender(e.target.value)}
+                  defaultValue={data.sender}
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Autocomplete
+                  disablePortal
+                  id="clear-on-escape"
+                  options={cities != null ? cities : null}
+                  getOptionLabel={(option) => option.sazmaniCityName}
+                  onChange={(e, value) => setOrigin(value.ID)}
+                  defaultValue={{ sazmaniCityName: data.originName }}
+                  renderInput={(params) => (
+                    <TextField
+                      variant="standard"
+                      {...params}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                      label="مبدا"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  required
+                  id="address1"
+                  name="address1"
+                  label="محل بارگیری"
+                  defaultValue={data.download_location}
+                  onChange={(e) => setDownloadLocation(e.target.value)}
+                  fullWidth
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان بارگیری(از)"
+                      onChange={(e) => setLoadingTime(e)}
+                      minDate={new Date()}
+                      defaultValue={new Date(data.loading_time * 1000)}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان بارگیری(تا)"
+                      onChange={(e) => setDownloadInterval(e)}
+                      minDate={loadingTime}
+                      defaultValue={new Date(data.DownloadInterval * 1000)}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} mt={5}>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  id="firstName"
+                  name="firstName"
+                  label="گیرنده*"
+                  defaultValue={data.receiver}
+                  onChange={(e) => setReceiver(e.target.value)}
+                  fullWidth
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Autocomplete
+                  disablePortal
+                  id="clear-on-escape"
+                  options={cities != null ? cities : null}
+                  getOptionLabel={(option) => option.sazmaniCityName}
+                  defaultValue={{ sazmaniCityName: data.destinationName }}
+                  onChange={(e, value) => setDestination(value.ID)}
+                  renderInput={(params) => (
+                    <TextField
+                      variant="standard"
+                      {...params}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                      label="مقصد"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  required
+                  id="address1"
+                  name="address1"
+                  label="محل تخلیه"
+                  defaultValue={data.discharge_location}
+                  onChange={(e) => setDischargeLocation(e.target.value)}
+                  fullWidth
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان تخلیه(از)"
+                      onChange={(e) => setDischargeTime(e)}
+                      minDate={downloadInterval}
+                      defaultValue={new Date(data.discharge_time * 1000)}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان تخلیه(تا)"
+                      onChange={(e) => setDrainInterval(e)}
+                      minDate={dischargeTime}
+                      defaultValue={new Date(data.DrainInterval * 1000)}
+                    />
+                  </DemoContainer>
+                  {/* </DemoItem> */}
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </React.Fragment>
         );
       case 2:
         return (
@@ -330,6 +311,7 @@ export default function Checkout({dd , dp ,dc ,data}) {
             setFare={setFare}
             fare={data.fare}
             customer_offer_fare={data.customer_offer_fare}
+            lnsurance_value={data.lnsurance_value}
             // setTypeOfWage={setTypeOfWage}
             setCustomerOfferFare={setCustomerOfferFare}
           />
@@ -340,31 +322,124 @@ export default function Checkout({dd , dp ,dc ,data}) {
         throw new Error("Unknown step");
     }
   }
+  console.log(data.type);
   const postInfo = async (e) => {
     var bodyFormData = new FormData();
     const local = JSON.parse(localStorage.getItem("key"));
     bodyFormData.append("orderID", data.id);
     bodyFormData.append("userID", local.userInfo.ID);
-    {type !== null ? bodyFormData.append("type", type) : bodyFormData.append("type", data.type)};
-    {packing !== null ? bodyFormData.append("packing", packing) : bodyFormData.append("packing", data.packing)};
-    {weight !== null ? bodyFormData.append("weight", weight) : bodyFormData.append("weight", data.weight)};
-    {fare !== null ? bodyFormData.append("fare", fare) : bodyFormData.append("fare", data.fare)};
-    {customerOfferFare !== null ? bodyFormData.append("customer_offer_fare", customerOfferFare) : bodyFormData.append("customer_offer_fare", data.customerOfferFare)};
-    {downloadLocation !== null ? bodyFormData.append("type", downloadLocation) : bodyFormData.append("download_location", data.download_location)};
-    {dischargeLocation !== null ? bodyFormData.append("discharge_location", dischargeLocation) : bodyFormData.append("discharge_location", data.discharge_location)};
-    {loadingTime !== null ? bodyFormData.append("loading_time", Math.floor(new Date(loadingTime).getTime() / 1000)) : bodyFormData.append("loading_time", Math.floor(new Date(data.loading_time).getTime() / 1000))};
-    {downloadInterval !== null ? bodyFormData.append("DownloadInterval", Math.floor(new Date(downloadInterval).getTime() / 1000)) : bodyFormData.append("DownloadInterval", Math.floor(new Date(data.DownloadInterval).getTime() / 1000))};
-    {dischargeTime !== null ? bodyFormData.append("discharge_time", Math.floor(new Date(dischargeTime).getTime() / 1000)) : bodyFormData.append("discharge_time", Math.floor(new Date(data.discharge_time).getTime() / 1000))};
-    {drainInterval !== null ? bodyFormData.append("DrainInterval", Math.floor(new Date(drainInterval).getTime() / 1000)) : bodyFormData.append("DrainInterval", Math.floor(new Date(data.DrainInterval).getTime() / 1000))};
-    {length !== null ? bodyFormData.append("length", length) : bodyFormData.append("length", data.length)};
-    {width !== null ? bodyFormData.append("width", width) : bodyFormData.append("width", data.width)};
-    {thickness !== null ? bodyFormData.append("thickness", thickness) : bodyFormData.append("thickness", data.thickness)};
-    {typeOfWage !== null ? bodyFormData.append("type_of_wage", typeOfWage) : bodyFormData.append("type_of_wage", data.type_of_wage)};
-    {sender !== null ? bodyFormData.append("sender", sender) : bodyFormData.append("sender", data.sender)};
-    {receiver !== null ? bodyFormData.append("receiver", receiver) : bodyFormData.append("receiver", data.receiver)};
-    {origin !== null ? bodyFormData.append("origin", origin) : bodyFormData.append("origin", data.origin)};
-    {destination  !== null ? bodyFormData.append("destination", destination) : bodyFormData.append("destination", data.destination)};
-    {cargoDescription !== null ? bodyFormData.append("cargo_description", cargoDescription) : bodyFormData.append("cargo_description", data.cargo_description)};
+    {
+      type !== null
+        ? bodyFormData.append("type", type)
+        : bodyFormData.append("type", data.type);
+    }
+    {
+      packing2 !== null
+        ? bodyFormData.append("packing", packing2)
+        : bodyFormData.append("packing", data.packing);
+    }
+    {
+      weight !== null
+        ? bodyFormData.append("weight", weight)
+        : bodyFormData.append("weight", data.weight);
+    }
+    {
+      fare !== null
+        ? bodyFormData.append("lnsurance_value", fare)
+        : bodyFormData.append("lnsurance_value", data.lnsurance_value);
+    }
+    {
+      customerOfferFare !== null
+        ? bodyFormData.append("customer_offer_fare", customerOfferFare)
+        : bodyFormData.append("customer_offer_fare", data.customer_offer_fare);
+    }
+    {
+      downloadLocation !== null
+        ? bodyFormData.append("type", downloadLocation)
+        : bodyFormData.append("download_location", data.download_location);
+    }
+    {
+      dischargeLocation !== null
+        ? bodyFormData.append("discharge_location", dischargeLocation)
+        : bodyFormData.append("discharge_location", data.discharge_location);
+    }
+    {
+      loadingTime !== null
+        ? bodyFormData.append(
+            "loading_time",
+            Math.floor(new Date(loadingTime).getTime() / 1000)
+          )
+        : bodyFormData.append("loading_time", data.loading_time);
+    }
+    {
+      downloadInterval !== null
+        ? bodyFormData.append(
+            "DownloadInterval",
+            Math.floor(new Date(downloadInterval).getTime() / 1000)
+          )
+        : bodyFormData.append("DownloadInterval", data.DownloadInterval);
+    }
+    {
+      dischargeTime !== null
+        ? bodyFormData.append(
+            "discharge_time",
+            Math.floor(new Date(dischargeTime).getTime() / 1000)
+          )
+        : bodyFormData.append("discharge_time", data.discharge_time);
+    }
+    {
+      drainInterval !== null
+        ? bodyFormData.append(
+            "DrainInterval",
+            Math.floor(new Date(drainInterval).getTime() / 1000)
+          )
+        : bodyFormData.append("DrainInterval", data.DrainInterval);
+    }
+    {
+      length !== null
+        ? bodyFormData.append("length", length)
+        : bodyFormData.append("length", data.length);
+    }
+    {
+      width !== null
+        ? bodyFormData.append("width", width)
+        : bodyFormData.append("width", data.width);
+    }
+    {
+      thickness !== null
+        ? bodyFormData.append("thickness", thickness)
+        : bodyFormData.append("thickness", data.thickness);
+    }
+    {
+      typeOfWage !== null
+        ? bodyFormData.append("type_of_wage", typeOfWage)
+        : bodyFormData.append("type_of_wage", data.type_of_wage);
+    }
+    {
+      sender !== null
+        ? bodyFormData.append("sender", sender)
+        : bodyFormData.append("sender", data.sender);
+    }
+    {
+      receiver !== null
+        ? bodyFormData.append("receiver", receiver)
+        : bodyFormData.append("receiver", data.receiver);
+    }
+    {
+      origin !== null
+        ? bodyFormData.append("origin", origin)
+        : bodyFormData.append("origin", data.origin);
+    }
+    {
+      destination !== null
+        ? bodyFormData.append("destination", destination)
+        : bodyFormData.append("destination", data.destination);
+    }
+    {
+      cargoDescription !== null
+        ? bodyFormData.append("cargo_description", cargoDescription)
+        : bodyFormData.append("cargo_description", data.cargo_description);
+    }
     try {
       const response = await fetch("https://hagbaar.com/api/bar/updateOrder", {
         mode: "cors",
@@ -374,10 +449,9 @@ export default function Checkout({dd , dp ,dc ,data}) {
       const data = await response.json();
       if (data.error == 0) {
         toast.success(data.detail);
-        // setTimeout(() => {
-        //   // window.open("/waiting", "_self");
-        // }, 4000);
-        // props.setValue(2);
+        setTimeout(() => {
+          handleClose();
+        }, 4000);
       }
       if (data.error != 1 && data.error != 0) {
         toast.error(data.detail);
@@ -400,6 +474,8 @@ export default function Checkout({dd , dp ,dc ,data}) {
   React.useEffect(() => {
     getData();
   }, []);
+  console.log(loadingTime);
+  console.log(data.loading_time);
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />

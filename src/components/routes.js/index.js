@@ -19,13 +19,9 @@ import Accepted from 'layouts/reservation copy/index'
 
 function Rouess(props) {
   const local = JSON.parse(localStorage.getItem('key'))
-  console.log(local.role)
   return (
     <Routes>
       <Route index element={<SignIn />} />
-      {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
-      {local != null ? local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null :null}
-      {local != null ? local.role == 3 ?  <Route path="accepted" element={<Accepted />} /> :null :null}
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="reservation" element={<Reservation />} />
       <Route path="waiting" element={<Billing />} />
@@ -35,6 +31,9 @@ function Rouess(props) {
       <Route path="ticket" element={<Ticket />} />
       <Route path="/authentication/sign-up" element={<SignUp />} />
       <Route path="/bar/show" element={<ShowDetail />} />
+      {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
+      {local != null ? local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null :null}
+      {local != null ? local.role == 3 ?  <Route path="accepted" element={<Accepted />} /> :null :null}
     </Routes>
   );
 }

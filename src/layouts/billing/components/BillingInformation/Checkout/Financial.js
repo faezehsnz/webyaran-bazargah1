@@ -30,7 +30,6 @@ export default function FinancialInfoForm(props) {
               <MenuItem value={0}>در مقصد</MenuItem>
               <MenuItem value={1}>در مبدا</MenuItem>
                <MenuItem value={3}>کیف پول</MenuItem>
-              {/*<MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
         </Grid>
@@ -40,8 +39,8 @@ export default function FinancialInfoForm(props) {
             id="standard-start-adornment"
             variant="standard"
             label="ارزش کالا"
-            defaultValue={props.fare}
-            onChange={(e) => props.setCustomerOfferFare(e.target.value)}
+            defaultValue={props.lnsurance_value}
+            onChange={(e) => props.setFare(e.target.value)}
             dir="ltr"
             InputProps={{
               startAdornment: (
@@ -53,15 +52,12 @@ export default function FinancialInfoForm(props) {
        
         <Grid item xs={12} sm={3}>
         <FormControl variant="standard" fullWidth>
-            {/* <InputLabel id="demo-simple-select-standard-label">
-               کرایه پیشنهادی
-            </InputLabel> */}
             <TextField
             id="standard-start-adornment"
             variant="standard"
             label="کرایه پیشنهادی"
             defaultValue={props.customer_offer_fare}
-            onChange={(e) => props.setFare(e.target.value)}
+            onChange={(e) => props.setCustomerOfferFare(e.target.value)}
             dir="ltr"
             InputProps={{
               startAdornment: (

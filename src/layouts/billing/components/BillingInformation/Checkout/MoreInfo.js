@@ -5,11 +5,7 @@ import TextField from "@mui/material/TextField";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
-import {
-  DatePicker,
-  MobileDateTimePicker,
-  DesktopDateTimePicker,
-} from "@mui/x-date-pickers";
+
 import Autocomplete from "@mui/material/Autocomplete";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -60,7 +56,7 @@ export default function MoreInfoForm(props) {
                 {...params}
                 inputProps={{
                   ...params.inputProps,
-                  autoComplete: "new-password", // disable autocomplete and autofill
+                  autoComplete: "new-password", 
                 }}
                 label="مبدا"
               />
@@ -128,7 +124,7 @@ export default function MoreInfoForm(props) {
                 {...params}
                 inputProps={{
                   ...params.inputProps,
-                  autoComplete: "new-password", // disable autocomplete and autofill
+                  autoComplete: "new-password", 
                 }}
                 label="مقصد"
               />
@@ -168,7 +164,6 @@ export default function MoreInfoForm(props) {
                 minDate={props.dischargeTime}
               />
             </DemoContainer>
-            {/* </DemoItem> */}
           </LocalizationProvider>
         </Grid>
       </Grid>

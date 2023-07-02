@@ -123,7 +123,6 @@ export default function Checkout() {
       postInfo();
     }
   };
-  console.log(origin);
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
@@ -170,20 +169,6 @@ export default function Checkout() {
                 />
               </Grid>
               <Grid item xs={12} sm={3}>
-                {/* <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-standard-label">
-              شهر مبدا*
-            </InputLabel> */}
-                {/* <Grid item xs={12} sm={12}>
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="شهر مبدا*"
-            fullWidth
-            variant="standard"
-            onChange={(e) => props.setOrigin(e.target.value)}
-          />
-        </Grid> */}
                 <Autocomplete
                   disablePortal
                   id="clear-on-escape"
@@ -314,6 +299,7 @@ export default function Checkout() {
           <FinancialInfoForm
             setTypeOfWage={setTypeOfWage}
             setFare={setFare}
+            setInsuranceValue={setInsuranceValue}
             // setTypeOfWage={setTypeOfWage}
             setCustomerOfferFare={setCustomerOfferFare}
           />
@@ -331,7 +317,7 @@ export default function Checkout() {
     bodyFormData.append("type", type);
     bodyFormData.append("packing", packing);
     bodyFormData.append("weight", weight);
-    bodyFormData.append("fare", customerOfferFare);
+    bodyFormData.append("lnsurance_value", insuranceValue);
     bodyFormData.append("download_location", downloadLocation);
     bodyFormData.append("discharge_location", dischargeLocation);
     bodyFormData.append(

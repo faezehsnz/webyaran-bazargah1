@@ -8,16 +8,12 @@ import Typography from "@mui/material/Typography";
 import {
   DataGrid,
   faIR,
-  gridColumnsTotalWidthSelector,
   GridToolbar,
 } from "@mui/x-data-grid";
-// import { connect } from 'react-redux';
-// import { setData ,setReport } from '../../store/actions'
 import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
 import NotificationItem from "examples/Items/NotificationItem";
 import Menu from "@mui/material/Menu";
-import Icon from "@mui/material/Icon";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
@@ -238,7 +234,6 @@ function BillingInformation(props) {
       setLoading(false);
       if (data.error == 0) {
         toast.success(data.detail);
-        // window.open('reservation' ,'_self')
       }
       if (data.error != 0) {
         setError(data.detail);
@@ -442,6 +437,13 @@ console.log(props.showID)
       headerName: "مقدار کرایه",
       headerAlign: "center",
       width: 160,
+      renderCell: (params) => {
+        return (
+          <p>
+            {params !== null && params !== undefined ?  params.row.fare.toLocaleString() : 0 }
+          </p>
+        );
+      },
     },
     {
       field: "the_status",

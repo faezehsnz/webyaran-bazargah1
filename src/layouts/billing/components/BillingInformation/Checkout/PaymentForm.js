@@ -34,8 +34,6 @@ export default function PaymentForm(props) {
             >
               <MenuItem value="44"></MenuItem>
               <MenuItem value={10}>کفی</MenuItem>
-              {/* <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
         </Grid>
