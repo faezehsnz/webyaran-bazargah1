@@ -55,9 +55,6 @@ export default function FullScreenDialog({
           <Checkout
             data={data}
             handleClose={handleClose}
-            // dd={dd !== null ? dd[0].sazmaniCityName : ""}
-            // dc={dc !== null ? dc[0].sazmaniCityName : ""}
-            // dp={dp !== null ? dp[0] : ""}
           />
         ) : null}
         <ToastContainer

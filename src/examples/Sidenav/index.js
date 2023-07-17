@@ -83,14 +83,13 @@ function Sidenav({ color, userId, brand, brandName, routes, ...rest }) {
         (e) =>
           e.key !== "dashboard" &&
           e.key !== "addbar" &&
-          e.key !== "addbarn" &&
           e.key !== "accepted"
       );
     }
     if (local.role == 2) {
       var x = e.filter(
         (e) =>
-          e.key !== "dashboard" && e.key !== "addbarn" && e.key !== "accepted"
+          e.key !== "dashboard" && e.key !== "accepted"
       );
     }
     if (local.role == 3) {

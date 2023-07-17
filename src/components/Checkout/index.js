@@ -80,20 +80,16 @@ export default function Checkout() {
   const [carType, setCarType] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [type, setType] = React.useState(null);
-  const [location, setLocation] = React.useState(null);
   const [packing, setPacking] = React.useState(null);
   const [weight, setWight] = React.useState(null);
   const [number, setNumber] = React.useState(null);
   const [insuranceValue, setInsuranceValue] = React.useState(null);
-  const [productOwner, setProductOwner] = React.useState(null);
   const [downloadLocation, setDownloadLocation] = React.useState(null);
   const [dischargeLocation, setDischargeLocation] = React.useState(null);
   const [loadingTime, setLoadingTime] = React.useState(null);
   const [downloadInterval, setDownloadInterval] = React.useState(null);
   const [dischargeTime, setDischargeTime] = React.useState(null);
   const [drainInterval, setDrainInterval] = React.useState(null);
-  const [orderNumber, setOrderNumber] = React.useState(null);
-  const [orderItem, setOrderItem] = React.useState(null);
   const [length, setLength] = React.useState(null);
   const [width, setWidth] = React.useState(null);
   const [thickness, setThickness] = React.useState(null);
@@ -110,12 +106,8 @@ export default function Checkout() {
   const [theStatus, setTheStatus] = React.useState(null);
   const [receipt, setReceipt] = React.useState(null);
   const [fare, setFare] = React.useState(null);
-  const [discount, setDiscount] = React.useState(null);
+  const [trafficBar, setTrafficBar] = React.useState(null);
   const [customerOfferFare, setCustomerOfferFare] = React.useState(null);
-  const [commission, setCommission] = React.useState(null);
-  const [havaleId, setHavaleId] = React.useState(null);
-  const [barnameId, setBarnameId] = React.useState(null);
-  const [specialGoods, setSpecialGoods] = React.useState(null);
   const [cargoDescription, setCargoDescription] = React.useState(null);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -148,6 +140,7 @@ export default function Checkout() {
             setCarType={setCarType}
             carTypes={carTypes != null && carTypes}
             type={type}
+            setTrafficBar={setTrafficBar}
           />
         );
       case 1:
@@ -346,6 +339,7 @@ export default function Checkout() {
     bodyFormData.append("destination", destination);
     bodyFormData.append("customer_offer_fare", fare);
     bodyFormData.append("cargo_description", cargoDescription);
+    bodyFormData.append("trafficBar", trafficBar);
     try {
       const response = await fetch("https://hagbaar.com/api/bar/createOrder", {
         mode: "cors",
@@ -367,7 +361,6 @@ export default function Checkout() {
     } catch (e) {
       toast(e.detail);
       setActiveStep(0);
-      // setError(e.message);
     }
   };
   const getData = async (e) => {

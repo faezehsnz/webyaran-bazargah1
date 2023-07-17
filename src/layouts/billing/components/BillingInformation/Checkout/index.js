@@ -91,8 +91,6 @@ export default function Checkout({ dd, dp, dc, data, handleClose }) {
   const [downloadInterval, setDownloadInterval] = React.useState(null);
   const [dischargeTime, setDischargeTime] = React.useState(null);
   const [drainInterval, setDrainInterval] = React.useState(null);
-  const [orderNumber, setOrderNumber] = React.useState(null);
-  const [orderItem, setOrderItem] = React.useState(null);
   const [length, setLength] = React.useState(null);
   const [width, setWidth] = React.useState(null);
   const [thickness, setThickness] = React.useState(null);
@@ -104,15 +102,9 @@ export default function Checkout({ dd, dp, dc, data, handleClose }) {
   const [receiver, setReceiver] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
   const [destination, setDestination] = React.useState(null);
-  const [comment, setComment] = React.useState(null);
-  const [active, setActive] = React.useState(null);
-  const [theStatus, setTheStatus] = React.useState(null);
   const [fare, setFare] = React.useState(null);
   const [customerOfferFare, setCustomerOfferFare] = React.useState(null);
-  const [commission, setCommission] = React.useState(null);
-  const [havaleId, setHavaleId] = React.useState(null);
-  const [barnameId, setBarnameId] = React.useState(null);
-  const [specialGoods, setSpecialGoods] = React.useState(null);
+  const [trafficBar, setTrafficBar] = React.useState(null);
   const [cargoDescription, setCargoDescription] = React.useState(null);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -148,6 +140,7 @@ export default function Checkout({ dd, dp, dc, data, handleClose }) {
             carTypes={carTypes != null && carTypes}
             type={type}
             data={data}
+            setTrafficBar={setTrafficBar}
           />
         );
       case 1:
@@ -440,6 +433,12 @@ export default function Checkout({ dd, dp, dc, data, handleClose }) {
         ? bodyFormData.append("cargo_description", cargoDescription)
         : bodyFormData.append("cargo_description", data.cargo_description);
     }
+    {
+      trafficBar !== null
+        ? bodyFormData.append("trafficBar", trafficBar)
+        : bodyFormData.append("trafficBar", data.trafficBar);
+    }
+    
     try {
       const response = await fetch("https://hagbaar.com/api/bar/updateOrder", {
         mode: "cors",

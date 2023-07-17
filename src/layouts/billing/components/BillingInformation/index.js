@@ -5,11 +5,7 @@ import Bar from "components/Checkout/bar.json";
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {
-  DataGrid,
-  faIR,
-  GridToolbar,
-} from "@mui/x-data-grid";
+import { DataGrid, faIR, GridToolbar } from "@mui/x-data-grid";
 import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
 import NotificationItem from "examples/Items/NotificationItem";
@@ -30,6 +26,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import FullScreenDialog from "../modal";
+import AddBarname from "../addBarnameModal";
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   // direction: 'rtl',
@@ -50,13 +47,11 @@ function BillingInformation(props) {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openB, setBOpen] = React.useState(false);
   const [param, setParam] = React.useState(null);
   const [packing, setPacking] = React.useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [defaultP, setDefaultP] = React.useState(null);
-  const [defaultC, setDefaultC] = React.useState(null);
-  const [defaultD, setDefaultD] = React.useState(null);
   const [cities, setCities] = React.useState([
     {
       ID: "1",
@@ -87,6 +82,13 @@ function BillingInformation(props) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleClickBOpen = () => {
+    setBOpen(true);
+  };
+
+  const handleBClose = () => {
+    setBOpen(false);
   };
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
 
@@ -183,37 +185,7 @@ function BillingInformation(props) {
       setError(e.detail);
     }
   };
-  const getData3 = async (params) => {
-    var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem("key"));
-    bodyFormData.append("userID", local.userInfo.ID);
-    bodyFormData.append("role", local.role);
-    bodyFormData.append("barID", params.id);
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://hagbaar.com/api/bar/getBarnamehBar",
-        {
-          mode: "cors",
-          method: "POST",
-          body: bodyFormData,
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (data.error == 0) {
-        toast.success(data.detail);
-        // window.open('reservation' ,'_self')
-      }
-      if (data.error != 0) {
-        setError(data.detail);
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      // handleClickOpen();
-      setError(e.detail);
-    }
-  };
+
   const getData4 = async (params) => {
     var bodyFormData = new FormData();
     const local = JSON.parse(localStorage.getItem("key"));
@@ -244,48 +216,53 @@ function BillingInformation(props) {
       setError(e.detail);
     }
   };
+  const deleteBar = async (params) => {
+    var bodyFormData = new FormData();
+    const local = JSON.parse(localStorage.getItem("key"));
+    bodyFormData.append("userID", local.userInfo.ID);
+    bodyFormData.append("role", local.role);
+    bodyFormData.append("barID", params.id);
+    try {
+      setLoading(true);
+      const response = await fetch("https://hagbaar.com/api/bar/deleteBar", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (data.error == 0) {
+        toast.success(data.detail);
+        console.log(data);
+      }
+      if (data.error != 0) {
+        setError(data.detail);
+        toast.error(data.detail);
+      }
+    } catch (e) {
+      // handleClickOpen();
+      setError(e.detail);
+    }
+  };
   const getProps = async (e) => {
     setCities(City.cities.map((option) => option));
     setPacking(City.pakings.map((option) => option));
     setCarTypes(City.mecanismTypes.map((option) => option));
     setGoodTypes(Bar.goodTypes.map((option) => option));
   };
-  const FindIndexPacking = () => {
-    if (props.showID !== [] && packing !== null) {
-      const e = packing.filter((i) => i.id == props.showID.packing);
-      setDefaultP(e);
-      console.log(e);
-    }
-  };
-console.log(props.showID)
-  const FindIndexCity = async () => {
-    if (props.showID !== [] && cities !== null) {
-      console.log(cities, props.showID);
-      const e = cities.filter((i) => i.ID == props.showID.origin);
-      setDefaultC(e);
-    }
-  };
-  const FindIndexDist = async () => {
-    if (props.showID !== [] && cities !== null) {
-      const e = cities.filter((i) => i.ID == props.showID.destination);
-      console.log(e)
-      setDefaultD(e);
-    }
-  };
-  console.log(defaultD);
   useEffect(() => {
     getProps();
-    FindIndexCity();
-    FindIndexPacking();
-    FindIndexDist();
   }, [open]);
   const renderMenu = (params) => (
     <>
+      <AddBarname
+        data={props.showID !== null ? props.showID : null}
+        open={openB}
+        handleClickOpen={handleClickBOpen}
+        handleClose={handleBClose}
+      />
       <FullScreenDialog
-        dd={defaultD}
-        dc={defaultC}
-        dp={defaultP}
-        data={props.showID !== null ? props.showID :null}
+        data={props.showID !== null ? props.showID : null}
         open={open}
         handleClickOpen={handleClickOpen}
         handleClose={handleClose}
@@ -317,8 +294,17 @@ console.log(props.showID)
             ) : null}
           </>
         ) : null}
-
-        <NotificationItem icon={<DeleteOutlineOutlinedIcon />} title="حذف" />
+        {props.showID !== null ? (
+          <>
+            {local.role == 2 && (
+              <NotificationItem
+                icon={<DeleteOutlineOutlinedIcon />}
+                onClick={() => deleteBar(props.showID)}
+                title="حذف"
+              />
+            )}
+          </>
+        ) : null}
         {props.showID !== null ? (
           <>
             {local.role == 3 &&
@@ -357,7 +343,7 @@ console.log(props.showID)
               <NotificationItem
                 icon={<MenuOutlinedIcon />}
                 title="بارنامه کردن"
-                onClick={() => getData3(props.showID)}
+                onClick={handleClickBOpen}
               />
             ) : props.showID.the_status > 0 &&
               props.showID !== null &&
@@ -371,17 +357,9 @@ console.log(props.showID)
             ) : null}{" "}
           </>
         ) : null}
-        {/* ) : (
-        <NotificationItem
-          icon={<MenuOutlinedIcon />}
-          title="رزرو توسط راننده"
-          onClick={() => getData(params)}
-        />
-        )} */}
       </Menu>
     </>
   );
-  console.log(props.showID)
   const columns = [
     {
       field: "cargo_description",
@@ -440,7 +418,9 @@ console.log(props.showID)
       renderCell: (params) => {
         return (
           <p>
-            {params !== null && params !== undefined ?  params.row.fare.toLocaleString() : 0 }
+            {params !== null && params !== undefined
+              ? params.row.fare.toLocaleString()
+              : 0}
           </p>
         );
       },
@@ -537,6 +517,7 @@ console.log(props.showID)
         <Box component="ul" display="flex" flexDirection="column" p={0} m={0}>
           <StyledDataGrid
             slots={{ toolbar: GridToolbar }}
+            getRowId={(row) => row.id} 
             localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
             columns={columns}
             rows={props.report}

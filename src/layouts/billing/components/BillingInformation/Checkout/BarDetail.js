@@ -138,8 +138,25 @@ export default function AddressForm(props) {
               }}
             />
           </Grid>
+          <Grid item xs={12} sm={3}>
+            <FormControl variant="standard" fullWidth>
+              <InputLabel id="demo-simple-select-standard-label">
+                ترافیک بار
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                // value={age}
+                onChange={(e) => props.setTrafficBar(e.target.value)}
+                defaultValue={10}
+                label=""
+              >
+                <MenuItem value={0}>بار عادی</MenuItem>
+                <MenuItem value={1}>بار ترافیکی</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
-        <Divider />
         <Grid container spacing={3} mt={1} ml={1}>
           <Grid item xs={12} sm={3}>
             <Autocomplete

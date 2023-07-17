@@ -5,7 +5,9 @@ import {
   Box,
   Button,
   Card,
+  MenuItem,
   FormControl,
+  Select,
   FormHelperText,
   Input,
   IconButton,
@@ -62,6 +64,7 @@ function Form1(props) {
     },
   ]);
   const [origin, setOrigin] = React.useState(null);
+  const [hamlType, setHamlType] = React.useState(null);
   const [value, setValue] = React.useState("1");
   const [name, setName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -155,7 +158,7 @@ function Form1(props) {
       bodyFormData.append("adrres", address);
       bodyFormData.append("password", password);
       bodyFormData.append("cityID", origin);
-      // props.setCityID(origin)
+      bodyFormData.append("hamlType", hamlType);
     }
     try {
       const response = await fetch("https://hagbaar.com/api/auth/updateUser", {
@@ -729,6 +732,26 @@ function Form1(props) {
                   fullWidth
                   onChange={(e) => setaddress(e.target.value)}
                 />
+              </Box>
+              <Box mb={2}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel
+                    id="demo-simple-select-standard-label"
+                    sx={{ marginTop: -1.5 }}
+                  >
+                    نوع شرکت حمل
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={hamlType}
+                    onChange={(e) => setHamlType(e.target.value)}
+                  >
+                    <MenuItem value={1}>بزرگ مقیاس</MenuItem>
+                    <MenuItem value={2}>عادی</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
               <Box mb={2}>
                 <Autocomplete
