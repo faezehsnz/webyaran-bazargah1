@@ -94,6 +94,11 @@ function Form4(props) {
               variant="contained"
               fullWidth
               onClick={postPhoneNumber}
+              onKeyUp={(event) => {
+                if (event.ctrlKey && event.key == "Enter") {
+                  postPhoneNumber()
+                }
+              }}
             >
               دریافت کد
             </Button>

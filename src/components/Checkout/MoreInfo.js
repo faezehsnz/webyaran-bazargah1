@@ -15,6 +15,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 export default function MoreInfoForm(props) {
+  console.log(props)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

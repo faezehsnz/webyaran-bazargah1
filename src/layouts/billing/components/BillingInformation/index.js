@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
-
+import City from "components/Checkout/data.json";
+import Bar from "components/Checkout/bar.json";
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { DataGrid, faIR, GridToolbar } from "@mui/x-data-grid";
-// import { connect } from 'react-redux';
-// import { setData ,setReport } from '../../store/actions'
 import styled from "@emotion/styled";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import NotificationItem from "examples/Items/NotificationItem";
 import Menu from "@mui/material/Menu";
-import Icon from "@mui/material/Icon";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { connect } from "react-redux";
-import { setUserID, setCityID ,setShowData ,setBarData} from "components/store/actions";
+import {
+  setUserID,
+  setCityID,
+  setShowData,
+  setBarData,
+} from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import FullScreenDialog from "../modal";
+import AddBarname from "../addBarnameModal";
+
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+  // direction: 'rtl',
   "& .super-app-theme--2": {
     backgroundColor: "rgb(192, 216, 193)",
   },
@@ -46,16 +47,53 @@ function BillingInformation(props) {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openB, setBOpen] = React.useState(false);
   const [param, setParam] = React.useState(null);
+  const [packing, setPacking] = React.useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
-
-  const handleCloseMenu = () => setOpenMenu(false);
+  const [cities, setCities] = React.useState([
+    {
+      ID: "1",
+      sazmaniCityXID: "26441030",
+      sazmaniCityName: "نوجه ده سادات",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "37.9098127",
+      Longitude: "46.9631703",
+      active: "1",
+    },
+    {
+      ID: "2",
+      sazmaniCityXID: "26441031",
+      sazmaniCityName: "کرگان",
+      TaxID: "1301000",
+      TaxState: "13",
+      Latitude: "38.1067244",
+      Longitude: "48.4829618",
+      active: "1",
+    },
+  ]);
+  const [goodTypes, setGoodTypes] = React.useState(null);
+  const [carTypes, setCarTypes] = React.useState(null);
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleClickBOpen = () => {
+    setBOpen(true);
+  };
+
+  const handleBClose = () => {
+    setBOpen(false);
+  };
+  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
+
+  const handleCloseMenu = () => setOpenMenu(false);
+
   const local = JSON.parse(localStorage.getItem("key"));
   const getData = async (params) => {
     var bodyFormData = new FormData();
@@ -147,37 +185,7 @@ function BillingInformation(props) {
       setError(e.detail);
     }
   };
-  const getData3 = async (params) => {
-    var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem("key"));
-    bodyFormData.append("userID", local.userInfo.ID);
-    bodyFormData.append("role", local.role);
-    bodyFormData.append("barID", params.id);
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://hagbaar.com/api/bar/getBarnamehBar",
-        {
-          mode: "cors",
-          method: "POST",
-          body: bodyFormData,
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (data.error == 0) {
-        toast.success(data.detail);
-        // window.open('reservation' ,'_self')
-      }
-      if (data.error != 0) {
-        setError(data.detail);
-        toast.error(data.detail);
-      }
-    } catch (e) {
-      // handleClickOpen();
-      setError(e.detail);
-    }
-  };
+
   const getData4 = async (params) => {
     var bodyFormData = new FormData();
     const local = JSON.parse(localStorage.getItem("key"));
@@ -198,7 +206,6 @@ function BillingInformation(props) {
       setLoading(false);
       if (data.error == 0) {
         toast.success(data.detail);
-        // window.open('reservation' ,'_self')
       }
       if (data.error != 0) {
         setError(data.detail);
@@ -209,8 +216,57 @@ function BillingInformation(props) {
       setError(e.detail);
     }
   };
+  const deleteBar = async (params) => {
+    var bodyFormData = new FormData();
+    const local = JSON.parse(localStorage.getItem("key"));
+    bodyFormData.append("userID", local.userInfo.ID);
+    bodyFormData.append("role", local.role);
+    bodyFormData.append("barID", params.id);
+    try {
+      setLoading(true);
+      const response = await fetch("https://hagbaar.com/api/bar/deleteBar", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (data.error == 0) {
+        toast.success(data.detail);
+        console.log(data);
+      }
+      if (data.error != 0) {
+        setError(data.detail);
+        toast.error(data.detail);
+      }
+    } catch (e) {
+      // handleClickOpen();
+      setError(e.detail);
+    }
+  };
+  const getProps = async (e) => {
+    setCities(City.cities.map((option) => option));
+    setPacking(City.pakings.map((option) => option));
+    setCarTypes(City.mecanismTypes.map((option) => option));
+    setGoodTypes(Bar.goodTypes.map((option) => option));
+  };
+  useEffect(() => {
+    getProps();
+  }, [open]);
   const renderMenu = (params) => (
     <>
+      <AddBarname
+        data={props.showID !== null ? props.showID : null}
+        open={openB}
+        handleClickOpen={handleClickBOpen}
+        handleClose={handleBClose}
+      />
+      <FullScreenDialog
+        data={props.showID !== null ? props.showID : null}
+        open={open}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+      />
       <Menu
         anchorEl={openMenu}
         anchorReference={null}
@@ -225,65 +281,82 @@ function BillingInformation(props) {
         <NotificationItem
           icon={<VisibilityOutlinedIcon />}
           title="نمایش"
-          onClick={() => navigate('/bar/show')}
+          onClick={() => navigate("/bar/show")}
         />
-        <NotificationItem
-          icon={<ModeEditOutlineOutlinedIcon />}
-          title="ویرایش"
-        />
-        <NotificationItem icon={<DeleteOutlineOutlinedIcon />} title="حذف" />
-        {props.showID !== [] ? <>
-        {local.role == 3 &&
-        props.showID.the_status == 0 &&
-        props.showID.transportationCompani == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="پذیرفتن"
-            onClick={() => getData(props.showID)}
-          />
-        ) : local.role == 1 &&
-        props.showID !== [] &&
-        props.showID.transportationCompani > 0 &&
-        props.showID.the_status == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="رزرو"
-            onClick={() => getData1(props.showID)}
-          />
-        ) : local.role == 3 &&
-        props.showID.the_status > 0 &&
-          props.showID.transportationCompani > 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="حواله"
-            onClick={() => getData2(props.showID)}
-          />
-        ) : local.role == 3 &&
-        props.showID.the_status > 0 &&
-        props.showID.transportationCompani > 0 &&
-        props.showID.havale_id > 0 &&
-        props.showID.receipt == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="بارنامه کردن"
-            onClick={() => getData3(props.showID)}
-          />
-        ) : props.showID.the_status > 0 &&
-          props.showID.receipt == 2 &&
-          props.showID.active == 0 ? (
-          <NotificationItem
-            icon={<MenuOutlinedIcon />}
-            title="تحویل دادن"
-            onClick={() => getData4(props.showID)}
-          />
-        ) : null} </>:null}
-        {/* ) : (
-        <NotificationItem
-          icon={<MenuOutlinedIcon />}
-          title="رزرو توسط راننده"
-          onClick={() => getData(params)}
-        />
-        )} */}
+        {props.showID !== null ? (
+          <>
+            {props.showID.active == 1 ? (
+              <NotificationItem
+                onClick={handleClickOpen}
+                icon={<ModeEditOutlineOutlinedIcon />}
+                title="ویرایش"
+              />
+            ) : null}
+          </>
+        ) : null}
+        {props.showID !== null ? (
+          <>
+            {local.role == 2 && (
+              <NotificationItem
+                icon={<DeleteOutlineOutlinedIcon />}
+                onClick={() => deleteBar(props.showID)}
+                title="حذف"
+              />
+            )}
+          </>
+        ) : null}
+        {props.showID !== null ? (
+          <>
+            {local.role == 3 &&
+            props.showID !== null &&
+            props.showID.the_status == 0 &&
+            props.showID.transportationCompani == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="پذیرفتن"
+                onClick={() => getData(props.showID)}
+              />
+            ) : local.role == 1 &&
+              props.showID !== null &&
+              props.showID.transportationCompani > 0 &&
+              props.showID.the_status == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="رزرو"
+                onClick={() => getData1(props.showID)}
+              />
+            ) : local.role == 3 &&
+              props.showID.the_status > 0 &&
+              props.showID.havale_id == 0 &&
+              props.showID.transportationCompani > 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="حواله"
+                onClick={() => getData2(props.showID)}
+              />
+            ) : local.role == 3 &&
+              props.showID !== null &&
+              props.showID.the_status > 0 &&
+              props.showID.transportationCompani > 0 &&
+              props.showID.havale_id > 0 &&
+              props.showID.receipt == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="بارنامه کردن"
+                onClick={handleClickBOpen}
+              />
+            ) : props.showID.the_status > 0 &&
+              props.showID !== null &&
+              props.showID.receipt == 2 &&
+              props.showID.active == 0 ? (
+              <NotificationItem
+                icon={<MenuOutlinedIcon />}
+                title="تحویل دادن"
+                onClick={() => getData4(props.showID)}
+              />
+            ) : null}{" "}
+          </>
+        ) : null}
       </Menu>
     </>
   );
@@ -315,9 +388,10 @@ function BillingInformation(props) {
       },
     },
     {
-      field: "download_location",
+      field: "originName",
       headerName: "شهر مبدا",
       headerAlign: "center",
+      width: 150,
       // renderCell: (params) => {
       //   var date = params.value
       //   var validDate = new Date(date * 1000).toLocaleDateString('fa-IR');
@@ -325,54 +399,84 @@ function BillingInformation(props) {
       // }
     },
     {
-      field: "discharge_location",
+      field: "destinationName",
       headerName: "شهر مقصد",
       headerAlign: "center",
+      width: 170,
+    },
+    {
+      field: "ownerName",
+      headerName: "صاحب بار",
+      headerAlign: "center",
+      width: 140,
     },
     {
       field: "fare",
       headerName: "مقدار کرایه",
       headerAlign: "center",
       width: 160,
+      renderCell: (params) => {
+        return (
+          <p>
+            {params !== null && params !== undefined
+              ? params.row.fare.toLocaleString()
+              : 0}
+          </p>
+        );
+      },
     },
     {
-      field: 'the_status',
-      headerName: 'وضعیت حمل',
-      headerAlign: 'center',
+      field: "the_status",
+      headerName: "وضعیت حمل",
+      headerAlign: "center",
       width: 250,
       renderCell: (params) => {
-        
         return (
-          
           <p>
             {params.value == 0
-              ? 'در انتظار پذیرش'
+              ? "در انتظار پذیرش"
               : params.value > 0
-              ? ' پذیرش شده توسط ' + params.row.driverName.name + params.row.driverName.lastName
+              ? " پذیرش شده توسط " +
+                params.row.driverName.name +
+                params.row.driverName.lastName
               : null}
           </p>
         );
-      }
+      },
     },
     {
-      field: 'transportationCompani',
-      headerName: 'شرکت حمل',
-      headerAlign: 'center',
+      field: "transportationCompani",
+      headerName: "شرکت حمل",
+      headerAlign: "center",
       width: 220,
       renderCell: (params) => {
         return (
-          <p>{params.value == 0 ? 'در انتظار ' : params.value > 0 ? ' پذیرش شده توسط ' + params.row.hamlCompanyName.brandName : null}</p>
+          <p>
+            {params.value == 0
+              ? "در انتظار "
+              : params.value > 0
+              ? " پذیرش شده توسط " + params.row.hamlCompanyName.brandName
+              : null}
+          </p>
         );
-      }
+      },
     },
     {
-      field: 'receipt',
-      headerName: 'وضعیت تحویل',
-      headerAlign: 'center',
+      field: "receipt",
+      headerName: "وضعیت تحویل",
+      headerAlign: "center",
       width: 140,
       renderCell: (params) => {
-        return <p>{params.value == 0 ? 'در انتظار حمل ' : params.value == 2 ? 'درحال حمل' : 'درمقصد'}</p>;
-      }
+        return (
+          <p>
+            {params.value == 0
+              ? "در انتظار حمل "
+              : params.value == 2
+              ? "درحال حمل"
+              : "درمقصد"}
+          </p>
+        );
+      },
     },
     {
       field: "action",
@@ -382,17 +486,15 @@ function BillingInformation(props) {
       width: 110,
       renderCell: (params) => (
         <>
-          {/* {setParam(params)} */}
-          {/* {console.log(params)} */}
           <MoreHorizOutlinedIcon onClick={(e) => handleOpenMenu(e)}>
             move_vert
           </MoreHorizOutlinedIcon>
           {renderMenu(params.row)}
-          {/* {confirmDialog()} */}
         </>
       ),
     },
   ];
+
   return (
     <Card id="delete-account">
       <Box
@@ -415,6 +517,7 @@ function BillingInformation(props) {
         <Box component="ul" display="flex" flexDirection="column" p={0} m={0}>
           <StyledDataGrid
             slots={{ toolbar: GridToolbar }}
+            getRowId={(row) => row.id} 
             localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
             columns={columns}
             rows={props.report}
@@ -426,7 +529,9 @@ function BillingInformation(props) {
                 },
               },
             }}
-            onRowClick={(rows)=>{props.setShowData(rows.row)}}
+            onRowClick={(rows) => {
+              props.setShowData(rows.row);
+            }}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
             checkboxSelection
@@ -453,7 +558,7 @@ const mapStateToProps = (state) => ({
   userId: state.userId,
   cityId: state.cityId,
   barData: state.barData,
-  showID: state.showID
+  showID: state.showID,
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -24,7 +24,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import City from "./data.json";
 import Bar from "./bar.json";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
+import {
+  DatePicker,
+  MobileDateTimePicker,
+  DesktopDateTimePicker,
+} from "@mui/x-date-pickers";
+import Autocomplete from "@mui/material/Autocomplete";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 const steps = [
   "اطلاعات بار",
   // "اطلاعات مکانیزم حمل",
@@ -68,20 +80,16 @@ export default function Checkout() {
   const [carType, setCarType] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [type, setType] = React.useState(null);
-  const [location, setLocation] = React.useState(null);
   const [packing, setPacking] = React.useState(null);
   const [weight, setWight] = React.useState(null);
   const [number, setNumber] = React.useState(null);
   const [insuranceValue, setInsuranceValue] = React.useState(null);
-  const [productOwner, setProductOwner] = React.useState(null);
   const [downloadLocation, setDownloadLocation] = React.useState(null);
   const [dischargeLocation, setDischargeLocation] = React.useState(null);
   const [loadingTime, setLoadingTime] = React.useState(null);
   const [downloadInterval, setDownloadInterval] = React.useState(null);
   const [dischargeTime, setDischargeTime] = React.useState(null);
   const [drainInterval, setDrainInterval] = React.useState(null);
-  const [orderNumber, setOrderNumber] = React.useState(null);
-  const [orderItem, setOrderItem] = React.useState(null);
   const [length, setLength] = React.useState(null);
   const [width, setWidth] = React.useState(null);
   const [thickness, setThickness] = React.useState(null);
@@ -98,12 +106,8 @@ export default function Checkout() {
   const [theStatus, setTheStatus] = React.useState(null);
   const [receipt, setReceipt] = React.useState(null);
   const [fare, setFare] = React.useState(null);
-  const [discount, setDiscount] = React.useState(null);
+  const [trafficBar, setTrafficBar] = React.useState(null);
   const [customerOfferFare, setCustomerOfferFare] = React.useState(null);
-  const [commission, setCommission] = React.useState(null);
-  const [havaleId, setHavaleId] = React.useState(null);
-  const [barnameId, setBarnameId] = React.useState(null);
-  const [specialGoods, setSpecialGoods] = React.useState(null);
   const [cargoDescription, setCargoDescription] = React.useState(null);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -111,7 +115,6 @@ export default function Checkout() {
       postInfo();
     }
   };
-
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
@@ -137,32 +140,159 @@ export default function Checkout() {
             setCarType={setCarType}
             carTypes={carTypes != null && carTypes}
             type={type}
+            setTrafficBar={setTrafficBar}
           />
         );
       case 1:
         return (
-          <MoreInfoForm
-            setSender={setSender}
-            setReceiver={setReceiver}
-            setOrigin={setOrigin}
-            setDestination={setDestination}
-            setLoadingTime={setLoadingTime}
-            setDownloadInterval={setDownloadInterval}
-            downloadInterval={downloadInterval}
-            dischargeTime={dischargeTime}
-            loadingTime={loadingTime}
-            setDischargeTime={setDischargeTime}
-            setDrainInterval={setDrainInterval}
-            setDownloadLocation={setDownloadLocation}
-            setDischargeLocation={setDischargeLocation}
-            cities={packing != null && cities}
-          />
+          <React.Fragment>
+            <Typography variant="h6" gutterBottom>
+              سایر توضیحات
+            </Typography>
+            <p>پر کردن فیلد های ستاره دار (*) اجباری است.</p>
+            <Grid container spacing={3} mt={5}>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  id="firstName"
+                  name="firstName"
+                  label="فرستنده*"
+                  fullWidth
+                  variant="standard"
+                  onChange={(e) => setSender(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Autocomplete
+                  disablePortal
+                  id="clear-on-escape"
+                  options={cities != null ? cities : null}
+                  getOptionLabel={(option) => option.sazmaniCityName}
+                  onChange={(e, value) => setOrigin(value.ID)}
+                  renderInput={(params) => (
+                    <TextField
+                      variant="standard"
+                      {...params}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                      label="مبدا"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  required
+                  id="address1"
+                  name="address1"
+                  label="محل بارگیری"
+                  onChange={(e) => setDownloadLocation(e.target.value)}
+                  fullWidth
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان بارگیری(از)"
+                      onChange={(e) => setLoadingTime(e)}
+                      minDate={new Date()}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان بارگیری(تا)"
+                      onChange={(e) => setDownloadInterval(e)}
+                      minDate={loadingTime}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} mt={5}>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  id="firstName"
+                  name="firstName"
+                  label="گیرنده*"
+                  onChange={(e) => setReceiver(e.target.value)}
+                  fullWidth
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Autocomplete
+                  disablePortal
+                  id="clear-on-escape"
+                  options={cities != null ? cities : null}
+                  getOptionLabel={(option) => option.sazmaniCityName}
+                  onChange={(e, value) => setDestination(value.ID)}
+                  renderInput={(params) => (
+                    <TextField
+                      variant="standard"
+                      {...params}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                      label="مقصد"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  required
+                  id="address1"
+                  name="address1"
+                  label="محل تخلیه"
+                  onChange={(e) => setDischargeLocation(e.target.value)}
+                  fullWidth
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان تخلیه(از)"
+                      onChange={(e) => setDischargeTime(e)}
+                      minDate={downloadInterval}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      ampm={false}
+                      label="زمان تخلیه(تا)"
+                      onChange={(e) => setDrainInterval(e)}
+                      minDate={dischargeTime}
+                    />
+                  </DemoContainer>
+                  {/* </DemoItem> */}
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </React.Fragment>
         );
       case 2:
         return (
           <FinancialInfoForm
             setTypeOfWage={setTypeOfWage}
             setFare={setFare}
+            setInsuranceValue={setInsuranceValue}
             // setTypeOfWage={setTypeOfWage}
             setCustomerOfferFare={setCustomerOfferFare}
           />
@@ -180,7 +310,7 @@ export default function Checkout() {
     bodyFormData.append("type", type);
     bodyFormData.append("packing", packing);
     bodyFormData.append("weight", weight);
-    bodyFormData.append("fare", customerOfferFare);
+    bodyFormData.append("lnsurance_value", insuranceValue);
     bodyFormData.append("download_location", downloadLocation);
     bodyFormData.append("discharge_location", dischargeLocation);
     bodyFormData.append(
@@ -209,6 +339,7 @@ export default function Checkout() {
     bodyFormData.append("destination", destination);
     bodyFormData.append("customer_offer_fare", fare);
     bodyFormData.append("cargo_description", cargoDescription);
+    bodyFormData.append("trafficBar", trafficBar);
     try {
       const response = await fetch("https://hagbaar.com/api/bar/createOrder", {
         mode: "cors",
@@ -230,7 +361,6 @@ export default function Checkout() {
     } catch (e) {
       toast(e.detail);
       setActiveStep(0);
-      // setError(e.message);
     }
   };
   const getData = async (e) => {
@@ -310,6 +440,11 @@ export default function Checkout() {
                   variant="contained"
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
+                  onKeyUp={(event) => {
+                    if (event.ctrlKey && event.key == "Enter") {
+                      handleNext();
+                    }
+                  }}
                 >
                   {activeStep === steps.length - 1 ? "ثبت بار" : "بعدی"}
                 </Button>

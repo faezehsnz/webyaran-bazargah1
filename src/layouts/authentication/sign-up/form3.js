@@ -62,6 +62,11 @@ function Form3(props) {
             <Button
               variant="contained"
               onClick={() => props.setValue(1)}
+              onKeyUp={(event) => {
+                if (event.ctrlKey && event.key == "Enter") {
+                  props.setValue(1);
+                }
+              }}
               fullWidth
             >
               بعدی
@@ -71,7 +76,7 @@ function Form3(props) {
             <Typography variant="button" color="text">
               قبلا ثبت نام کرده اید؟
               <Typography
-              component={Link}
+                component={Link}
                 to="/"
                 variant="button"
                 color="info"
@@ -84,7 +89,6 @@ function Form3(props) {
           </Box>
         </Box>
       </Box>
-
     </Card>
   );
 }

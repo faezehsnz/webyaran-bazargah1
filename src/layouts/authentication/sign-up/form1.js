@@ -3,11 +3,19 @@ import {
   AppBar,
   Grid,
   Box,
-  Typography,
-  Input,
   Button,
-  InputLabel,
   Card,
+  MenuItem,
+  FormControl,
+  Select,
+  FormHelperText,
+  Input,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Stack,
+  Typography,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
@@ -24,10 +32,12 @@ import {
   setCityID,
   setBarData,
   setID,
-  setShowData
+  setShowData,
 } from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Form1(props) {
   const navigate = useNavigate();
@@ -54,6 +64,7 @@ function Form1(props) {
     },
   ]);
   const [origin, setOrigin] = React.useState(null);
+  const [hamlType, setHamlType] = React.useState(null);
   const [value, setValue] = React.useState("1");
   const [name, setName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -61,13 +72,25 @@ function Form1(props) {
   const [nationalCode, setNationalCode] = React.useState("");
   const [lisenceCode, setLisenceCode] = React.useState("");
   const [smartCode, setSmartCode] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [type, setType] = React.useState("");
   const [brandName, setBrandName] = React.useState("");
   const [sabtNumber, setSAbtNumber] = React.useState("");
   const [address, setaddress] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [hamlCode, setHamlCode] = React.useState("");
+<<<<<<< HEAD
   
+=======
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+>>>>>>> 9fb2983bd8a4656a4243616cc8bae26692ecc5d2
   const getData2 = async (e) => {
     setCities(City.cities.map((option) => option));
   };
@@ -88,6 +111,7 @@ function Form1(props) {
       bodyFormData.append("nationalCode", nationalCode);
       bodyFormData.append("ghavinameNumber", lisenceCode);
       bodyFormData.append("hoshmandNumber", smartCode);
+      bodyFormData.append("password", password);
       bodyFormData.append("cityID", 0);
       // props.setCityID(0)
     }
@@ -105,6 +129,7 @@ function Form1(props) {
         bodyFormData.append("adrres", address);
         bodyFormData.append("sabtNumber", sabtNumber);
         bodyFormData.append("brandName", brandName);
+        bodyFormData.append("password", password);
         bodyFormData.append("cityID", 1);
       }
       if (value == 1) {
@@ -119,6 +144,7 @@ function Form1(props) {
         bodyFormData.append("fatherName", fatherName);
         bodyFormData.append("phone", phone);
         bodyFormData.append("adrres", address);
+        bodyFormData.append("password", password);
         bodyFormData.append("cityID", 1);
       }
       // props.setCityID(0)
@@ -134,8 +160,9 @@ function Form1(props) {
       bodyFormData.append("hamlCode", hamlCode);
       bodyFormData.append("phone", phone);
       bodyFormData.append("adrres", address);
+      bodyFormData.append("password", password);
       bodyFormData.append("cityID", origin);
-      // props.setCityID(origin)
+      bodyFormData.append("hamlType", hamlType);
     }
     try {
       const response = await fetch("https://hagbaar.com/api/auth/updateUser", {
@@ -167,7 +194,7 @@ function Form1(props) {
     <Card
       sx={{
         marginTop: -25,
-        width: { md: "40vw"},
+        width: { md: "40vw" },
         marginLeft: { md: "-4vw", xs: "0px" },
       }}
     >
@@ -192,7 +219,7 @@ function Form1(props) {
         <Box component="form" role="form">
           {props.type == 1 ? (
             <>
-              <Box display="flex" justifyContent='space-around' mb={2}>
+              <Box display="flex" justifyContent="space-around" mb={2}>
                 <Box>
                   <InputLabel htmlFor="standard-adornment-password">
                     نام
@@ -267,9 +294,37 @@ function Form1(props) {
                   onChange={(e) => setSmartCode(e.target.value)}
                 />
               </Box>
+              <Box mb={2}>
+                <InputLabel htmlFor="standard-adornment-password">
+                  رمز عبور
+                </InputLabel>
+                <Input
+                  required
+                  variant="standard"
+                  fullWidth
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Box>
               <Box mt={4} mb={1}>
                 <Button
                   onClick={postInfo}
+                  onKeyUp={(event) => {
+                    if (event.ctrlKey && event.key == "Enter") {
+                      postInfo();
+                    }
+                  }}
                   // component={Link}
                   // to="/dashboard"
                   variant="contained"
@@ -291,34 +346,34 @@ function Form1(props) {
                   </AppBar>
                 </Grid>
                 <TabPanel value="0">
-                <Box display="flex" justifyContent='space-around' mb={2}>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Box>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام خانوادگی
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Box>
-              </Box>
+                  <Box display="flex" justifyContent="space-around" mb={2}>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </Box>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام خانوادگی
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </Box>
+                  </Box>
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       کدملی
@@ -394,6 +449,29 @@ function Form1(props) {
                       onChange={(e) => setaddress(e.target.value)}
                     />
                   </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      رمز عبور
+                    </InputLabel>
+                    <Input
+                      required
+                      variant="standard"
+                      fullWidth
+                      onChange={(e) => setPassword(e.target.value)}
+                      type={showPassword ? "text" : "password"}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </Box>
                 </TabPanel>
                 <TabPanel value="1">
                   <Box mb={2}>
@@ -435,36 +513,36 @@ function Form1(props) {
                       onChange={(e) => setSAbtNumber(e.target.value)}
                     />
                   </Box>
-                  <Box display="flex" justifyContent='space-around' mb={2}>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام رابط
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Box>
-                <Box>
-                  <InputLabel htmlFor="standard-adornment-password">
-                    نام خانوادگی رابط
-                  </InputLabel>
-                  <Input
-                    required
-                    type="نام و نام خانوادگی"
-                    label="Name"
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Box>
-              </Box>
-                 
-                  <Box mb={2}>
+                  <Box display="flex" justifyContent="space-around" mb={2}>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام رابط
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </Box>
+                    <Box>
+                      <InputLabel htmlFor="standard-adornment-password">
+                        نام خانوادگی رابط
+                      </InputLabel>
+                      <Input
+                        required
+                        type="نام و نام خانوادگی"
+                        label="Name"
+                        variant="standard"
+                        fullWidth
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </Box>
+                  </Box>
+
+                  {/* <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       نام پدر رابط
                     </InputLabel>
@@ -474,7 +552,7 @@ function Form1(props) {
                       fullWidth
                       onChange={(e) => setFatherName(e.target.value)}
                     />
-                  </Box>
+                  </Box> */}
                   <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       تلفن ثابت
@@ -501,6 +579,29 @@ function Form1(props) {
                       onChange={(e) => setaddress(e.target.value)}
                     />
                   </Box>
+                  <Box mb={2}>
+                    <InputLabel htmlFor="standard-adornment-password">
+                      رمز عبور
+                    </InputLabel>
+                    <Input
+                      required
+                      variant="standard"
+                      fullWidth
+                      type={showPassword ? "text" : "password"}
+                      onChange={(e) => setPassword(e.target.value)}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </Box>
                   {/* <Box mb={2}>
                     <InputLabel htmlFor="standard-adornment-password">
                       کدملی رابط
@@ -521,6 +622,11 @@ function Form1(props) {
                   // component={Link}
                   // to="/dashboard"
                   onClick={postInfo}
+                  onKeyUp={(event) => {
+                    if (event.ctrlKey && event.key == "Enter") {
+                      postInfo();
+                    }
+                  }}
                   variant="contained"
                   fullWidth
                 >
@@ -632,6 +738,26 @@ function Form1(props) {
                 />
               </Box>
               <Box mb={2}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel
+                    id="demo-simple-select-standard-label"
+                    sx={{ marginTop: -1.5 }}
+                  >
+                    نوع شرکت حمل
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={hamlType}
+                    onChange={(e) => setHamlType(e.target.value)}
+                  >
+                    <MenuItem value={1}>بزرگ مقیاس</MenuItem>
+                    <MenuItem value={2}>عادی</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box mb={2}>
                 <Autocomplete
                   disablePortal
                   id="clear-on-escape"
@@ -651,11 +777,39 @@ function Form1(props) {
                   )}
                 />
               </Box>
+              <Box mb={2}>
+                <InputLabel htmlFor="standard-adornment-password">
+                  رمز عبور
+                </InputLabel>
+                <Input
+                  required
+                  variant="standard"
+                  fullWidth
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Box>
               <Box mt={4} mb={1}>
                 <Button
                   onClick={postInfo}
                   // component={Link}
                   // to="/dashboard"
+                  onKeyUp={(event) => {
+                    if (event.ctrlKey && event.key == "Enter") {
+                      postInfo();
+                    }
+                  }}
                   variant="contained"
                   fullWidth
                 >

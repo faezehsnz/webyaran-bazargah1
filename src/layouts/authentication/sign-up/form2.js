@@ -86,12 +86,24 @@ function Form2(props) {
               onChange={(e) => setCode(e.target.value)}
             />
             {error == true && (
-              <FormHelperText sx={{color:'red'}}> فیلد کد نمیتواند خالی باشد</FormHelperText>
+              <FormHelperText sx={{ color: "red" }}>
+                {" "}
+                فیلد کد نمیتواند خالی باشد
+              </FormHelperText>
             )}
           </Box>
 
           <Box mt={4} mb={1}>
-            <Button onClick={() => postCode()} variant="contained" fullWidth>
+            <Button
+              onClick={() => postCode()}
+              onKeyUp={(event) => {
+                if (event.ctrlKey && event.key == "Enter") {
+                  postCode();
+                }
+              }}
+              variant="contained"
+              fullWidth
+            >
               وارد کردن اطلاعات
             </Button>
           </Box>

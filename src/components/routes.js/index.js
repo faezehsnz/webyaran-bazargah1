@@ -14,23 +14,26 @@ import ShowDetail from "layouts/showDetail";
 import Dashboard from "layouts/dashboard";
 import { connect } from "react-redux";
 import Tables from "layouts/tables";
-import Tables2 from "layouts/tables copy";
+import Barnameh from "layouts/barnameh";
+import Accepted from 'layouts/reservation copy/index'
+
 function Rouess(props) {
   const local = JSON.parse(localStorage.getItem('key'))
   return (
     <Routes>
       <Route index element={<SignIn />} />
-      {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
-      {local != null ? local.role == 3 ?  <Route path="addbarn" element={<Tables2 />} /> :null :null}
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="reservation" element={<Reservation />} />
       <Route path="waiting" element={<Billing />} />
       <Route path="havale" element={<RTL />} />
       <Route path="intheway" element={<Notifications />} />
-      <Route path="canceled" element={<Canceled />} />
+      <Route path="done" element={<Canceled />} />
       <Route path="ticket" element={<Ticket />} />
       <Route path="/authentication/sign-up" element={<SignUp />} />
       <Route path="/bar/show" element={<ShowDetail />} />
+      <Route path="addbarn" element={<Barnameh />} />
+      {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
+      {local != null ? local.role == 3 ?  <Route path="accepted" element={<Accepted />} /> :null :null}
     </Routes>
   );
 }

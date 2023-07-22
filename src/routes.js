@@ -1,8 +1,6 @@
-
-// Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
-import Tables2 from "layouts/tables copy";
+import Barnameh from "layouts/barnameh";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
@@ -15,6 +13,7 @@ import Ticket from "layouts/profile";
 import Canceled from "layouts/canceled";
 import Reservation from "layouts/reservation";
 import ShowDetail from "layouts/showDetail";
+import Accepted from 'layouts/reservation copy/index'
 const routes = [
   {
     type: "collapse",
@@ -42,6 +41,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "بارهای پذیرش شده",
+    key: "accepted",
+    icon: <Icon fontSize="small">list_alt</Icon>,
+    route: "/accepted",
+    component: <Accepted />,
+  },
+  {
+    type: "collapse",
     name: "بارهای رزرو شده",
     key: "reservation",
     icon: <Icon fontSize="small">drafts</Icon>,
@@ -58,11 +65,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "افزودن بارنامه",
+    name: "لیست بارنامه ها",
     key: "addbarn",
     icon: <Icon fontSize="small">list_alt</Icon>,
     route: "/addbarn",
-    component: <Tables2 />,
+    component: <Barnameh />,
   },
   {
     type: "collapse",
@@ -74,10 +81,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "بارهای کنسلی",
-    key: "canceled",
-    icon: <Icon fontSize="small">cancel</Icon>,
-    route: "/canceled",
+    name: "بارهای به مقصد رسیده",
+    key: "done",
+    icon: <Icon fontSize="small">done</Icon>,
+    route: "/done",
     component: <Canceled />,
   },
   {

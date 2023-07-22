@@ -21,15 +21,17 @@ export default function AddressForm(props) {
             options={props.goodTypes}
             // open={true}
             getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setType(value.ID)}
+            onChange={(e, value) => props.setType(value.id)}
             renderInput={(params) => (
-              <TextField variant="standard" 
-              {...params}
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
-              }}
-               label="نوع بار" />
+              <TextField
+                variant="standard"
+                {...params}
+                inputProps={{
+                  ...params.inputProps,
+                  autoComplete: "new-password", // disable autocomplete and autofill
+                }}
+                label="نوع بار"
+              />
             )}
           />
         </Grid>
@@ -50,15 +52,17 @@ export default function AddressForm(props) {
             id="clear-on-escape"
             options={props.packing}
             getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setPacking(value.ID)}
+            onChange={(e, value) => props.setPacking(value.ID)}
             renderInput={(params) => (
-              <TextField variant="standard" 
-              {...params}
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
-              }}
-              label="نوع بسته بندی" />
+              <TextField
+                variant="standard"
+                {...params}
+                inputProps={{
+                  ...params.inputProps,
+                  autoComplete: "new-password", // disable autocomplete and autofill
+                }}
+                label="نوع بسته بندی"
+              />
             )}
           />
         </Grid>
@@ -120,6 +124,7 @@ export default function AddressForm(props) {
               }}
             />
           </Grid>
+
           <Grid item xs={12} sm={2}>
             <TextField
               id="standard-start-adornment"
@@ -134,6 +139,24 @@ export default function AddressForm(props) {
               }}
             />
           </Grid>
+          <Grid item xs={12} sm={3}>
+            <FormControl variant="standard" fullWidth>
+              <InputLabel id="demo-simple-select-standard-label">
+                ترافیک بار
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                // value={age}
+                onChange={(e) => props.setTrafficBar(e.target.value)}
+                defaultValue={10}
+                label=""
+              >
+                <MenuItem value={0}>بار عادی</MenuItem>
+                <MenuItem value={1}>بار ترافیکی</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
         <Divider />
         <Grid container spacing={3} mt={1} ml={1}>
@@ -143,15 +166,17 @@ export default function AddressForm(props) {
               id="clear-on-escape"
               options={props.carTypes}
               getOptionLabel={(option) => option.name}
-            onChange={(e , value)=> props.setCarType(value.id)}
-            renderInput={(params) => (
-              <TextField variant="standard" 
-              {...params}
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
-              }}
-                label="نوع ماشین" />
+              onChange={(e, value) => props.setCarType(value.id)}
+              renderInput={(params) => (
+                <TextField
+                  variant="standard"
+                  {...params}
+                  inputProps={{
+                    ...params.inputProps,
+                    autoComplete: "new-password", // disable autocomplete and autofill
+                  }}
+                  label="نوع ماشین"
+                />
               )}
             />
           </Grid>
