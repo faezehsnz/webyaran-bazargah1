@@ -67,6 +67,7 @@ function Form1(props) {
   const [address, setaddress] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [hamlCode, setHamlCode] = React.useState("");
+  
   const getData2 = async (e) => {
     setCities(City.cities.map((option) => option));
   };
