@@ -79,9 +79,6 @@ function Form1(props) {
   const [address, setaddress] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [hamlCode, setHamlCode] = React.useState("");
-<<<<<<< HEAD
-  
-=======
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -90,7 +87,6 @@ function Form1(props) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
->>>>>>> 9fb2983bd8a4656a4243616cc8bae26692ecc5d2
   const getData2 = async (e) => {
     setCities(City.cities.map((option) => option));
   };
