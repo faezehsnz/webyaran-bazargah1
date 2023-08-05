@@ -30,7 +30,32 @@ function Grid(props) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
 
   const handleCloseMenu = () => setOpenMenu(false);
-
+  const AccBar = async (params) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("status", params.status == 1 ? 2 : 1);
+    bodyFormData.append("role", 4);
+    bodyFormData.append("userID", params.ID);
+    bodyFormData.append("questionRole", 3);
+    try {
+      const response = await fetch(
+        "https://hagbaar.com/api/auth/setDeactiveUser",
+        {
+          mode: "cors",
+          method: "POST",
+          body: bodyFormData,
+        }
+      );
+      const data = await response.json();
+      if (data.error == 0) {
+        toast.success('با موفقیت تغییر کرد');
+      }
+      if (data.error != 0) {
+        toast.error(data.detail);
+      }
+    } catch (e) {
+      // handleClickOpen();
+    }
+  };
   const renderMenu = (params) => (
     <>
       <Menu
@@ -44,20 +69,28 @@ function Grid(props) {
         onClose={handleCloseMenu}
         sx={{ mt: 2 }}
       >
-        <NotificationItem
-          icon={<VisibilityOutlinedIcon />}
-          title="غیرفعال کردن"
-          // onClick={() => navigate("/bar/show")}
-        />
+        {props.barData && props.barData.status == 1 ? (
+          <NotificationItem
+            icon={<VisibilityOutlinedIcon />}
+            title="غیرفعال کردن"
+            onClick={() => AccBar(props.barData)}
+          />
+        ) : (
+          <NotificationItem
+            icon={<VisibilityOutlinedIcon />}
+            title="فعال کردن"
+            onClick={() => AccBar(props.barData)}
+          />
+        )}
       </Menu>
     </>
   );
   const columns = [
     {
-        field: "ID",
-        headerName: "id",
-        headerAlign: "center",
-        width: 50,
+      field: "ID",
+      headerName: "id",
+      headerAlign: "center",
+      width: 50,
     },
     {
       field: "brandName",
@@ -90,11 +123,20 @@ function Grid(props) {
       width: 130,
     },
     {
-        field: "hamlType",
-        headerName: "نوع",
-        headerAlign: "center",
-        width: 110,
+      field: "hamlType",
+      headerName: "نوع",
+      headerAlign: "center",
+      width: 110,
+    },
+    {
+      field: "status",
+      headerName: "وضعیت",
+      headerAlign: "center",
+      width: 170,
+      renderCell: (params) => {
+        return <p>{params.row.status == 1 ? "فعال" : " غیرفعال"} </p>;
       },
+    },
     {
       field: "action",
       headerName: "عملیات",
@@ -111,7 +153,7 @@ function Grid(props) {
       ),
     },
   ];
-  console.log(props.report)
+  console.log(props.report);
   return (
     <Card id="delete-account">
       <Box
@@ -129,7 +171,7 @@ function Grid(props) {
         <Box component="ul" display="flex" flexDirection="column" p={0} m={0}>
           <DataGrid
             slots={{ toolbar: GridToolbar }}
-            getRowId={(row) => row.ID} 
+            getRowId={(row) => row.ID}
             localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
             columns={columns}
             rows={props.report}
@@ -142,7 +184,7 @@ function Grid(props) {
               },
             }}
             onRowClick={(rows) => {
-              props.setShowData(rows.row);
+              props.setBarData(rows.row);
             }}
             pageSizeOptions={[5]}
             disableRowSelectionOnClick
