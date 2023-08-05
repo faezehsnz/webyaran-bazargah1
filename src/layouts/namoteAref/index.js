@@ -1,27 +1,23 @@
+
 import React, { useState, useEffect } from "react";
-import { Alert } from "@mui/material";
-// @mui material components
 import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
-
-// Material Dashboard 2 React example components
+import { Alert } from "@mui/material";
+// Material Dashboard 2 React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import MasterCard from "examples/Cards/MasterCard";
+import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
+
+// Billing page components
 import BillingInformation from "layouts/billing/components/BillingInformation";
-// Data
-
-// RTL components
-import Projects from "layouts/rtl/components/Projects";
-
-// Material Dashboard 2 React contexts
-import { useMaterialUIController, setDirection } from "context";
 import { connect } from "react-redux";
-import { setUserID, setCityID } from "components/store/actions";
-import { setBarData } from "components/store/actions";
+import { setUserID, setCityID ,setShowData ,setBarData} from "components/store/actions";
 
-function RTL(props) {
+function Namot(props) {
   const [open, setOpen] = React.useState(false);
   const [report, setReport] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,7 +30,7 @@ function RTL(props) {
     bodyFormData.append("cityID", local.userInfo.cityID);
     try {
       setLoading(true);
-      const response = await fetch("https://hagbaar.com/api/bar/getHavaleBars", {
+      const response = await fetch("https://hagbaar.com/api/bar/getAwkwardBars", {
         mode: "cors",
         method: "POST",
         body: bodyFormData,
@@ -55,13 +51,15 @@ function RTL(props) {
   }, [1]);
   return (
     <DashboardLayout>
-      <DashboardNavbar />
-      <Box py={3}>
-        <Box>
+      <DashboardNavbar/>
+      <Box mt={8}>
+        <Box mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={12}>
+            <Grid item xs={12} md={12}>
             {report !== [] ? (
-                <BillingInformation report={report} title='بارهای حواله شده' />
+                <BillingInformation
+                  report={report}
+                  title='بارهای نامتعارف'/>
               ) : (
                 <Alert severity="error">{error}</Alert>
               )}
@@ -78,6 +76,7 @@ const mapStateToProps = (state) => ({
   userId: state.userId,
   cityId: state.cityId,
   barData: state.barData,
+  showID: state.showID
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -85,6 +84,7 @@ const mapDispatchToProps = (dispatch) => {
     setUserID: (value) => dispatch(setUserID(value)),
     setCityID: (value) => dispatch(setCityID(value)),
     setBarData: (value) => dispatch(setBarData(value)),
+    setShowData: (value) => dispatch(setShowData(value)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(RTL);
+export default connect(mapStateToProps, mapDispatchToProps)(Namot);

@@ -7,6 +7,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { InputLabel, Select, MenuItem, Divider, Input } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 export default function AddressForm(props) {
+  console.log(props.packing)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -52,7 +53,7 @@ export default function AddressForm(props) {
             id="clear-on-escape"
             options={props.packing}
             getOptionLabel={(option) => option.name}
-            onChange={(e, value) => props.setPacking(value.ID)}
+            onChange={(e ,value) => props.setPacking(value)}
             renderInput={(params) => (
               <TextField
                 variant="standard"

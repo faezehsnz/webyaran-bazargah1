@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { setShowData } from "components/store/actions";
 
 function DriverTable({report}) {
-    console.log(report)
+  console.log(report)
   return (
     <>
       <Grid item xs={12} mb={3} display="flex" direction="column" justifyContent="center" maxWidth={100}>
@@ -26,7 +26,7 @@ function DriverTable({report}) {
               >
                 <Grid item>
                   <Typography variant="p" color="inherit">
-                    {report.driverName !== false ? report.driverName : 'بار برای راننده ای ثبت نشده است'}
+                    {report.driverName !== false ? report.driverName.name + report.driverName.lastName : 'بار برای راننده ای ثبت نشده است'}
                   </Typography>
                 </Grid>
                 <Grid item>

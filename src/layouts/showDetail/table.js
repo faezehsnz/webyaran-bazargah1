@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 import { setShowData } from "components/store/actions";
 
 function Table({report}) {
-    console.log(report)
   return (
     <>
       <Grid item xs={12} mb={3} display="flex" direction="column" justifyContent="center" maxWidth={100}>

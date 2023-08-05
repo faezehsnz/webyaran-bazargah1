@@ -7,6 +7,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { InputLabel, Select, MenuItem, Divider, Input } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 export default function AddressForm(props) {
+  console.log(props.data)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -19,6 +20,7 @@ export default function AddressForm(props) {
             disablePortal
             id="clear-on-escape"
             options={props.goodTypes}
+            defaultValue={{ name: props.data.TypeBarName }}
             getOptionLabel={(option) => option.name}
             onChange={(e , value)=> props.setType(value.id)}
             renderInput={(params) => (
@@ -51,6 +53,7 @@ export default function AddressForm(props) {
             options={props.packing}
             getOptionLabel={(option) => option.name}
             onChange={(e , value)=> props.setPacking2(value.id)}
+            defaultValue={{ name: props.data.pakingName }}
             renderInput={(params) => (
               <TextField variant="standard" 
               {...params}
@@ -148,7 +151,7 @@ export default function AddressForm(props) {
                 id="demo-simple-select-standard"
                 // value={age}
                 onChange={(e) => props.setTrafficBar(e.target.value)}
-                defaultValue={10}
+                defaultValue={props.data.trafficBar == 1 ? 1 : 0}
                 label=""
               >
                 <MenuItem value={0}>بار عادی</MenuItem>

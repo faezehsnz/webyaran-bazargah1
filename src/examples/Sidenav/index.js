@@ -75,7 +75,6 @@ function Sidenav({ color, userId, brand, brandName, routes, ...rest }) {
     return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
   const local = JSON.parse(localStorage.getItem("key"));
-  console.log(local);
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   if (local != null) {
     if (local.role == 1) {
@@ -83,17 +82,23 @@ function Sidenav({ color, userId, brand, brandName, routes, ...rest }) {
         (e) =>
           e.key !== "dashboard" &&
           e.key !== "addbar" &&
-          e.key !== "accepted"
+          e.key !== "accepted" &&
+          e.key !== "users"
       );
     }
     if (local.role == 2) {
       var x = e.filter(
         (e) =>
-          e.key !== "dashboard" && e.key !== "accepted"
+          e.key !== "dashboard" && e.key !== "accepted" && e.key !== "users"
       );
     }
     if (local.role == 3) {
-      var x = e.filter((e) => e.key !== "addbar");
+      var x = e.filter(
+        (e) => e.key !== "addbar" && e.key !== "users" && e.key !== "namot"
+      );
+    }
+    if (local.role == 4) {
+      var x = e;
     }
   } else {
     var x = e;

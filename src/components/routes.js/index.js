@@ -16,7 +16,10 @@ import { connect } from "react-redux";
 import Tables from "layouts/tables";
 import Barnameh from "layouts/barnameh";
 import Accepted from 'layouts/reservation copy/index'
-
+import Users from "layouts/users";
+import Print from "layouts/barnameh/print";
+import NamoteAref from "layouts/namoteAref";
+import Print1 from "layouts/rtl/print";
 function Rouess(props) {
   const local = JSON.parse(localStorage.getItem('key'))
   return (
@@ -31,9 +34,13 @@ function Rouess(props) {
       <Route path="ticket" element={<Ticket />} />
       <Route path="/authentication/sign-up" element={<SignUp />} />
       <Route path="/bar/show" element={<ShowDetail />} />
-      <Route path="addbarn" element={<Barnameh />} />
-      {local != null ? local.role == 2 ?  <Route path="addbar" element={<Tables />} /> :null :null}
-      {local != null ? local.role == 3 ?  <Route path="accepted" element={<Accepted />} /> :null :null}
+      <Route path="/addbarn" element={<Barnameh />} />
+      <Route path="/print" element={<Print />} />
+      <Route path="/havale/show" element={<Print1 />} />
+      {local != null ? local.role == 4 ?  <Route path="/users" element={<Users />} /> :null :null}
+      {local != null ? local.role == 2 || 4 ?  <Route path="/addbar" element={<Tables />} /> :null :null}
+      {local != null ? local.role == 3 || 4 ?  <Route path="/accepted" element={<Accepted />} /> :null :null}
+      {local != null ? local.role == 3 || 4 ?  <Route path="/namot" element={<NamoteAref />} /> :null :null}
     </Routes>
   );
 }

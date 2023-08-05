@@ -24,7 +24,7 @@ export default function FinancialInfoForm(props) {
               id="demo-simple-select-standard"
               // value={age}
               onChange={(e) => props.setTypeOfWage(e.target.value)}
-              defaultValue={10}
+              defaultValue={props.type_of_wage == 1 ? 1 : 0}
               label=""
             >
               <MenuItem value={0}>در مقصد</MenuItem>

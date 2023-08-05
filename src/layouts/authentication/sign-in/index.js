@@ -67,7 +67,6 @@ function Basic() {
         body: bodyFormData
       });
       const data = await response.json();
-      console.log(data.error);
       if (data.error == 0) {
         // props.setData2(data);
         localStorage.setItem('key', JSON.stringify(data));
@@ -152,6 +151,7 @@ function Basic() {
           <MenuItem value={1}>راننده</MenuItem>
           <MenuItem value={2}>صاحب کالا</MenuItem>
           <MenuItem value={3}>شرکت حمل</MenuItem>
+          <MenuItem value={4}>ادمین بازارگاه</MenuItem>
         </Select>
       </FormControl>
             </Box>
