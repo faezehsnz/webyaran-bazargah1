@@ -16,12 +16,38 @@ import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import BillingInformation from "layouts/billing/components/BillingInformation";
 import { connect } from "react-redux";
 import { setUserID, setCityID ,setShowData ,setBarData} from "components/store/actions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Notifications(props) {
   const [open, setOpen] = React.useState(false);
   const [report, setReport] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const login = async (e) => {
+    const local = JSON.parse(localStorage.getItem('key'))
+    console.log(local)
+    var bodyFormData = new FormData();
+    bodyFormData.append('role', local.role);
+    bodyFormData.append('mobile', local.userInfo.phone);
+    bodyFormData.append('password', local.userInfo.password);
+    try {
+      const response = await fetch('https://hagbaar.com/api/auth/loginByPass', {
+        mode: 'cors',
+        method: 'POST',
+        body: bodyFormData
+      });
+      const data = await response.json();
+      console.log(data.userInfo.status)
+      if(data.userInfo.status == 1){
+        window.open('/' , '_self')
+        toast.error('شما مجاز به استفاده از بازارگاه نمیباشید');
+      }
+    } catch (e) {
+      // toast(e.detail);
+      // setError(e.message);
+    }
+  };
   const getData = async (e) => {
     var bodyFormData = new FormData();
     const local = JSON.parse(localStorage.getItem('key'))
@@ -48,6 +74,7 @@ function Notifications(props) {
   };
   useEffect(() => {
     getData();
+    login();
   }, [1]);
   return (
     <DashboardLayout>
@@ -68,6 +95,18 @@ function Notifications(props) {
         </Box>
       </Box>
       {/* <Footer /> */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </DashboardLayout>
   );
 }

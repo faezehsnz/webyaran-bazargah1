@@ -244,6 +244,34 @@ function BillingInformation(props) {
       setError(e.detail);
     }
   };
+  const AccBar = async (params) => {
+    var bodyFormData = new FormData();
+    const local = JSON.parse(localStorage.getItem("key"));
+    bodyFormData.append("status", 1);
+    bodyFormData.append("role", local.role);
+    bodyFormData.append("barID", params.id);
+    try {
+      setLoading(true);
+      const response = await fetch("https://hagbaar.com/api/bar/setBarStatus", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (data.error == 0) {
+        toast.success(data.detail);
+        console.log(data);
+      }
+      if (data.error != 0) {
+        setError(data.detail);
+        toast.error(data.detail);
+      }
+    } catch (e) {
+      // handleClickOpen();
+      setError(e.detail);
+    }
+  };
   const getProps = async (e) => {
     setCities(City.cities.map((option) => option));
     setPacking(City.pakings.map((option) => option));
@@ -278,11 +306,26 @@ function BillingInformation(props) {
         onClose={handleCloseMenu}
         sx={{ mt: 2 }}
       >
-        <NotificationItem
-          icon={<VisibilityOutlinedIcon />}
-          title="نمایش"
-          onClick={() => navigate("/bar/show")}
-        />
+        {props.title == "بارهای حواله شده" ? (
+          <NotificationItem
+            icon={<VisibilityOutlinedIcon />}
+            title="نمایش"
+            onClick={() => navigate("/havale/show")}
+          />
+        ) : (
+          <NotificationItem
+            icon={<VisibilityOutlinedIcon />}
+            title="نمایش"
+            onClick={() => navigate("/bar/show")}
+          />
+        )}
+        {props.title == "بارهای نامتعارف" ? (
+          <NotificationItem
+            icon={<VisibilityOutlinedIcon />}
+            title="تایید"
+            onClick={() => AccBar(props.showID)}
+          />
+        ) : null}
         {props.showID !== null ? (
           <>
             {props.showID.active == 1 ? (
@@ -494,7 +537,6 @@ function BillingInformation(props) {
       ),
     },
   ];
-
   return (
     <Card id="delete-account">
       <Box
@@ -507,7 +549,7 @@ function BillingInformation(props) {
         <Typography variant="h6" fontWeight="medium">
           {props.title}
         </Typography>
-        {props.title == "بارهای حواله شده در بازارگاه" ? (
+        {props.title == "بارهای حواله شده" ? (
           <Button variant="contained" sx={{ color: "#FFF" }}>
             حواله کردن ({0}) بارنامه
           </Button>
@@ -517,7 +559,7 @@ function BillingInformation(props) {
         <Box component="ul" display="flex" flexDirection="column" p={0} m={0}>
           <StyledDataGrid
             slots={{ toolbar: GridToolbar }}
-            getRowId={(row) => row.id} 
+            getRowId={(row) => row.id}
             localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
             columns={columns}
             rows={props.report}

@@ -305,6 +305,7 @@ export default function Checkout({ dd, dp, dc, data, handleClose }) {
             fare={data.fare}
             customer_offer_fare={data.customer_offer_fare}
             lnsurance_value={data.lnsurance_value}
+            type_of_wage ={data.type_of_wage}
             // setTypeOfWage={setTypeOfWage}
             setCustomerOfferFare={setCustomerOfferFare}
           />
@@ -473,8 +474,6 @@ export default function Checkout({ dd, dp, dc, data, handleClose }) {
   React.useEffect(() => {
     getData();
   }, []);
-  console.log(loadingTime);
-  console.log(data.loading_time);
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -531,6 +530,9 @@ export default function Checkout({ dd, dp, dc, data, handleClose }) {
                 </>
               )}
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                 <Button onClick={handleClose} sx={{ mt: 3, ml: 1 }}>
+                    بستن
+                  </Button>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                     قبلی

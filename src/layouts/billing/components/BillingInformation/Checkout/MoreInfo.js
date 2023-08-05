@@ -11,7 +11,6 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 export default function MoreInfoForm(props) {
-  console.log(props)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -30,20 +29,6 @@ export default function MoreInfoForm(props) {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          {/* <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-standard-label">
-              شهر مبدا*
-            </InputLabel> */}
-            {/* <Grid item xs={12} sm={12}>
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="شهر مبدا*"
-            fullWidth
-            variant="standard"
-            onChange={(e) => props.setOrigin(e.target.value)}
-          />
-        </Grid> */}
           <Autocomplete
             disablePortal
             id="clear-on-escape"

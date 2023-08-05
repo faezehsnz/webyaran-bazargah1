@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
-import City from "components/Checkout/data.json";
-import Bar from "components/Checkout/bar.json";
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -12,6 +10,9 @@ import NotificationItem from "examples/Items/NotificationItem";
 import Menu from "@mui/material/Menu";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { connect } from "react-redux";
 import {
   setUserID,
@@ -23,25 +24,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
-const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-  // direction: 'rtl',
-  "& .super-app-theme--2": {
-    backgroundColor: "rgb(192, 216, 193)",
-  },
-  "& .super-app-theme--1": {
-    backgroundColor: "rgb(192, 216, 193)",
-  },
-  "& .super-app-theme--0": {
-    backgroundColor: "rgb(249, 210, 179)",
-  },
-}));
-// Billing page components
-// import Bill from "layouts/billing/components/Bill";
-
-function BillingInformation(props) {
+function Grid(props) {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = React.useState(false);
-
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
 
   const handleCloseMenu = () => setOpenMenu(false);
@@ -61,93 +46,61 @@ function BillingInformation(props) {
       >
         <NotificationItem
           icon={<VisibilityOutlinedIcon />}
-          title="نمایش"
-          onClick={() => navigate("/print")}
+          title="غیرفعال کردن"
+          // onClick={() => navigate("/bar/show")}
         />
       </Menu>
     </>
   );
   const columns = [
     {
-      field: "bolNr",
-      headerName: "شماره بارنامه",
-      headerAlign: "center",
-      width: 140,
+        field: "ID",
+        headerName: "id",
+        headerAlign: "center",
+        width: 50,
     },
     {
-      field: "bolSerialNr",
-      headerName: "سری بارنامه",
-      headerAlign: "center",
-      width: 140,
-    },
-
-    {
-      field: "bilingDate",
-      headerName: "تاریخ بارنامه",
-      headerAlign: "center",
-      width: 130,
-      renderCell: (params) => {
-        var date = params.value;
-        var validDate = new Date(date * 1000).toLocaleDateString("fa-IR");
-        return <p>{validDate}</p>;
-      },
-    },
-    {
-      field: "cargo_description",
-      headerName: "نوع بار",
+      field: "name",
+      headerName: " نام",
       headerAlign: "center",
       width: 130,
     },
     {
-      field: "originName",
-      headerName: "شهر مبدا",
+      field: "lastName",
+      headerName: "نام خانوادگی",
+      headerAlign: "center",
+      width: 130,
+    },
+    {
+      field: "fatherName",
+      headerName: "نام پدر",
       headerAlign: "center",
       width: 150,
     },
     {
-      field: "destinationName",
-      headerName: "شهر مقصد",
+      field: "ghavinameNumber",
+      headerName: "شماره گواهینامه",
+      headerAlign: "center",
+      width: 150,
+    },
+    {
+      field: "hoshmandNumber",
+      headerName: "شماره هوشمند",
       headerAlign: "center",
       width: 170,
     },
     {
-      field: "driverName",
-      headerName: "نام راننده",
+      field: "status",
+      headerName: "وضعیت",
       headerAlign: "center",
-      width: 250,
-      renderCell: (params) => {
-        return (
-          <p>{params.row.driverName && params.row.driverName.name + params.row.driverName.lastName}</p>
-        );
-      },
-    },
-    {
-      field: "fare",
-      headerName: "مقدار کرایه",
-      headerAlign: "center",
-      width: 160,
-      renderCell: (params) => {
-        return (
-          <p>
-            {params !== null && params !== undefined
-              ? params.row.fare.toLocaleString()
-              : 0}
-          </p>
-        );
-      },
-    },
-    {
-      field: "transportationCompani",
-      headerName: "شرکت حمل",
-      headerAlign: "center",
-      width: 220,
+      width: 170,
       renderCell: (params) => {
         return (
           <p>
             {params.value == 0
-              ? "در انتظار "
+              ? "غیرفعال"
               : params.value > 0
-              ? " پذیرش شده توسط " + params.row.hamlCompanyName.brandName
+              ? " فعال "
               : null}
           </p>
         );
@@ -169,7 +122,7 @@ function BillingInformation(props) {
       ),
     },
   ];
-
+  console.log(props.report)
   return (
     <Card id="delete-account">
       <Box
@@ -185,13 +138,13 @@ function BillingInformation(props) {
       </Box>
       <Box pt={1} pb={2} px={2}>
         <Box component="ul" display="flex" flexDirection="column" p={0} m={0}>
-          <StyledDataGrid
+          <DataGrid
             slots={{ toolbar: GridToolbar }}
             getRowId={(row) => row.ID} 
             localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
             columns={columns}
             rows={props.report}
-            // {...data}
+            // {...props.report}
             initialState={{
               pagination: {
                 paginationModel: {
@@ -239,4 +192,4 @@ const mapDispatchToProps = (dispatch) => {
     setShowData: (value) => dispatch(setShowData(value)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(BillingInformation);
+export default connect(mapStateToProps, mapDispatchToProps)(Grid);

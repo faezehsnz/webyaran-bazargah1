@@ -14,6 +14,9 @@ import Canceled from "layouts/canceled";
 import Reservation from "layouts/reservation";
 import ShowDetail from "layouts/showDetail";
 import Accepted from 'layouts/reservation copy/index'
+import Users from "layouts/users";
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import NamoteAref from "layouts/namoteAref";
 const routes = [
   {
     type: "collapse",
@@ -46,6 +49,14 @@ const routes = [
     icon: <Icon fontSize="small">list_alt</Icon>,
     route: "/accepted",
     component: <Accepted />,
+  },
+  {
+    type: "collapse",
+    name: "بارهای نامتعارف",
+    key: "namot",
+    icon: <Icon fontSize="small">list_alt</Icon>,
+    route: "/namot",
+    component: <NamoteAref />,
   },
   {
     type: "collapse",
@@ -94,6 +105,14 @@ const routes = [
     icon: <Icon fontSize="small">confirmation_number</Icon>,
     route: "/ticket",
     component: <Ticket />,
+  },
+  {
+    type: "collapse",
+    name: "کاربران",
+    key: "users",
+    icon: <SupervisedUserCircleIcon fontSize="small"></SupervisedUserCircleIcon>,
+    route: "/users",
+    component: <Users />,
   },
   {
     type: "collapse",

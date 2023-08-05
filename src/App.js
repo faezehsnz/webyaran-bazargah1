@@ -44,7 +44,6 @@ import { store } from "components/store";
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-import { setType, setMobile, setUserID } from "components/store/actions";
 import { connect } from "react-redux";
 import "App.css";
 import Rouess from "components/routes.js";

@@ -308,7 +308,7 @@ export default function Checkout() {
     const local = JSON.parse(localStorage.getItem("key"));
     bodyFormData.append("userID", local.userInfo.ID);
     bodyFormData.append("type", type);
-    bodyFormData.append("packing", packing);
+    bodyFormData.append("packing", packing.id);
     bodyFormData.append("weight", weight);
     bodyFormData.append("lnsurance_value", insuranceValue);
     bodyFormData.append("download_location", downloadLocation);
