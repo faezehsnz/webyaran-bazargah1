@@ -40,7 +40,7 @@ function Reservation(props) {
       });
       const data = await response.json();
       console.log(data.userInfo.status)
-      if(data.userInfo.status == 1){
+      if(data.userInfo.status !== 1){
         window.open('/' , '_self')
         toast.error('شما مجاز به استفاده از بازارگاه نمیباشید');
       }
@@ -86,9 +86,7 @@ function Reservation(props) {
             <Grid item xs={12} md={6} lg={12}>
               {report !== [] ? (
                 <BillingInformation report={report} title="بارهای رزرو شده" />
-              ) : (
-                <Alert severity="error">{error}</Alert>
-              )}
+              ) : null}
             </Grid>
           </Grid>
         </Box>

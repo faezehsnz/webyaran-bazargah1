@@ -62,9 +62,7 @@ function RTL(props) {
             <Grid item xs={12} md={6} lg={12}>
             {report !== [] ? (
                 <BillingInformation report={report} title='بارهای حواله شده' />
-              ) : (
-                <Alert severity="error">{error}</Alert>
-              )}
+              ) : null}
             </Grid>
           </Grid>
         </Box>

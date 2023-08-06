@@ -60,9 +60,7 @@ function Namot(props) {
                 <BillingInformation
                   report={report}
                   title='بارهای نامتعارف'/>
-              ) : (
-                <Alert severity="error">{error}</Alert>
-              )}
+              ) : null}
             </Grid>
           </Grid>
         </Box>

@@ -61,9 +61,7 @@ function Accepted(props) {
             <Grid item xs={12} md={6} lg={12}>
               {report !== [] && report ? (
                 <BillingInformation report={report} title="بارهای رزرو شده" />
-              ) : (
-                <Alert severity="error">{error}</Alert>
-              )}
+              ) : null}
             </Grid>
           </Grid>
         </Box>

@@ -39,7 +39,7 @@ function Notifications(props) {
       });
       const data = await response.json();
       console.log(data.userInfo.status)
-      if(data.userInfo.status == 1){
+      if(data.userInfo.status != 1){
         window.open('/' , '_self')
         toast.error('شما مجاز به استفاده از بازارگاه نمیباشید');
       }
@@ -87,9 +87,7 @@ function Notifications(props) {
                 <BillingInformation
                   report={report}
                   title='بارهای درحال حمل'/>
-              ) : (
-                <Alert severity="error">{error}</Alert>
-              )}
+              ) : null}
             </Grid>
           </Grid>
         </Box>

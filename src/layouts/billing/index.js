@@ -40,7 +40,7 @@ function Billing(props) {
       });
       const data = await response.json();
       console.log(data.userInfo.status)
-      if(data.userInfo.status == 0){
+      if(data.userInfo.status !== 1){
         window.open('/' , '_self')
         toast.error('شما مجاز به استفاده از بازارگاه نمیباشید');
       }
@@ -89,9 +89,7 @@ function Billing(props) {
                   report={report}
                   title="بارهای در صف پذیرش"
                 />
-              ) : (
-                <Alert severity="error">{error == null ? 'با مشخصات شما هیچ باری وجود ندارد' : error}</Alert>
-              )}
+              ) : null}
             </Grid>
           </Grid>
         </Box>
