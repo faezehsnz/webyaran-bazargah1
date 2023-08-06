@@ -349,9 +349,9 @@ export default function Checkout() {
       const data = await response.json();
       if (data.error == 0) {
         toast.success(data.detail);
-        setTimeout(() => {
-          window.open("/waiting", "_self");
-        }, 4000);
+        // setTimeout(() => {
+        //   window.open("/waiting", "_self");
+        // }, 4000);
         // props.setValue(2);
       }
       if (data.error != 1 && data.error != 0) {
@@ -408,12 +408,12 @@ export default function Checkout() {
                 اطلاعات با موفقیت ثبت شد!
               </Typography>
               <Typography variant="subtitle1">
-                به صفحه
+               برای مشاهده بار صفحه
                 <Typography component={Link} to="/waiting" variant="button">
                   {" "}
                   بارهای در صف پذیرش{" "}
                 </Typography>
-                منتقل میشوید.
+                را چک کنید.
               </Typography>
             </React.Fragment>
           ) : (

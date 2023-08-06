@@ -472,7 +472,7 @@ function BillingInformation(props) {
       field: "the_status",
       headerName: "وضعیت حمل",
       headerAlign: "center",
-      width: 250,
+      width: 280,
       renderCell: (params) => {
         return (
           <p>
@@ -491,7 +491,7 @@ function BillingInformation(props) {
       field: "transportationCompani",
       headerName: "شرکت حمل",
       headerAlign: "center",
-      width: 220,
+      width: 280,
       renderCell: (params) => {
         return (
           <p>

@@ -23,7 +23,6 @@ import ReactToPrint from "react-to-print";
 import "./style.css";
 function Print(props) {
   let componentRef = useRef();
-  console.log(props.showID);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -152,6 +151,8 @@ function Print(props) {
                       <th>شماره هوشمند</th>
                       <th>شماره تماس</th>
                       <th>پلاک ماشین</th>
+                      <th>شماره هوشمند ماشین</th>
+                      <th>نوع بارگیر</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -177,6 +178,12 @@ function Print(props) {
                       </td>
                       <td style={{ textAlign: "center" }}>
                         {props.showID.vehicleLicensePlateNr}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {props.showID.vehicleSmartCard}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {props.showID.loaderTypeName}
                       </td>
                     </tr>
                   </tbody>
