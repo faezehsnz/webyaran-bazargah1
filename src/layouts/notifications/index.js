@@ -26,10 +26,9 @@ function Notifications(props) {
   const [error, setError] = useState("");
   const login = async (e) => {
     const local = JSON.parse(localStorage.getItem('key'))
-    console.log(local)
     var bodyFormData = new FormData();
     bodyFormData.append('role', local.role);
-    bodyFormData.append('mobile', local.userInfo.phone);
+    bodyFormData.append('mobile', local.userInfo.mobile);
     bodyFormData.append('password', local.userInfo.password);
     try {
       const response = await fetch('https://hagbaar.com/api/auth/loginByPass', {
@@ -38,10 +37,11 @@ function Notifications(props) {
         body: bodyFormData
       });
       const data = await response.json();
-      console.log(data.userInfo.status)
       if(data.userInfo.status != 1){
-        window.open('/' , '_self')
         toast.error('شما مجاز به استفاده از بازارگاه نمیباشید');
+        setTimeout(() => {
+          window.open('/' , '_self')
+        }, 5000);
       }
     } catch (e) {
       // toast(e.detail);

@@ -36,6 +36,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "بارهای نامتعارف",
+    key: "namot",
+    icon: <Icon fontSize="small">list_alt</Icon>,
+    route: "/namot",
+    component: <NamoteAref />,
+  },
+  {
+    type: "collapse",
     name: "بارهای در صف پذیرش",
     key: "waiting",
     icon: <Icon fontSize="small">list_alt</Icon>,
@@ -49,14 +57,6 @@ const routes = [
     icon: <Icon fontSize="small">list_alt</Icon>,
     route: "/accepted",
     component: <Accepted />,
-  },
-  {
-    type: "collapse",
-    name: "بارهای نامتعارف",
-    key: "namot",
-    icon: <Icon fontSize="small">list_alt</Icon>,
-    route: "/namot",
-    component: <NamoteAref />,
   },
   {
     type: "collapse",
@@ -98,14 +98,14 @@ const routes = [
     route: "/done",
     component: <Canceled />,
   },
-  {
-    type: "collapse",
-    name: "تیکت",
-    key: "ticket",
-    icon: <Icon fontSize="small">confirmation_number</Icon>,
-    route: "/ticket",
-    component: <Ticket />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "تیکت",
+  //   key: "ticket",
+  //   icon: <Icon fontSize="small">confirmation_number</Icon>,
+  //   route: "/ticket",
+  //   component: <Ticket />,
+  // },
   {
     type: "collapse",
     name: "کاربران",

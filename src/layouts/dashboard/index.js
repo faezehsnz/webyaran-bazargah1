@@ -31,6 +31,10 @@ function Dashboard() {
           <Grid item xs={12} md={12} lg={12}>
             <Alert variant="filled" severity="error">
               درصورتی که اطلاعات بار شما نامتعارف باشد بار ثبت میشود اما بعد از تایید ادمین در بازارگاه اعلام میشود!
+            
+            </Alert>
+            <Alert variant="filled" severity="warning" sx={{my:3 ,color:'#FFF'}}>
+              به بار بیش از 22تن,طول بیش از 12متر و ارتفاع بیش از 3 متر نامتعارف گفته میشود.
             </Alert>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>

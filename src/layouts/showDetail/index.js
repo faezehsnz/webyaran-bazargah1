@@ -23,6 +23,7 @@ import { connect } from "react-redux";
 import { setShowData } from "components/store/actions";
 import Table from "./table";
 import DriverTable from "./driverTable";
+import HamlTable from "./hamlTable";
 
 function ShowDetail(props) {
   const [, dispatch] = useMaterialUIController();
@@ -113,6 +114,7 @@ function ShowDetail(props) {
                   </MDBox>
                 </Card>
               </Grid>
+              
              <Grid item xs={12} mt={6}>
                 <Card>
                   <MDBox
@@ -125,7 +127,7 @@ function ShowDetail(props) {
                     borderRadius="lg"
                     coloredShadow="info"
                   >
-                    <Typography color="#FFF">اطلاعات راننده و ماشین</Typography>
+                    <Typography color="#FFF">اطلاعات راننده</Typography>
                   </MDBox>
                   <MDBox pt={3}>
                     {props.showID !== null ? (
@@ -136,8 +138,10 @@ function ShowDetail(props) {
                   </MDBox>
                 </Card>
               </Grid>
+
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <Card>
                 <MDBox
                   mx={2}
@@ -172,6 +176,30 @@ function ShowDetail(props) {
                 </MDBox>
               </Card>
             </Grid> 
+            <Grid item xs={12} mt={6}>
+                <Card>
+                  <MDBox
+                    mx={2}
+                    mt={-3}
+                    py={3}
+                    px={2}
+                    variant="gradient"
+                    sx={{ backgroundColor: "#344767" }}
+                    borderRadius="lg"
+                    coloredShadow="info"
+                  >
+                    <Typography color="#FFF">اطلاعات شرکت حمل</Typography>
+                  </MDBox>
+                  <MDBox pt={3}>
+                    {props.showID !== null ? (
+                      <HamlTable report={props.showID} />
+                    ) : (
+                      "اطلاعاتی جهت نمایش وجود ندارد"
+                    )}
+                  </MDBox>
+                </Card>
+              </Grid>
+              </Grid>
           </Grid>
         </>
       ) : (

@@ -15,34 +15,36 @@ import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import BillingInformation from "layouts/billing/components/BillingInformation";
 import { connect } from "react-redux";
 import { setUserID, setCityID } from "components/store/actions";
-import { setBarData ,setID} from "components/store/actions";
+import { setBarData, setID } from "components/store/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Reservation(props) {
-  const local = localStorage.getItem('data')
+  const local = localStorage.getItem("data");
   const [open, setOpen] = React.useState(false);
   const [report, setReport] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const login = async (e) => {
-    const local = JSON.parse(localStorage.getItem('key'))
-    console.log(local)
+    const local = JSON.parse(localStorage.getItem("key"));
+    console.log(local);
     var bodyFormData = new FormData();
-    bodyFormData.append('role', local.role);
-    bodyFormData.append('mobile', local.userInfo.phone);
-    bodyFormData.append('password', local.userInfo.password);
+    bodyFormData.append("role", local.role);
+    bodyFormData.append("mobile", local.userInfo.mobile);
+    bodyFormData.append("password", local.userInfo.password);
     try {
-      const response = await fetch('https://hagbaar.com/api/auth/loginByPass', {
-        mode: 'cors',
-        method: 'POST',
-        body: bodyFormData
+      const response = await fetch("https://hagbaar.com/api/auth/loginByPass", {
+        mode: "cors",
+        method: "POST",
+        body: bodyFormData,
       });
       const data = await response.json();
-      console.log(data.userInfo.status)
-      if(data.userInfo.status != 1){
-        window.open('/' , '_self')
+      console.log(data.userInfo.status);
+      if (data.userInfo.status != 1) {
         toast.error('شما مجاز به استفاده از بازارگاه نمیباشید');
+        setTimeout(() => {
+          window.open('/' , '_self')
+        }, 5000);
       }
     } catch (e) {
       // toast(e.detail);
@@ -51,17 +53,20 @@ function Reservation(props) {
   };
   const getData = async (e) => {
     var bodyFormData = new FormData();
-    const local = JSON.parse(localStorage.getItem('key'))
+    const local = JSON.parse(localStorage.getItem("key"));
     bodyFormData.append("userID", local.userInfo.ID);
     bodyFormData.append("role", local.role);
     bodyFormData.append("cityID", local.userInfo.cityID);
     try {
       setLoading(true);
-      const response = await fetch("https://hagbaar.com/api/bar/getReservationBars", {
-        mode: "cors",
-        method: "POST",
-        body: bodyFormData,
-      });
+      const response = await fetch(
+        "https://hagbaar.com/api/bar/getReservationBars",
+        {
+          mode: "cors",
+          method: "POST",
+          body: bodyFormData,
+        }
+      );
       const data = await response.json();
       setReport(data.bars);
       setLoading(false);
