@@ -83,7 +83,8 @@ function Sidenav({ color, userId, brand, brandName, routes, ...rest }) {
           e.key !== "dashboard" &&
           e.key !== "addbar" &&
           e.key !== "accepted" &&
-          e.key !== "users"
+          e.key !== "users" &&
+          e.key !== "namot"
       );
     }
     if (local.role == 2) {

@@ -93,19 +93,19 @@ function BillingInformation(props) {
       },
     },
     {
-      field: "cargo_description",
+      field: "goodsName",
       headerName: "نوع بار",
       headerAlign: "center",
       width: 130,
     },
     {
-      field: "originName",
+      field: "senderCityName",
       headerName: "شهر مبدا",
       headerAlign: "center",
       width: 150,
     },
     {
-      field: "destinationName",
+      field: "receiverCityName",
       headerName: "شهر مقصد",
       headerAlign: "center",
       width: 170,
@@ -117,7 +117,7 @@ function BillingInformation(props) {
       width: 250,
       renderCell: (params) => {
         return (
-          <p>{params.row.driverName && params.row.driverName.name + params.row.driverName.lastName}</p>
+          <p>{params.row.driver1FirstName + params.row.driver1LastName}</p>
         );
       },
     },
@@ -137,21 +137,10 @@ function BillingInformation(props) {
       },
     },
     {
-      field: "transportationCompani",
+      field: "executor",
       headerName: "شرکت حمل",
       headerAlign: "center",
-      width: 220,
-      renderCell: (params) => {
-        return (
-          <p>
-            {params.value == 0
-              ? "در انتظار "
-              : params.value > 0
-              ? " پذیرش شده توسط " + params.row.hamlCompanyName.brandName
-              : null}
-          </p>
-        );
-      },
+      width: 200,
     },
     {
       field: "action",
