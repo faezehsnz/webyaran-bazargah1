@@ -1,17 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useState, useEffect } from "react";
 
@@ -35,7 +21,7 @@ import { Box } from "@mui/material";
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import backgroundImage from "assets/images/bg-profile.jpeg";
+import backgroundImage from "assets/1.jpg";
 import { Button } from "@mui/material";
 
 function Header({ children ,handleOpen}) {
@@ -89,68 +75,12 @@ function Header({ children ,handleOpen}) {
       <Card
         sx={{
           position: "relative",
-          mt: -8,
+          mt: -20,
           mx: 3,
           py: 2,
           px: 2,
         }}
       >
-        <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <Box height="100%" mt={0.5} lineHeight={1}>
-              <Button
-                variant="contained"
-                sx={{ color: "#FFF", backgroundColor: "#1A73E8", fontSize: 15 }}
-                onClick={handleOpen}
-              >
-                <AddOutlinedIcon />
-                تیکت جدید
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={8} lg={6} sx={{ ml: "auto" }}>
-            <AppBar position="static">
-              <Tabs
-                orientation={tabsOrientation}
-                value={tabValue}
-                onChange={handleSetTabValue}
-              >
-                <Tab
-                  label="همه"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      reorder
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="انجام نشده"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      radio_button_unchecked
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="انجام شده"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      done
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="بسته شده"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      done_all
-                    </Icon>
-                  }
-                />
-              </Tabs>
-            </AppBar>
-          </Grid>
-        </Grid>
         {children}
       </Card>
     </Box>

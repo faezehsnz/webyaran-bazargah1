@@ -22,6 +22,7 @@ import NamoteAref from "layouts/namoteAref";
 import Print1 from "layouts/rtl/print";
 import AboutUs from "layouts/aboutUs";
 import Guid from "layouts/guid";
+import User from "layouts/user";
 function Rouess(props) {
   const local = JSON.parse(localStorage.getItem('key'))
   return (
@@ -40,6 +41,7 @@ function Rouess(props) {
       <Route path="/bar/show" element={<ShowDetail />} />
       <Route path="/addbarn" element={<Barnameh />} />
       <Route path="/print" element={<Print />} />
+      <Route path="/userInfo" element={<User />} />
       <Route path="/havale/show" element={<Print1 />} />
       {local != null ? local.role == 4 ?  <Route path="/users" element={<Users />} /> :null :null}
       {local != null ? local.role == 2 || 4 ?  <Route path="/addbar" element={<Tables />} /> :null :null}

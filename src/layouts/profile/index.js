@@ -1,11 +1,6 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
 
 // Material Dashboard 2 React components
 import Box from "@mui/material/Box";
@@ -15,12 +10,12 @@ import Typography from "@mui/material/Typography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer"
-import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import ProfilesList from "examples/Lists/ProfilesList";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 // import PlatformSettings from "layouts/profile/components/PlatformSettings";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Data
 import profilesListData from "layouts/profile/data/profilesListData";
 import BasicModal from "./modal";
@@ -28,6 +23,31 @@ import BasicModal from "./modal";
 // Images
 function Ticket() {
   const [open, setOpen] = React.useState(false);
+  const [data, setData] = React.useState(false);
+  const local = JSON.parse(localStorage.getItem("key"));
+  const postInfo = async (e) => {
+      var bodyFormData = new FormData();
+      bodyFormData.append("userID", local.userInfo.mobile);
+      try {
+        const response = await fetch(
+          "https://hagbaar.com/api/Tickets/getTikectList",
+          {
+            mode: "cors",
+            method: "POST",
+            body: bodyFormData,
+          }
+        );
+        // window.open('/dashboard' , '_self')
+        const data = await response.json();
+        setData(data.tickets)
+      } catch (e) {
+        toast(e.detail);
+        // setError(e.message);
+      }
+  };
+  useEffect(() => {
+    postInfo()
+  }, [2]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
@@ -43,12 +63,24 @@ function Ticket() {
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Grid item xs={12} xl={12}>
-              <ProfilesList title="تیکت ها" profiles={profilesListData} shadow={false} />
+              <ProfilesList title="تیکت ها" profiles={data} shadow={false} />
             </Grid>
           </Grid>
         </Box>
       </Header>
       {/* <Footer /> */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </DashboardLayout>
   );
 }

@@ -1,4 +1,4 @@
-// react-routers components
+import React from "react";
 import { Link } from "react-router-dom";
 
 // prop-types is library for typechecking of props
@@ -12,12 +12,20 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
-
-function ProfilesList({ title, profiles, shadow }) {
-  const renderProfiles = profiles.map(
-    ({ image, name, description, action, icon }) => (
+import BasicModal from "layouts/profile/ticket";
+function ProfilesList(props) {
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState(null);
+  const handleOpen = (e) => {
+    setOpen(true);
+    setSelected(e);
+  };
+  const handleClose = () => setOpen(false);
+  const renderProfiles =
+    props.profiles &&
+    props.profiles.map((i) => (
       <MDBox
-        key={name}
+        key={i.ID}
         component="li"
         display="flex"
         alignItems="center"
@@ -29,14 +37,14 @@ function ProfilesList({ title, profiles, shadow }) {
           sx={{
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             py: 1,
-            px:1.3,
+            px: 1.3,
             borderRadius: "50%",
             width: "40px",
             height: "40px",
-            alignItems:'center'
+            alignItems: "center",
           }}
         >
-          <Icon alt="something here" sx={{alignSelf:'center'}}>{icon}</Icon>
+          {/* <Icon alt="something here" sx={{alignSelf:'center'}}>{icon}</Icon> */}
         </MDBox>
         <MDBox
           display="flex"
@@ -45,48 +53,35 @@ function ProfilesList({ title, profiles, shadow }) {
           justifyContent="center"
         >
           <MDTypography variant="button" fontWeight="medium">
-            {name}
+            {i.title}
           </MDTypography>
           <MDTypography variant="caption" color="text">
-            {description}
+            {i.body}
           </MDTypography>
         </MDBox>
         <MDBox ml="auto">
-          {action.type === "internal" ? (
-            <MDButton
-              component={Link}
-              to={action.route}
-              variant="text"
-              color="info"
-            >
-              {action.label}
-            </MDButton>
-          ) : (
-            <MDButton
-              component="a"
-              href={action.route}
-              target="_blank"
-              rel="noreferrer"
-              variant="text"
-              color={action.color}
-            >
-              {action.label}
-            </MDButton>
-          )}
+          <MDButton onClick={() => handleOpen(i)} variant="text" color="info">
+            مشاهده
+          </MDButton>
         </MDBox>
       </MDBox>
-    )
-  );
+    ));
 
   return (
-    <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
+    <Card sx={{ height: "100%", boxShadow: "none" }}>
+      <BasicModal
+        handleClose={handleClose}
+        handleOpen={handleOpen}
+        open={open}
+        data={selected}
+      />
       <MDBox pt={2} px={2}>
         <MDTypography
           variant="h6"
           fontWeight="medium"
           textTransform="capitalize"
         >
-          {title}
+          {props.title}
         </MDTypography>
       </MDBox>
       <MDBox p={2}>
@@ -97,17 +92,5 @@ function ProfilesList({ title, profiles, shadow }) {
     </Card>
   );
 }
-
-// Setting default props for the ProfilesList
-ProfilesList.defaultProps = {
-  shadow: true,
-};
-
-// Typechecking props for the ProfilesList
-ProfilesList.propTypes = {
-  title: PropTypes.string.isRequired,
-  profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
-  shadow: PropTypes.bool,
-};
 
 export default ProfilesList;

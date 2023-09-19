@@ -35,7 +35,7 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
 } from "context";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -87,7 +87,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>person</Icon>} title="حساب کاربری" />
+      <NotificationItem onClick={() => window.open('/userInfo' , '_self')} icon={<Icon>person</Icon>} title="حساب کاربری" />
       <NotificationItem icon={<Icon>help</Icon>} title="FAQ" />
       <NotificationItem onClick={() => window.open('/' , '_self')} icon={<Icon>logout</Icon>} title="خروج" />
     </Menu>
@@ -106,7 +106,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
   const local = JSON.parse(localStorage.getItem('key'))
-
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -147,7 +146,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
               </IconButton>
               {renderMenu()}
             </MDBox>
-            <Typography>{local !== null && local.role == 1 ?'راننده' : local.role == 2 ? 'صاحب کالا' : local.role == 3 ? 'شرکت حمل' :null}</Typography>
+            <Box>
+            <Typography>{local !== null && local.userInfo.name + local.userInfo.lastName}</Typography>
+            <Typography sx={{fontSize:'12px'}}>{local !== null && local.role == 1 ?'راننده' : local.role == 2 ? 'صاحب کالا' : local.role == 3 ? 'شرکت حمل' :null}</Typography>
+            </Box>
           </MDBox>
         )}
       </Toolbar>

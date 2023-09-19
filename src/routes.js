@@ -111,14 +111,14 @@ const routes = [
     route: "/done",
     component: <Canceled />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "تیکت",
-  //   key: "ticket",
-  //   icon: <Icon fontSize="small">confirmation_number</Icon>,
-  //   route: "/ticket",
-  //   component: <Ticket />,
-  // },
+  {
+    type: "collapse",
+    name: "تیکت",
+    key: "ticket",
+    icon: <Icon fontSize="small">confirmation_number</Icon>,
+    route: "/ticket",
+    component: <Ticket />,
+  },
   {
     type: "collapse",
     name: "کاربران",
