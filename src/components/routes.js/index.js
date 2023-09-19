@@ -20,12 +20,16 @@ import Users from "layouts/users";
 import Print from "layouts/barnameh/print";
 import NamoteAref from "layouts/namoteAref";
 import Print1 from "layouts/rtl/print";
+import AboutUs from "layouts/aboutUs";
+import Guid from "layouts/guid";
 function Rouess(props) {
   const local = JSON.parse(localStorage.getItem('key'))
   return (
     <Routes>
       <Route index element={<SignIn />} />
       <Route path="dashboard" element={<Dashboard />} />
+      <Route path="about" element={<AboutUs />} />
+      <Route path="key" element={<Guid />} />
       <Route path="reservation" element={<Reservation />} />
       <Route path="waiting" element={<Billing />} />
       <Route path="havale" element={<RTL />} />

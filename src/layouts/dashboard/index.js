@@ -93,40 +93,6 @@ function Dashboard() {
             </Box>
           </Grid>
         </Grid>
-        <Box mt={4.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <Box mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="بارهای کنسل شده"
-                  date="در هفته گذشته"
-                  chart={reportsBarChartData}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <Box mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="تعداد ماشین ها"
-                  date="در سال اخیر"
-                  chart={sales}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <Box mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="تعداد بارهای حمل شده"
-                  date="در سال اخیر"
-                  chart={tasks}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
         <Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} lg={12}>

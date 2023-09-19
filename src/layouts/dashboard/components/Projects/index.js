@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // @mui material components
@@ -29,10 +14,10 @@ import Typography from "@mui/material/Typography";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-// import data from "layouts/dashboard/components/Projects/data";
+import data from "layouts/dashboard/components/Projects/data";
 
 function Projects() {
-  // const { columns, rows } = data();
+  const { columns, rows } = data();
   const [menu, setMenu] = useState(null);
 
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
@@ -64,7 +49,7 @@ function Projects() {
       <Box display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <Box>
           <Typography variant="h6" gutterBottom>
-            آخرین وضعیت
+            تیکت ها
           </Typography >
           <Box display="flex" alignItems="center" lineHeight={0}>
             <Icon
@@ -77,7 +62,7 @@ function Projects() {
               done
             </Icon>
             <Typography variant="button" fontWeight="regular" color="text">
-              &nbsp;یک ماه اخیر
+              &nbsp;تیکت های باز
             </Typography >
           </Box>
         </Box>
@@ -89,13 +74,13 @@ function Projects() {
         {renderMenu}
       </Box>
       <Box>
-        {/* <DataTable
+        <DataTable
           table={{ columns, rows }}
           showTotalEntries={false}
           isSorted={false}
           noEndBorder
           entriesPerPage={false}
-        /> */}
+        />
       </Box>
     </Card>
   );

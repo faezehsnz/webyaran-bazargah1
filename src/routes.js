@@ -15,9 +15,22 @@ import Reservation from "layouts/reservation";
 import ShowDetail from "layouts/showDetail";
 import Accepted from 'layouts/reservation copy/index'
 import Users from "layouts/users";
+import FlagIcon from '@mui/icons-material/Flag';
+import InfoIcon from '@mui/icons-material/Info';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import NamoteAref from "layouts/namoteAref";
+import AboutUs from "layouts/aboutUs";
+import Guid from "layouts/guid";
 const routes = [
+  {
+    type: "collapse",
+    name: "راهنما",
+    key: "key",
+    icon: <FlagIcon fontSize="small"></FlagIcon>,
+    route: "/key",
+    component: <Guid />,
+  },
+  
   {
     type: "collapse",
     name: "داشبورد",
@@ -137,6 +150,14 @@ const routes = [
     icon: <Icon fontSize="small">show</Icon>,
     route: "/bar/show",
     component: <ShowDetail />,
+  },
+  {
+    type: "collapse",
+    name: "درباره ما",
+    key: "about",
+    icon: <InfoIcon fontSize="small"></InfoIcon>,
+    route: "/about",
+    component: <AboutUs />,
   },
 ];
 export default routes
