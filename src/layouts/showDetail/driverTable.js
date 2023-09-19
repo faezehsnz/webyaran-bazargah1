@@ -54,16 +54,83 @@ function DriverTable({report}) {
               >
                 <Grid item>
                   <Typography variant="p" color="inherit">
-                  {report.fare}
+                  {report.driverName !== false ? report.driverName.nationalCode :null}
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography variant="p" color="inherit" textAlign="end">
-                    کرایه :
+                    کد ملی :
                   </Typography>
                 </Grid>
               </Grid>
         </Grid>
+        <Grid item xs={12}>
+              <Grid
+                container
+                display="flex"
+                direction="row-reverse"
+                justifyContent="space-between"
+                borderBottom="1px solid #D9D9D9"
+                px={3}
+                py={1}
+              >
+                <Grid item>
+                  <Typography variant="p" color="inherit">
+                  {report.driverName !== false ? report.driverName.hoshmandNumber :null}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="p" color="inherit" textAlign="end">
+                    شماره هوشمند :
+                  </Typography>
+                </Grid>
+              </Grid>
+        </Grid>
+        <Grid item xs={12}>
+              <Grid
+                container
+                display="flex"
+                direction="row-reverse"
+                justifyContent="space-between"
+                borderBottom="1px solid #D9D9D9"
+                px={3}
+                py={1}
+              >
+                <Grid item>
+                  <Typography variant="p" color="inherit">
+                  {report.driverName !== false ? report.driverName.mobile :null}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="p" color="inherit" textAlign="end">
+                    شماره تماس :
+                  </Typography>
+                </Grid>
+              </Grid>
+        </Grid>
+        <Grid item xs={12}>
+              <Grid
+                container
+                display="flex"
+                direction="row-reverse"
+                justifyContent="space-between"
+                borderBottom="1px solid #D9D9D9"
+                px={3}
+                py={1}
+              >
+                <Grid item>
+                  <Typography variant="p" color="inherit">
+                  {report.driverName !== false ? report.driverName.ghavinameNumber :null}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="p" color="inherit" textAlign="end">
+                    شماره گواهینامه :
+                  </Typography>
+                </Grid>
+              </Grid>
+        </Grid>
+       
         </Grid>
     </>
   );

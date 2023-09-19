@@ -82,7 +82,7 @@ function BillingInformation(props) {
     },
 
     {
-      field: "bilingDate",
+      field: "issueDate",
       headerName: "تاریخ بارنامه",
       headerAlign: "center",
       width: 130,
