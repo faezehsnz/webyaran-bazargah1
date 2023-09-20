@@ -22,9 +22,7 @@ import Header from "layouts/guid/components/Header";
 // import PlatformSettings from "layouts/profile/components/PlatformSettings";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-// Data
-import profilesListData from "layouts/profile/data/profilesListData";
-import BasicModal from "./modal";
+import { Alert } from "@mui/material";
 
 // Images
 function Guid() {
@@ -47,6 +45,20 @@ function Guid() {
                 راهنما و قوانین و مقررات
               </MDTypography>
             </MDBox>
+            <Grid item xs={12} md={12} lg={12} mt={3}>
+              <Alert variant="filled" severity="error">
+                درصورتی که اطلاعات بار شما نامتعارف باشد بار ثبت میشود اما بعد
+                از تایید ادمین در بازارگاه اعلام میشود!
+              </Alert>
+              <Alert
+                variant="filled"
+                severity="warning"
+                sx={{ my: 3, color: "#FFF" }}
+              >
+                به بار بیش از 22تن,طول بیش از 12متر و ارتفاع بیش از 3 متر
+                نامتعارف گفته میشود.
+              </Alert>
+            </Grid>
             <MDBox p={2}>
               <h5>ماده 1 - تعاریف و اصطالحات</h5>
               <p style={{ fontSize: "12px" }}>
